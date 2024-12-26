@@ -16,19 +16,25 @@
         <header class="l-header">
             <nav class="nav bd-grid">
                 <div>
-                    <a href="#" class="nav__logo">Juan</a>
+                    <a href="#home" class="nav__logo">Juan</a>
                 </div>
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
-                        <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
-                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-                        <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
-                        <li class="nav__item"><a href="#work" class="nav__link">Work</a></li>
-                        <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+                        <li class="nav__item"><a href="#home" class="nav__link active-link" data-section="nav-bar" data-value="home">Home</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link" data-section="nav-bar" data-value="about">About</a></li>
+                        <li class="nav__item"><a href="#skills" class="nav__link" data-section="nav-bar" data-value="skills">Skills</a></li>
+                        <li class="nav__item"><a href="#work" class="nav__link" data-section="nav-bar" data-value="projects">Projects</a></li>
+                        <li class="nav__item"><a href="#contact" class="nav__link" data-section="nav-bar" data-value="contact">Contact</a></li>
                     </ul>
                 </div>
-
+                <div id="flags" class="flags">
+                    <div class="flags__item" data-language="es">
+                        <img src="assets/icons/co.svg" alt="">
+                    <div class="flags__item" data-language="en">
+                        <img src="assets/icons/us.svg" alt="">
+                    </div>
+                </div>
                 <div class="nav__toggle" id="nav-toggle">
                     <i class='bx bx-menu'></i>
                 </div>
@@ -41,7 +47,7 @@
                 <div class="home__data">
                     <h1 class="home__title">Hi,<br>I'am <span class="home__title-color">Juan</span><br> Software Developer</h1>
 
-                    <a href="https://wa.me/qr/UCDII2EI7QCFK1" class="button" target="_defer">Contact</a>
+                    <a href="https://wa.me/qr/UCDII2EI7QCFK1" class="button" target="_defer" data-section="home" data-value="contact">Contact</a>
                 </div>
 
                 <div class="home__social">
@@ -65,28 +71,28 @@
 
             <!--===== ABOUT =====-->
             <section class="about section " id="about">
-                <h2 class="section-title">About</h2>
+                <h2 class="section-title" data-section="about" data-value="title">About</h2>
 
                 <div class="about__container bd-grid">
                     <div class="about__img">
-                        <img src="assets/img/about.jpg" alt="">
+                        <img src="assets/img/img-about.png" alt="">
                     </div>
                     
                     <div>
-                        <h2 class="about__subtitle">I'am Juan Rodriguez</h2>
-                        <p class="about__text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate cum expedita quo culpa tempora, assumenda, quis fugiat ut voluptates soluta, aut earum nemo recusandae cumque perferendis! Recusandae alias accusamus atque.</p>           
+                        <h2 class="about__subtitle" data-section="about" data-value="i am">I'am Juan Rodriguez</h2>
+                        <p class="about__text" data-section="about" data-value="description">I'm from Colombia 🇨🇴, I thrive on tackling challenges and contributing to meaningful projects in diverse, multicultural environments.</p>           
                     </div>                                   
                 </div>
             </section>
 
             <!--===== SKILLS =====-->
             <section class="skills section" id="skills">
-                <h2 class="section-title">Skills</h2>
+                <h2 class="section-title" data-section="skills" data-value="title">Skills</h2>
 
                 <div class="skills__container bd-grid">          
                     <div>
-                        <h2 class="skills__subtitle">Profesional Skills</h2>
-                        <p class="skills__text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit optio id vero amet, alias architecto consectetur error eum eaque sit.</p>
+                        <h2 class="skills__subtitle" data-section="skills" data-value="title2">Technical Skills</h2>
+                        <p class="skills__text" data-section="skills" data-value="description">These are some of my core technical skills, with levels of mastery that reflect my experience and consistent practice in each area. I am committed to continuous learning to improve and expand my knowledge.</p>
                         <div class="skills__data">
                             <div class="skills__names">
                                 <i class='bx bxl-html5 skills__icon'></i>
@@ -120,65 +126,62 @@
                                 
                             </div>
                             <div>
-                                <span class="skills__percentage">65%</span>
+                                <span class="skills__percentage">40%</span>
                             </div>
                         </div>
                         <div class="skills__data">
                             <div class="skills__names">
-                                <i class='bx bxs-paint skills__icon'></i>
-                                <span class="skills__name">UX/UI</span>
+                                <i class='bx bxl-git skills__icon'></i>
+                                <span class="skills__name">GIT</span>
                             </div>
                             <div class="skills__bar skills__ux">
                                 
                             </div>
                             <div>
-                                <span class="skills__percentage">85%</span>
+                                <span class="skills__percentage">75%</span>
                             </div>
                         </div>
                     </div>
                     
-                    <div>              
-                        <img src="assets/img/work3.jpg" alt="" class="skills__img">
+                    <div>  
+                        <img align="right" class="skills__img" width=500px alt="Unicorn" src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTN0NWlrNTZ0d24xbGFwazJyd21wOHNodnl6NG5mYXV1aWF3bno5eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tn33aiTi1jkl6H6/giphy.gif" />            
                     </div>
                 </div>
             </section>
 
             <!--===== WORK =====-->
             <section class="work section" id="work">
-                <h2 class="section-title">Work</h2>
+                <h2 class="section-title" data-section="projects" data-value="title">My Projects</h2>
 
                 <div class="work__container bd-grid">
-                    <a href="" class="work__img">
-                        <img src="assets/img/work1.jpg" alt="">
+                    <a href="https://github.com/Juanfrxz/Ejercicio-JS-IMC.git" class="work__img" target="_defer">
+                        <img src="assets/img/img-project1.png" alt=""> 
                     </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work2.jpg" alt="">
+                    <a href="https://github.com/Juanfrxz/Juan-David-Rodriguez-Concert.git" class="work__img" target="_defer">
+                        <img src="assets/img/img-project2.png" alt="">
                     </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work3.jpg" alt="">
+                    <a href="https://github.com/Juanfrxz/Hamburgueseria.git" class="work__img" target="_defer">
+                        <img src="assets/img/img-project3.png" alt="">
                     </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work4.jpg" alt="">
+                    <a href="https://github.com/Juanfrxz/LigaBetPlay-Dicc-JuanDavidRodriguez.git" class="work__img" target="_defer">
+                        <img src="assets/img/img-project4.png" alt="">
                     </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work5.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work6.jpg" alt="">
+                    <a href="https://github.com/Juanfrxz/Juanfrxz-Proyecto_Python_RodriguezJuan.git" class="work__img" target="_defer">
+                        <img src="assets/img/img-project5.png" alt="">
                     </a>
                 </div>
             </section>
 
             <!--===== CONTACT =====-->
             <section class="contact section" id="contact">
-                <h2 class="section-title">Contact</h2>
+                <h2 class="section-title" data-section="contact" data-value="title">Contact</h2>
 
                 <div class="contact__container bd-grid">
                     <form action="" class="contact__form">
                         <input type="text" placeholder="Name" class="contact__input">
                         <input type="mail" placeholder="Email" class="contact__input">
                         <textarea name="" id="" cols="0" rows="10" class="contact__input"></textarea>
-                        <input type="button" value="Enviar" class="contact__button button">
+                        <input type="button" value="Send" class="contact__button button">
                     </form>
                 </div>
             </section>
@@ -186,13 +189,12 @@
 
         <!--===== FOOTER =====-->
         <footer class="footer">
-            <p class="footer__title">Marlon</p>
+            <p class="footer__title">Juanfrxz</p>
             <div class="footer__social">
-                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
-                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
-                <a href="#" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+                <a href="https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b" class="footer__icon"><i class='bx bxl-linkedin' ></i></a>
+                <a href="https://www.instagram.com/juan_frxz/" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
+                <a href="https://github.com/Juanfrxz" class="footer__icon"><i class='bx bxl-github' ></i></a>
             </div>
-            <p class="footer__copy">&#169; Bedimcode. All rigths reserved</p>
         </footer>
 
 

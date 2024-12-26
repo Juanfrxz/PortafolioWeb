@@ -26,6 +26,19 @@
   --z-fixed: 100;
 }
 
+.flags{
+  width: 75px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.flags__item{
+  width: 30px;
+}
+.flags__img{
+  cursor: pointer;
+  display: block;
+}
 
 @media screen and (min-width: 968px) {
   :root {

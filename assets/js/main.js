@@ -55,3 +55,24 @@ sr.reveal('.home__data, .about__img, .skills__subtitle, .skills__text',{});
 sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img',{delay: 400}); 
 sr.reveal('.home__social-icon',{ interval: 200}); 
 sr.reveal('.skills__data, .work__img, .contact__input',{interval: 200}); 
+
+const flasgElement = document.getElementById('flags');
+
+const textsToChange = document.querySelectorAll('[data-section]');
+
+const changeLenguage = async (language) => {
+    const requestJson =  await fetch(`./assets/languages/${language}.json`);
+    const texts = await requestJson.json();
+
+    for (const textToChange of textsToChange) {
+        const section  = textToChange.dataset.section;
+        const value = textToChange.dataset.value;
+
+        textToChange.innerHTML= texts[section][value];
+    }
+}
+
+
+flasgElement.addEventListener('click', (e) => {
+    changeLenguage(e.target.parentElement.dataset.language);
+});

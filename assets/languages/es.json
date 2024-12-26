@@ -1,0 +1,31 @@
+{
+    "nav-bar":{
+        "home": "Inicio",
+        "about": "Acerca de",
+        "skills": "Habilidades",
+        "projects": "Proyectos",
+        "contact": "Contacto"
+    },
+    "home": {
+        "contact": "Contáctame"
+    },
+    "about": {
+        "title": "Acerca de mi",
+        "i am": "soy Juan Rodriguez",
+        "description": "Soy de Colombia 🇨🇴, me encanta enfrentar desafíos y contribuir a proyectos significativos en entornos diversos y multiculturales.Soy de Colombia 🇨🇴, me encanta enfrentar desafíos y contribuir a proyectos significativos en entornos diversos y multiculturales."
+    },
+    "skills": {
+        "title": "Habilidades",
+        "title2" : "Habilidades técnicas",
+        "description": "Estas son algunas de mis principales habilidades técnicas, con niveles de dominio que reflejan mi experiencia y práctica constante en cada área. Estoy comprometido con el aprendizaje continuo para mejorar y ampliar mis conocimientos."
+    },
+    "projects": {
+        "title": "Proyectos"
+    },
+    "contact": {
+        "title": "Contacto",
+        "name" : "nombre",
+        "email": "correo electrónico",
+        "send": "enviar"
+    }
+}

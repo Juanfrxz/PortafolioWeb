@@ -1,0 +1,31 @@
+{
+    "nav-bar":{
+        "home": "Home",
+        "about": "About",
+        "skills": "Skills",
+        "projects": "Projects",
+        "contact": "Contact"
+    },
+    "home": {
+        "contact": "Contact"
+    },
+    "about": {
+        "title": "About me",
+        "i am": "I'm Juan Rodriguez",
+        "description": "I'm from Colombia 🇨🇴, I love facing challenges and contributing to meaningful projects in diverse and multicultural environments."
+    },
+    "skills": {
+        "title": "Skills",
+        "title2" : "Technical Skills",
+        "description": "These are some of my main technical skills, with levels of mastery that reflect my experience and constant practice in each area. I am committed to continuous learning to improve and expand my knowledge."
+    },
+    "projects": {
+        "title": "Projects"
+    },
+    "contact": {
+        "title": "Contact",
+        "name" : "name",
+        "email": "email",
+        "send": "send"
+    }
+}
