@@ -76,3 +76,18 @@ const changeLenguage = async (language) => {
 flasgElement.addEventListener('click', (e) => {
     changeLenguage(e.target.parentElement.dataset.language);
 });
+
+// modo oscuro y claro
+// let toggle = document.getElementById('toggle');
+// let label_toggle = document.getElementById('label_toggle');
+// toggle.addEventListener('change', (event) => {
+//     let chacked = event.target.checked;
+//     document.body.classList.toggle('dark');
+//     if (chacked==true) {
+//         label_toggle.innerHTML = '<i class="fa-solid fa-sun">';
+//         label_toggle.style.color = 'yellow';
+//     }else{
+//         label_toggle.innerHTML = '<i class="fa-solid fa-moon">';
+//         label_toggle.style.color = 'rebeccapurple';
+//     }
+// })
