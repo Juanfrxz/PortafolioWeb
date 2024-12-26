@@ -25,9 +25,6 @@
   --z-back: -10;
   --z-fixed: 100;
 }
-body{
-  transition: all 1.5s ease;
-}
 .flags{
   width: 75px;
   display: flex;
