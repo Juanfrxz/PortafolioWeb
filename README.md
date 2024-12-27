@@ -2,4 +2,4 @@
 ## 📌 Link De La Pagina
 
 1. Link: 
-    https://juan-portafolio-17.netlify.app/
+     https://juanfrxz.github.io/PortafolioWeb/
