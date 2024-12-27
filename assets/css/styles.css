@@ -265,6 +265,21 @@ img {
 .button:hover {
   box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.15);
 }
+.button-cv {
+  display: inline-block;
+  background-color: #fff;
+  color: var(--first-color);
+  padding: 0.75rem 2.5rem;
+  font-weight: var(--font-semi);
+  border-radius: 0.5rem;
+  border: 1.5px solid var(--first-color);
+  transition: 0.3s;
+}
+.button-cv:hover {
+  box-shadow: 0px 10px 36px rgba(0, 0, 0, 0.15);
+}
+
+
 
 /* ===== ABOUT =====*/
 .about__container {

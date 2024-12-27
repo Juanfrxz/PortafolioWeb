@@ -7,7 +7,8 @@
         "contact": "Contact"
     },
     "home": {
-        "contact": "Contact"
+        "contact": "Contact",
+        "download": "Download CV"
     },
     "about": {
         "title": "About me",
