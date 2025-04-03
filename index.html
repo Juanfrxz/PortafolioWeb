@@ -27,19 +27,19 @@
                         <li class="nav__item"><a href="#contact" class="nav__link" data-section="nav-bar" data-value="contact">Contact</a></li>
                     </ul>
                 </div>
-                <div id="flags" class="flags">
-                    <div class="flags__item" data-language="es">
-                        <img src="assets/icons/co.svg" alt="">
-                    <div class="flags__item" data-language="en">
-                        <img src="assets/icons/us.svg" alt="">
-                    </div>
+                <div id="flags" class="language-switcher">
+                    <button class="language-button" data-language="es">
+                        <img src="assets/icons/co.svg" alt="Español" class="language-flag">
+                        <span class="language-text">ES</span>
+                    </button>
+                    <button class="language-button" data-language="en">
+                        <img src="assets/icons/us.svg" alt="English" class="language-flag">
+                        <span class="language-text">EN</span>
+                    </button>
                 </div>
-                <!-- modo oscuro -->
-                <!-- <label for="toggle" id="label_toggle"><i class="fa-solid fa-moon"></i></label>
-                <input type="checkbox" id="toggle">
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-menu'></i> -->
-                </div>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class='bx bx-moon'></i>
+                </button>
             </nav>
         </header>
 
@@ -96,61 +96,77 @@
                 <h2 class="section-title" data-section="skills" data-value="title">Skills</h2>
 
                 <div class="skills__container bd-grid">          
-                    <div>
-                        <h2 class="skills__subtitle" data-section="skills" data-value="title2">Technical Skills</h2>
-                        <p class="skills__text" data-section="skills" data-value="description">These are some of my core technical skills, with levels of mastery that reflect my experience and consistent practice in each area. I am committed to continuous learning to improve and expand my knowledge.</p>
-                        <div class="skills__data">
-                            <div class="skills__names">
+                    <!-- Frontend Skills -->
+                    <div class="skills__category">
+                        <h3 class="skills__category-title">Frontend</h3>
+                        <div class="skills__grid">
+                            <div class="skills__data">
                                 <i class='bx bxl-html5 skills__icon'></i>
                                 <span class="skills__name">HTML5</span>
                             </div>
-                            <div class="skills__bar skills__html">
 
-                            </div>
-                            <div>
-                                <span class="skills__percentage">95%</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
+                            <div class="skills__data">
                                 <i class='bx bxl-css3 skills__icon'></i>
                                 <span class="skills__name">CSS3</span>
                             </div>
-                            <div class="skills__bar skills__css">
-                                
+
+                            <div class="skills__data">
+                                <i class='bx bxl-javascript skills__icon'></i>
+                                <span class="skills__name">JavaScript</span>
                             </div>
-                            <div>
-                                <span class="skills__percentage">85%</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxl-javascript skills__icon' ></i>
-                                <span class="skills__name">JAVASCRIPT</span>
-                            </div>
-                            <div class="skills__bar skills__js">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">40%</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxl-git skills__icon'></i>
-                                <span class="skills__name">GIT</span>
-                            </div>
-                            <div class="skills__bar skills__ux">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">75%</span>
+
+                            <div class="skills__data">
+                                <i class='bx bxl-bootstrap skills__icon'></i>
+                                <span class="skills__name">Bootstrap</span>
                             </div>
                         </div>
                     </div>
-                    
-                    <div>  
-                        <img align="right" class="skills__img" width=500px alt="Unicorn" src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTN0NWlrNTZ0d24xbGFwazJyd21wOHNodnl6NG5mYXV1aWF3bno5eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tn33aiTi1jkl6H6/giphy.gif" />            
+
+                    <!-- Backend Skills -->
+                    <div class="skills__category">
+                        <h3 class="skills__category-title">Backend</h3>
+                        <div class="skills__grid">
+                            <div class="skills__data">
+                                <i class='bx bx-code-curly skills__icon python-icon'></i>
+                                <span class="skills__name">Python</span>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bx-data skills__icon'></i>
+                                <span class="skills__name">MySQL</span>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bx-code-alt skills__icon csharp-icon'></i>
+                                <span class="skills__name">C#</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tools & Others -->
+                    <div class="skills__category">
+                        <h3 class="skills__category-title">Tools & Others</h3>
+                        <div class="skills__grid">
+                            <div class="skills__data">
+                                <i class='bx bxl-github skills__icon'></i>
+                                <span class="skills__name">GitHub</span>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bx-code-block skills__icon vscode-icon'></i>
+                                <span class="skills__name">VS Code</span>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bxl-git skills__icon'></i>
+                                <span class="skills__name">Git</span>
+                            </div>
+
+                            <div class="skills__data">
+                                <i class='bx bx-terminal skills__icon linux-icon'></i>
+                                <span class="skills__name">Linux</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -158,23 +174,179 @@
             <!--===== WORK =====-->
             <section class="work section" id="work">
                 <h2 class="section-title" data-section="projects" data-value="title">My Projects</h2>
-
+                
                 <div class="work__container bd-grid">
-                    <a href="https://github.com/Juanfrxz/Ejercicio-JS-IMC.git" class="work__img" target="_defer">
-                        <img src="assets/img/img-project1.png" alt=""> 
-                    </a>
-                    <a href="https://github.com/Juanfrxz/Juan-David-Rodriguez-Concert.git" class="work__img" target="_defer">
-                        <img src="assets/img/img-project2.png" alt="">
-                    </a>
-                    <a href="https://github.com/Juanfrxz/Hamburgueseria.git" class="work__img" target="_defer">
-                        <img src="assets/img/img-project3.png" alt="">
-                    </a>
-                    <a href="https://github.com/Juanfrxz/LigaBetPlay-Dicc-JuanDavidRodriguez.git" class="work__img" target="_defer">
-                        <img src="assets/img/img-project4.png" alt="">
-                    </a>
-                    <a href="https://github.com/Juanfrxz/Juanfrxz-Proyecto_Python_RodriguezJuan.git" class="work__img" target="_defer">
-                        <img src="assets/img/img-project5.png" alt="">
-                    </a>
+                    <div class="work__card">
+                        <div class="work__img-container">
+                            <img src="assets/img/image-f1.png" alt="F1 - Formula1" class="work__img">
+                        </div>
+                        <div class="work__content">
+                            <h3 class="work__title">F1 - Formula1</h3>
+                            <p class="work__description">A comprehensive Formula 1 management system featuring team management, cars, drivers, pole positions, and 3D model integrations.</p>
+                            <div class="work__tech">
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-html5'></i>
+                                    <span>HTML</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-css3'></i>
+                                    <span>CSS</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-javascript'></i>
+                                    <span>JavaScript</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-bootstrap'></i>
+                                    <span>Bootstrap</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bx-code-alt'></i>
+                                    <span>Vite</span>
+                                </div>
+                            </div>
+                            <a href="https://github.com/Juanfrxz/Formula1.git" class="work__link" target="_blank">
+                                <i class='bx bx-link-external'></i>
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+                    <div class="work__card">
+                        <div class="work__img-container">
+                            <img src="assets/img/img-project1.png" alt="IMC Calculator" class="work__img">
+                        </div>
+                        <div class="work__content">
+                            <h3 class="work__title">IMC Calculator</h3>
+                            <p class="work__description">A JavaScript application for calculating Body Mass Index with a modern interface and real-time calculations.</p>
+                            <div class="work__tech">
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-html5'></i>
+                                    <span>HTML</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-css3'></i>
+                                    <span>CSS</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-javascript'></i>
+                                    <span>JavaScript</span>
+                                </div>
+                            </div>
+                            <a href="https://github.com/Juanfrxz/Ejercicio-JS-IMC.git" class="work__link" target="_blank">
+                                <i class='bx bx-link-external'></i>
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="work__card">
+                        <div class="work__img-container">
+                            <img src="assets/img/img-project2.png" alt="Concert Website" class="work__img">
+                        </div>
+                        <div class="work__content">
+                            <h3 class="work__title">Concert Website</h3>
+                            <p class="work__description">A responsive website for a concert event featuring modern design, animations, and ticket booking system.</p>
+                            <div class="work__tech">
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-html5'></i>
+                                    <span>HTML</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-css3'></i>
+                                    <span>CSS</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-javascript'></i>
+                                    <span>JavaScript</span>
+                                </div>
+                            </div>
+                            <a href="https://github.com/Juanfrxz/Juan-David-Rodriguez-Concert.git" class="work__link" target="_blank">
+                                <i class='bx bx-link-external'></i>
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="work__card">
+                        <div class="work__img-container">
+                            <img src="assets/img/img-project3.png" alt="Hamburger Restaurant" class="work__img">
+                        </div>
+                        <div class="work__content">
+                            <h3 class="work__title">Hamburger Restaurant</h3>
+                            <p class="work__description">A restaurant website with an interactive menu, ordering system, and beautiful food presentations.</p>
+                            <div class="work__tech">
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-html5'></i>
+                                    <span>HTML</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-css3'></i>
+                                    <span>CSS</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-javascript'></i>
+                                    <span>JavaScript</span>
+                                </div>
+                            </div>
+                            <a href="https://github.com/Juanfrxz/Hamburgueseria.git" class="work__link" target="_blank">
+                                <i class='bx bx-link-external'></i>
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="work__card">
+                        <div class="work__img-container">
+                            <img src="assets/img/img-project4.png" alt="Liga BetPlay" class="work__img">
+                        </div>
+                        <div class="work__content">
+                            <h3 class="work__title">Liga BetPlay</h3>
+                            <p class="work__description">A comprehensive football league management system with team statistics and match tracking.</p>
+                            <div class="work__tech">
+                                <div class="work__tech-item">
+                                    <i class='bx bx-code-curly python-icon'></i>
+                                    <span>Python</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bx-data'></i>
+                                    <span>SQL</span>
+                                </div>
+                            </div>
+                            <a href="https://github.com/Juanfrxz/LigaBetPlay-Dicc-JuanDavidRodriguez.git" class="work__link" target="_blank">
+                                <i class='bx bx-link-external'></i>
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="work__card">
+                        <div class="work__img-container">
+                            <img src="assets/img/ine-campus.png" alt="Cine Campus" class="work__img">
+                        </div>
+                        <div class="work__content">
+                            <h3 class="work__title">Cine Campus</h3>
+                            <p class="work__description">A web application for movie enthusiasts to search and view detailed information about movies, featuring an intuitive interface and comprehensive movie database.</p>
+                            <div class="work__tech">
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-html5'></i>
+                                    <span>HTML</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-css3'></i>
+                                    <span>CSS</span>
+                                </div>
+                                <div class="work__tech-item">
+                                    <i class='bx bxl-javascript'></i>
+                                    <span>JavaScript</span>
+                                </div>
+                            </div>
+                            <a href="https://github.com/Juanfrxz/CineCamp.git" class="work__link" target="_blank">
+                                <i class='bx bx-link-external'></i>
+                                View Project
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -183,11 +355,11 @@
                 <h2 class="section-title" data-section="contact" data-value="title">Contact</h2>
 
                 <div class="contact__container bd-grid">
-                    <form action="" class="contact__form">
-                        <input type="text" placeholder="Name" class="contact__input">
-                        <input type="mail" placeholder="Email" class="contact__input">
-                        <textarea name="" id="" cols="0" rows="10" class="contact__input"></textarea>
-                        <input type="button" value="Send" class="contact__button button">
+                    <form action="mailto:jr563384@gmail.com" method="post" enctype="text/plain" class="contact__form">
+                        <input type="text" name="name" placeholder="Name" class="contact__input" required>
+                        <input type="email" name="email" placeholder="Email" class="contact__input" required>
+                        <textarea name="message" cols="0" rows="10" class="contact__input" required></textarea>
+                        <button type="submit" class="contact__button button">Send</button>
                     </form>
                 </div>
             </section>

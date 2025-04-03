@@ -72,23 +72,44 @@ const changeLenguage = async (language) => {
     }
 }
 
-
-flasgElement.addEventListener('click', (e) => {
-    changeLenguage(e.target.parentElement.dataset.language);
+// Update event listener for language buttons
+document.querySelectorAll('.language-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const language = e.currentTarget.dataset.language;
+        changeLenguage(language);
+        
+        // Update active state
+        document.querySelectorAll('.language-button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        e.currentTarget.classList.add('active');
+    });
 });
 
-// modo oscuro y claro
-// let toggle = document.getElementById('toggle');
-// let label_toggle = document.getElementById('label_toggle');
-// toggle.addEventListener('change', (event) => {
-//     let chacked = event.target.checked;
-//     document.body.classList.toggle('dark');
-//     if (chacked==true) {
-//         label_toggle.innerHTML = '<i class="fa-solid fa-sun">';
-//         label_toggle.style.color = 'yellow';
-//     }else{
-//         label_toggle.innerHTML = '<i class="fa-solid fa-moon">';
-//         label_toggle.style.color = 'rebeccapurple';
-//     }
-// })
+// Theme switching functionality
+const themeToggle = document.getElementById('theme-toggle');
+const icon = themeToggle.querySelector('i');
+
+// Set dark theme as default
+document.documentElement.setAttribute('data-theme', 'dark');
+icon.classList.remove('bx-moon');
+icon.classList.add('bx-sun');
+
+// Theme toggle event listener
+themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Update icon
+    if (newTheme === 'dark') {
+        icon.classList.remove('bx-moon');
+        icon.classList.add('bx-sun');
+    } else {
+        icon.classList.remove('bx-sun');
+        icon.classList.add('bx-moon');
+    }
+});
 
