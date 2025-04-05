@@ -373,11 +373,73 @@
                 <h2 class="section-title" data-section="contact" data-value="title">Contact</h2>
 
                 <div class="contact__container bd-grid">
+                    <div class="contact__info">
+                        <h3 class="contact__subtitle" data-section="contact" data-value="get-in-touch">Get in Touch</h3>
+                        <p class="contact__description" data-section="contact" data-value="description">
+                            Feel free to reach out. I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
+                        </p>
+                        
+                        <div class="contact__info-items">
+                            <div class="contact__info-item">
+                                <i class='bx bx-envelope contact__info-icon'></i>
+                                <div class="contact__info-data">
+                                    <h4>Email</h4>
+                                    <p>jr563384@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <div class="contact__info-item">
+                                <i class='bx bx-map contact__info-icon'></i>
+                                <div class="contact__info-data">
+                                    <h4>Location</h4>
+                                    <p>Colombia</p>
+                                </div>
+                            </div>
+
+                            <div class="contact__info-item">
+                                <i class='bx bxl-whatsapp contact__info-icon'></i>
+                                <div class="contact__info-data">
+                                    <h4>WhatsApp</h4>
+                                    <a href="https://wa.me/qr/UCDII2EI7QCFK1" target="_blank">Send message</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact__social">
+                            <a href="https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b" class="contact__social-link" target="_blank">
+                                <i class='bx bxl-linkedin'></i>
+                            </a>
+                            <a href="https://github.com/Juanfrxz" class="contact__social-link" target="_blank">
+                                <i class='bx bxl-github'></i>
+                            </a>
+                            <a href="https://www.instagram.com/juan_frxz/" class="contact__social-link" target="_blank">
+                                <i class='bx bxl-instagram'></i>
+                            </a>
+                        </div>
+                    </div>
+
                     <form action="mailto:jr563384@gmail.com" method="post" enctype="text/plain" class="contact__form">
-                        <input type="text" name="name" placeholder="Name" class="contact__input" required>
-                        <input type="email" name="email" placeholder="Email" class="contact__input" required>
-                        <textarea name="message" cols="0" rows="10" class="contact__input" required></textarea>
-                        <button type="submit" class="contact__button button">Send</button>
+                        <div class="contact__inputs">
+                            <div class="contact__content">
+                                <label for="name" class="contact__label" data-section="contact" data-value="name">Name</label>
+                                <input type="text" id="name" name="name" class="contact__input" required>
+                            </div>
+
+                            <div class="contact__content">
+                                <label for="email" class="contact__label" data-section="contact" data-value="email">Email</label>
+                                <input type="email" id="email" name="email" class="contact__input" required>
+                            </div>
+
+                            <div class="contact__content">
+                                <label for="message" class="contact__label" data-section="contact" data-value="message">Message</label>
+                                <textarea id="message" name="message" cols="0" rows="7" class="contact__input" required></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="contact__button button">
+                            <i class='bx bx-send contact__button-icon'></i>
+                            <span data-section="contact" data-value="send">Send Message</span>
+                        </button>
                     </form>
                 </div>
             </section>

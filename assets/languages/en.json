@@ -25,8 +25,11 @@
     },
     "contact": {
         "title": "Contact",
-        "name" : "name",
-        "email": "email",
-        "send": "send"
+        "get-in-touch": "Get in Touch",
+        "description": "Feel free to reach out. I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "send": "Send Message"
     }
 }

@@ -25,8 +25,11 @@
     },
     "contact": {
         "title": "Contacto",
-        "name" : "nombre",
-        "email": "correo electrónico",
-        "send": "enviar"
+        "get-in-touch": "Ponte en Contacto",
+        "description": "No dudes en contactarme. Siempre estoy abierto a discutir nuevos proyectos, ideas creativas u oportunidades para ser parte de tus visiones.",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "message": "Mensaje",
+        "send": "Enviar Mensaje"
     }
 }
