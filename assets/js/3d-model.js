@@ -1,5 +1,20 @@
 // Esperar a que el DOM esté cargado
 document.addEventListener('DOMContentLoaded', function() {
+    const loaderContainer = document.querySelector('.loader-container');
+    let assetsLoaded = false;
+    let modelLoaded = false;
+
+    // Función para ocultar el loader cuando todo esté listo
+    function hideLoader() {
+        if (assetsLoaded && modelLoaded) {
+            loaderContainer.classList.add('hidden');
+            // Remover el loader después de la transición
+            setTimeout(() => {
+                loaderContainer.style.display = 'none';
+            }, 500);
+        }
+    }
+
     // Verificar que Three.js esté disponible
     if (typeof THREE === 'undefined') {
         console.error('Three.js no está disponible');
@@ -28,11 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
         alpha: true
     });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setClearColor(0x000000, 0); // Fondo transparente
+    renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
     
     // Añadir luces
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
     scene.add(ambientLight);
     
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -89,12 +104,19 @@ document.addEventListener('DOMContentLoaded', function() {
             model.scale.set(1.4, 1.4, 1.4);
             model.position.set(0, 0.2, 0);
             scene.add(model);
+            
+            // Marcar el modelo como cargado
+            modelLoaded = true;
+            hideLoader();
         },
         function(xhr) {
             console.log('Progreso de carga: ' + Math.round(xhr.loaded / xhr.total * 100) + '%');
         },
         function(error) {
             console.error('Error al cargar el modelo:', error);
+            // En caso de error, ocultar el loader de todos modos
+            modelLoaded = true;
+            hideLoader();
         }
     );
     
@@ -105,5 +127,11 @@ document.addEventListener('DOMContentLoaded', function() {
             camera.updateProjectionMatrix();
             renderer.setSize(container.clientWidth, container.clientHeight);
         }
+    });
+
+    // Marcar los assets como cargados cuando la página esté lista
+    window.addEventListener('load', function() {
+        assetsLoaded = true;
+        hideLoader();
     });
 }); 

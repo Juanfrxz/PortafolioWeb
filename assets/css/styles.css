@@ -1011,3 +1011,147 @@ img {
     font-size: 3.5rem;
   }
 }
+
+/* Loader */
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--second-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.loader-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.fancy-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.cube-wrapper {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.cube-folding {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-style: preserve-3d;
+    animation: cube-spin 2.4s infinite linear;
+}
+
+.cube-folding span {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: var(--first-color);
+    transform-origin: 100% 100%;
+}
+
+.leaf1 {
+    animation: leaf1-fold 2.4s infinite linear both;
+}
+
+.leaf2 {
+    transform: rotateZ(90deg) rotateY(90deg);
+    animation: leaf2-fold 2.4s infinite linear both;
+}
+
+.leaf3 {
+    transform: rotateZ(180deg) rotateY(90deg);
+    animation: leaf3-fold 2.4s infinite linear both;
+}
+
+.leaf4 {
+    transform: rotateZ(270deg) rotateY(90deg);
+    animation: leaf4-fold 2.4s infinite linear both;
+}
+
+.loader-text {
+    margin-top: 1rem;
+    color: var(--first-color);
+    font-size: var(--h2-font-size);
+    font-weight: var(--font-semi);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.dots {
+    animation: dots 1.4s infinite;
+    display: inline-block;
+}
+
+@keyframes cube-spin {
+    0% {
+        transform: translate(-50%, -50%) rotateX(0) rotateY(0) rotateZ(0);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+@keyframes leaf1-fold {
+    0% { transform: rotateX(0) rotateY(0); }
+    20% { transform: rotateX(0) rotateY(180deg); }
+    40% { transform: rotateX(180deg) rotateY(180deg); }
+    60% { transform: rotateX(180deg) rotateY(0); }
+    80% { transform: rotateX(0) rotateY(0); }
+    100% { transform: rotateX(0) rotateY(0); }
+}
+
+@keyframes leaf2-fold {
+    0% { transform: rotateZ(90deg) rotateY(90deg); }
+    20% { transform: rotateZ(90deg) rotateY(270deg); }
+    40% { transform: rotateZ(90deg) rotateY(270deg); }
+    60% { transform: rotateZ(90deg) rotateY(90deg); }
+    80% { transform: rotateZ(90deg) rotateY(90deg); }
+    100% { transform: rotateZ(90deg) rotateY(90deg); }
+}
+
+@keyframes leaf3-fold {
+    0% { transform: rotateZ(180deg) rotateY(90deg); }
+    20% { transform: rotateZ(180deg) rotateY(90deg); }
+    40% { transform: rotateZ(180deg) rotateY(270deg); }
+    60% { transform: rotateZ(180deg) rotateY(270deg); }
+    80% { transform: rotateZ(180deg) rotateY(90deg); }
+    100% { transform: rotateZ(180deg) rotateY(90deg); }
+}
+
+@keyframes leaf4-fold {
+    0% { transform: rotateZ(270deg) rotateY(90deg); }
+    20% { transform: rotateZ(270deg) rotateY(90deg); }
+    40% { transform: rotateZ(270deg) rotateY(90deg); }
+    60% { transform: rotateZ(270deg) rotateY(270deg); }
+    80% { transform: rotateZ(270deg) rotateY(270deg); }
+    100% { transform: rotateZ(270deg) rotateY(90deg); }
+}
+
+@keyframes dots {
+    0%, 20% {
+        content: '.';
+    }
+    40% {
+        content: '..';
+    }
+    60%, 100% {
+        content: '...';
+    }
+}
