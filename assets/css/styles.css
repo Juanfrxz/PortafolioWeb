@@ -119,6 +119,25 @@ body {
   color: var(--text-color);
   background-color: var(--body-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: var(--body-color);
+}
+
+/* Asegurar que el contenido esté por encima del fondo */
+.l-header,
+.l-main,
+.footer {
+  position: relative;
+  z-index: 1;
 }
 
 h1, h2, p {
@@ -283,12 +302,35 @@ img {
   right: 0;
   bottom: 0;
   width: 260px;
+  height: 260px;
 }
 .home__blob {
   fill: var(--first-color);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 .home__blob-img {
   width: 360px;
+}
+
+#model-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+#model-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+  display: block;
 }
 
 /*BUTTONS*/
@@ -400,7 +442,7 @@ img {
 .skills__category-title {
   color: var(--first-color);
   font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
   position: relative;
   padding-bottom: 1rem;
@@ -420,8 +462,8 @@ img {
 
 .skills__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 1.5rem;
   justify-items: center;
 }
 
@@ -430,12 +472,13 @@ img {
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  padding: 1.5rem;
+  padding: 1.25rem;
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
   cursor: pointer;
-  min-width: 120px;
+  width: 100%;
+  max-width: 120px;
 }
 
 .skills__data:hover {
@@ -444,7 +487,7 @@ img {
 }
 
 .skills__icon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   transition: all 0.3s ease;
 }
 
@@ -541,37 +584,57 @@ img {
   color: #f0f6fc;
 }
 
-@media screen and (min-width: 768px) {
-  .skills__container {
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0 2rem;
+/* Responsive adjustments for skills */
+@media screen and (max-width: 320px) {
+  .skills__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
   
-  .skills__grid {
-    gap: 1.5rem;
+  .skills__data {
+    padding: 1rem;
   }
   
   .skills__icon {
-    font-size: 3.5rem;
-  }
-  
-  .skills__name {
-    font-size: var(--normal-font-size);
+    font-size: 2rem;
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 576px) {
   .skills__container {
     grid-template-columns: 1fr;
   }
   
-  .skills__category {
-    padding: 1.5rem;
+  .skills__grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .skills__container {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+    margin: 0 auto;
   }
   
   .skills__grid {
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 2rem;
+  }
+  
+  .skills__icon {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .skills__container {
+    padding: 0 2rem;
+  }
+  
+  .skills__grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
 }
 
@@ -844,6 +907,7 @@ img {
   }
   .home__img {
     width: 400px;
+    height: 400px;
     bottom: 10%;
   }
   .about__container {
