@@ -16,6 +16,8 @@ Hello! I'm Juan Rodriguez, a passionate software developer from Colombia 🇨�
 - Bootstrap
 - Three.js (for 3D model)
 - Particles.js (for particle effects)
+- Vite (Build Tool)
+- Node.js
 
 ## ✨ Portfolio Features
 
@@ -26,6 +28,7 @@ Hello! I'm Juan Rodriguez, a passionate software developer from Colombia 🇨�
 - 🎮 Interactive 3D model
 - 📧 Functional contact form
 - 🚀 Performance optimized
+- ⚡ Fast development with Vite
 
 ## 🎯 Featured Projects
 
@@ -43,7 +46,20 @@ Hello! I'm Juan Rodriguez, a passionate software developer from Colombia 🇨�
 git clone https://github.com/Juanfrxz/PortafolioWeb.git
 ```
 
-2. Open the `index.html` file in your preferred browser.
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. For production build:
+```bash
+npm run build
+```
 
 ## 📫 Contact
 
