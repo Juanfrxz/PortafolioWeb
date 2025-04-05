@@ -1,63 +1,63 @@
-# 🚀 Portafolio Web - Juan Rodriguez
+# 🚀 Web Portfolio - Juan Rodriguez
 
 <div align="center">
   <img src="assets/img/portafolio.png" alt="Logo" width="200"/>
 </div>
 
-## 👋 Sobre Mí
+## 👋 About Me
 
-¡Hola! Soy Juan Rodriguez, un apasionado desarrollador de software de Colombia 🇨🇴. Me encanta enfrentar desafíos y contribuir a proyectos significativos en entornos diversos y multiculturales. Mi enfoque está en crear soluciones innovadoras y de alta calidad que impacten positivamente en la vida de las personas.
+Hello! I'm Juan Rodriguez, a passionate software developer from Colombia 🇨🇴. I love facing challenges and contributing to meaningful projects in diverse and multicultural environments. My focus is on creating innovative, high-quality solutions that positively impact people's lives.
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Technologies Used
 
 - HTML5
 - CSS3
 - JavaScript
 - Bootstrap
-- Three.js (para el modelo 3D)
-- Particles.js (para efectos de partículas)
+- Three.js (for 3D model)
+- Particles.js (for particle effects)
 
-## ✨ Características del Portafolio
+## ✨ Portfolio Features
 
-- 🌓 Modo claro/oscuro
-- 🌐 Soporte multilingüe (Español/Inglés)
-- 📱 Diseño totalmente responsivo
-- 🎨 Animaciones y efectos visuales modernos
-- 🎮 Modelo 3D interactivo
-- 📧 Formulario de contacto funcional
-- 🚀 Optimizado para rendimiento
+- 🌓 Light/Dark mode
+- 🌐 Multilingual support (English/Spanish)
+- 📱 Fully responsive design
+- 🎨 Modern animations and visual effects
+- 🎮 Interactive 3D model
+- 📧 Functional contact form
+- 🚀 Performance optimized
 
-## 🎯 Proyectos Destacados
+## 🎯 Featured Projects
 
-- **F1 - Formula1**: Sistema integral de gestión de Fórmula 1
-- **IMC Calculator**: Calculadora de Índice de Masa Corporal
-- **Concert Website**: Sitio web para eventos musicales
-- **Hamburger Restaurant**: Sistema de pedidos para restaurante
-- **Liga BetPlay**: Sistema de gestión de liga de fútbol
-- **Cine Campus**: Aplicación web para entusiastas del cine
+- **F1 - Formula1**: Comprehensive Formula 1 management system
+- **BMI Calculator**: Body Mass Index calculator
+- **Concert Website**: Website for musical events
+- **Hamburger Restaurant**: Restaurant ordering system
+- **Liga BetPlay**: Soccer league management system
+- **Cine Campus**: Web application for movie enthusiasts
 
-## 🚀 Cómo Ejecutar el Proyecto
+## 🚀 How to Run the Project
 
-1. Clona el repositorio:
+1. Clone the repository:
 ```bash
 git clone https://github.com/Juanfrxz/PortafolioWeb.git
 ```
 
-2. Abre el archivo `index.html` en tu navegador preferido.
+2. Open the `index.html` file in your preferred browser.
 
-## 📫 Contacto
+## 📫 Contact
 
 - 📧 Email: jr563384@gmail.com
 - 💼 LinkedIn: [David Rodríguez](https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b)
 - 💻 GitHub: [Juanfrxz](https://github.com/Juanfrxz)
 - 📱 Instagram: [@juan_frxz](https://www.instagram.com/juan_frxz/)
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ---
 
 <div align="center">
-  <p>✨ Gracias por visitar mi portafolio! ✨</p>
+  <p>✨ Thanks for visiting my portfolio! ✨</p>
 </div>
