@@ -4,6 +4,7 @@
 :root {
   --header-height: 3rem;
   --font-semi: 600;
+  --font-bold: 700;
   /*===== Colores =====*/
   /*Purple 260 - Red 355 - Blue 224 - Pink 340*/
   /* HSL color mode */
@@ -244,7 +245,16 @@ img {
   background-color: var(--first-color);
 }
 .nav__logo {
-  color: var(--nav-text-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--title-color);
+  font-weight: var(--font-bold);
+}
+.nav__logo img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 .nav__toggle {
   color: var(--nav-text-color);
