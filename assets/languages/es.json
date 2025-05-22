@@ -7,6 +7,7 @@
         "contact": "Contacto"
     },
     "home": {
+        "title": "Hola,<br>Soy <span class=\"home__title-color\">Juan</span><br>Desarrollador de software",
         "contact": "Contáctame",
         "download": "Descargar CV"
     },
@@ -21,7 +22,13 @@
         "description": "Estas son algunas de mis principales habilidades técnicas, con niveles de dominio que reflejan mi experiencia y práctica constante en cada área. Estoy comprometido con el aprendizaje continuo para mejorar y ampliar mis conocimientos."
     },
     "projects": {
-        "title": "Proyectos"
+        "title": "Proyectos",
+        "f1_description": "Un sistema integral de gestión de Fórmula 1 que incluye gestión de equipos, automóviles, pilotos, posiciones de pole y integraciones de modelos 3D.",
+        "sgci_description": "Sistema de gestión de compras e inventario, un proyecto para gestionar compras, inventarios, promociones y flujo de caja.",
+        "concert_description": "Sitio web responsivo para un evento de concierto con diseño moderno, animaciones y sistema de reserva de entradas.",
+        "hamburger_description": "Sitio web de restaurante con menú interactivo, sistema de pedidos y hermosas presentaciones de alimentos.",
+        "liga_description": "Sistema integral de gestión de liga de fútbol con estadísticas de equipos y seguimiento de partidos.",
+        "cine_description": "Aplicación web para entusiastas del cine para buscar y ver información detallada de películas, con interfaz intuitiva y base de datos de películas completa."
     },
     "contact": {
         "title": "Contacto",
@@ -31,5 +38,8 @@
         "email": "Correo electrónico",
         "message": "Mensaje",
         "send": "Enviar Mensaje"
+    },
+    "loader": {
+        "text": "Cargando..."
     }
 }

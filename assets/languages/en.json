@@ -7,6 +7,7 @@
         "contact": "Contact"
     },
     "home": {
+        "title": "Hi,<br>I'm <span class=\"home__title-color\">Juan</span><br>Software Developer",
         "contact": "Contact",
         "download": "Download CV"
     },
@@ -21,7 +22,13 @@
         "description": "These are some of my main technical skills, with levels of mastery that reflect my experience and constant practice in each area. I am committed to continuous learning to improve and expand my knowledge."
     },
     "projects": {
-        "title": "Projects"
+        "title": "Projects",
+        "f1_description": "A comprehensive Formula 1 management system featuring team management, cars, drivers, pole positions, and 3D model integrations.",
+        "sgci_description": "Purchasing and Inventory Management System, a project for managing purchases, inventory, promotions, and cash flow.",
+        "concert_description": "A responsive website for a concert event featuring modern design, animations, and ticket booking system.",
+        "hamburger_description": "A restaurant website with an interactive menu, ordering system, and beautiful food presentations.",
+        "liga_description": "A comprehensive football league management system with team statistics and match tracking.",
+        "cine_description": "A web application for movie enthusiasts to search and view detailed information about movies, featuring an intuitive interface and comprehensive movie database."
     },
     "contact": {
         "title": "Contact",
@@ -31,5 +38,8 @@
         "email": "Email",
         "message": "Message",
         "send": "Send Message"
+    },
+    "loader": {
+        "text": "Loading..."
     }
 }
