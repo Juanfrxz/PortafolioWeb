@@ -44,7 +44,7 @@
 
 /* Dark theme variables */
 [data-theme="dark"] {
-  --first-color: hsl(260, 69%, 61%);
+  --first-color: rgb(133, 87, 224);
   --second-color: #fff;
   --body-color: hsl(260, 24%, 12%); /* Morado oscuro como en la imagen */
   --title-color: #fff;
@@ -1372,4 +1372,30 @@ img {
     60%, 100% {
         content: '...';
     }
+}
+
+/* Brand and tour link container */
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--mb-4);
+}
+
+/* Style tour link like nav items */
+#start-tour.nav__link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: var(--nav-text-color);
+}
+#start-tour.nav__link:hover::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0.18rem;
+  left: 0;
+  top: 2rem;
+  background-color: var(--first-color);
 }

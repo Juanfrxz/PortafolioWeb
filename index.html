@@ -4,9 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="assets/css/styles.css"> 
+        <!--===== GOOGLE FONTS =====-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">  
+        <link rel="stylesheet" href="assets/css/styles.css">  
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.css">
         <link rel="shortcut icon" href="assets/img/portafolio.png" type="image/x-icon">
         <title>Juan Rodriguez</title>
     </head>
@@ -32,11 +35,12 @@
         <!--===== HEADER =====-->
         <header class="l-header">
             <nav class="nav bd-grid">
-                <div>
+                <div class="nav__brand">
                     <a href="#home" class="nav__logo">
                         <img src="assets/img/portafolio.png" alt="imagen_portafolio">
                         <span>Juan</span>
                     </a>
+                    <a href="#" id="start-tour" class="nav__link" data-section="nav-bar" data-value="tour">🧭 Tour</a>
                 </div>
 
                 <div class="nav__menu" id="nav-menu">
@@ -68,7 +72,7 @@
             <!--===== HOME =====-->
             <section class="home bd-grid" id="home">
                 <div class="home__data">
-                    <h1 class="home__title" data-section="home" data-value="title">Hi,<br>I'm <span class="home__title-color">Juan</span><br> Software Developer</h1>
+                    <h1 class="home__title" data-section="home" data-value="title">Hi,<br>I'm <span class="home__title-color">Juan</span><br> Junior Developer</h1>
 
                     <!-- CONTACT -->
                     <a href="https://wa.me/qr/UCDII2EI7QCFK1" class="button" target="_defer" data-section="home" data-value="contact">Contact</a>
@@ -78,9 +82,9 @@
                 </div>
 
                 <div class="home__social">
-                    <a href="https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b" class="home__social-icon" target="_defer"><i class='bx bxl-linkedin'></i></a>
-                    <a href="https://www.instagram.com/juan_frxz/" class="home__social-icon" target="_defer"><i class='bx bxl-instagram' ></i></a>
-                    <a href="https://github.com/Juanfrxz" class="home__social-icon" target="_defer"><i class='bx bxl-github' ></i></a>
+                    <a href="https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b" class="home__social-icon" target="_defer" id="linkedin"><i class='bx bxl-linkedin'></i></a>
+                    <a href="https://www.instagram.com/juan_frxz/" class="home__social-icon" target="_defer" id="instagram"><i class='bx bxl-instagram' ></i></a>
+                    <a href="https://github.com/Juanfrxz" class="home__social-icon" target="_defer" id="github"><i class='bx bxl-github' ></i></a>
                 </div>
 
                 <div class="home__img">
@@ -118,7 +122,7 @@
 
                 <div class="skills__container bd-grid">          
                     <!-- Frontend Skills -->
-                    <div class="skills__category">
+                    <div class="skills__category" id="frontend">
                         <h3 class="skills__category-title">Frontend</h3>
                         <div class="skills__grid">
                             <div class="skills__data">
@@ -144,7 +148,7 @@
                     </div>
 
                     <!-- Backend Skills -->
-                    <div class="skills__category">
+                    <div class="skills__category" id="backend">
                         <h3 class="skills__category-title">Backend</h3>
                         <div class="skills__grid">
                             <div class="skills__data">
@@ -165,7 +169,7 @@
                     </div>
 
                     <!-- Tools & Others -->
-                    <div class="skills__category">
+                    <div class="skills__category" id="tools">
                         <h3 class="skills__category-title">Tools & Others</h3>
                         <div class="skills__grid">
                             <div class="skills__data">
@@ -197,12 +201,12 @@
                 <h2 class="section-title" data-section="projects" data-value="title">My Projects</h2>
                 
                 <div class="work__container bd-grid">
-                    <div class="work__card">
+                    <div class="work__card" id="f1_content">
                         <div class="work__img-container">
                             <img src="assets/img/image-f1.png" alt="F1 - Formula1" class="work__img">
                         </div>
-                        <div class="work__content">
-                            <h3 class="work__title">F1 - Formula1</h3>
+                        <div class="work__content" >
+                            <h3 class="work__title" id="f1_title">F1 - Formula1</h3>
                             <p class="work__description" data-section="projects" data-value="f1_description">A comprehensive Formula 1 management system featuring team management, cars, drivers, pole positions, and 3D model integrations.</p>
                             <div class="work__tech">
                                 <div class="work__tech-item">
@@ -476,6 +480,10 @@
         <script src="https://unpkg.com/i18next-http-backend@1.4.2/dist/umd/i18nextHttpBackend.min.js"></script>
         <script src="https://unpkg.com/i18next-browser-languagedetector@6.1.2/dist/umd/i18nextBrowserLanguageDetector.min.js"></script>
         <script src="assets/js/i18n.js"></script>
+
+        <!--===== TOUR =====-->
+        <script src="https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.js"></script>
+        <script type="module" src="assets/js/tour.js"></script>
 
         <!--===== MAIN JS =====-->
         <script src="assets/js/main.js"></script>

@@ -4,10 +4,11 @@
         "about": "Acerca de",
         "skills": "Habilidades",
         "projects": "Proyectos",
-        "contact": "Contacto"
+        "contact": "Contacto",
+        "tour": "🧭 Recorrido"
     },
     "home": {
-        "title": "Hola,<br>Soy <span class=\"home__title-color\">Juan</span><br>Desarrollador de software",
+        "title": "Hola,<br>Soy <span class=\"home__title-color\">Juan</span><br>Desarrollador Junior",
         "contact": "Contáctame",
         "download": "Descargar CV"
     },

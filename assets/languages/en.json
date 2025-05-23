@@ -4,10 +4,11 @@
         "about": "About",
         "skills": "Skills",
         "projects": "Projects",
-        "contact": "Contact"
+        "contact": "Contact",
+        "tour": "🧭 Tour"
     },
     "home": {
-        "title": "Hi,<br>I'm <span class=\"home__title-color\">Juan</span><br>Software Developer",
+        "title": "Hi,<br>I'm <span class=\"home__title-color\">Juan</span><br>Junior Developer",
         "contact": "Contact",
         "download": "Download CV"
     },
