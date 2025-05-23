@@ -1,4 +1,4 @@
-import { driver } from "./driver.js";
+import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 
 const driverObj = driver({
