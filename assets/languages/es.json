@@ -15,7 +15,8 @@
     "about": {
         "title": "Acerca de mi",
         "i am": "Soy Juan Rodriguez",
-        "description": "Soy de Colombia, me encanta enfrentar desafíos y contribuir a proyectos significativos en entornos diversos y multiculturales."
+        "description": "Soy de Colombia, me encanta enfrentar desafíos y contribuir a proyectos significativos en entornos diversos y multiculturales.",
+        "description2": "Tecnólogo en Implementación de Infraestructura TIC y Desarrollador de Software en formación, con experiencia en redes y desarrollo frontend. Me destaco por mi pensamiento ágil y mi capacidad para crear soluciones innovadoras."
     },
     "skills": {
         "title": "Habilidades",
