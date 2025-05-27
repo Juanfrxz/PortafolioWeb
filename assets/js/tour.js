@@ -1,6 +1,6 @@
 async function initTour() {
-  const { driver } = await import('driver.js');
-  await import('driver.js/dist/driver.css');
+  const { driver } = await import('../../node_modules/driver.js/dist/driver.js');
+  await import('../../node_modules/driver.js/dist/driver.css');
 
   const driverObj = driver({
     showProgress: true,
