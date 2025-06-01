@@ -12,19 +12,19 @@
   /* Modo claro por defecto */
   --first-color: hsl(var(--hue-color), 69%, 61%);
   --second-color: hsl(var(--hue-color), 30%, 8%);
-  --body-color: #fff;
+  --body-color: #f0f0f0; /* Light gray background */
   --title-color: hsl(var(--hue-color), 8%, 15%);
-  --text-color: hsl(var(--hue-color), 8%, 35%);
-  --text-color-light: hsl(var(--hue-color), 8%, 65%);
+  --text-color: #4a4a4a; /* Darker gray text color */
+  --text-color-light: #7a7a7a; /* Light gray text color */
   --input-color: hsl(var(--hue-color), 70%, 96%);
   --container-color: #fff;
   --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
   --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
-  --header-bg: #fff;
-  --section-bg: #fff;
-  --card-bg: #fff;
-  --input-bg: #fff;
-  --footer-bg: #fff;
+  --header-bg: #f0f0f0; /* Light gray header background */
+  --section-bg: #f0f0f0; /* Light gray section background */
+  --card-bg: #f0f0f0; /* Light gray card background */
+  --input-bg: #f0f0f0; /* Light gray input background */
+  --footer-bg: #f0f0f0; /* Light gray footer background */
   --nav-text-color: hsl(var(--hue-color), 8%, 35%);
   /*===== Fuente y tipografia =====*/
   --body-font: "Poppins", sans-serif;
