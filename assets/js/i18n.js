@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .init({
       fallbackLng: 'es',
       debug: false,
+      load: 'languageOnly',
       backend: {
         loadPath: 'assets/languages/{{lng}}.json'
       }
@@ -30,4 +31,4 @@ function updateContent() {
     const translation = i18next.t(key);
     if (translation) el.innerHTML = translation;
   });
-} 
+}
