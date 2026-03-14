@@ -1399,3 +1399,138 @@ img {
   top: 2rem;
   background-color: var(--first-color);
 }
+
+/* ===== EXPERIENCE =====*/
+.experience__container {
+    row-gap: 2rem;
+    padding: 1rem;
+}
+
+.experience__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+}
+
+/* Timeline vertical line */
+.experience__content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 17px; /* Centers with the marker */
+    width: 2px;
+    height: 100%;
+    background-color: var(--first-color);
+    z-index: 1;
+}
+
+.experience__data {
+    position: relative;
+    padding-left: 3rem;
+}
+
+.experience__marker {
+    position: absolute;
+    top: 0;
+    left: 8px; /* Offset to center on line */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--first-color);
+    border: 4px solid var(--body-color);
+    z-index: 2;
+}
+
+.experience__card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.experience__card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.experience__title {
+    font-size: var(--h2-font-size);
+    color: var(--first-color);
+    margin-bottom: 0.5rem;
+    font-weight: var(--font-semi);
+}
+
+.experience__company {
+    display: block;
+    font-size: var(--normal-font-size);
+    color: var(--title-color);
+    font-weight: var(--font-semi);
+    margin-bottom: 0.5rem;
+}
+
+.experience__date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--smaller-font-size);
+    color: var(--text-color-light);
+    margin-bottom: 1rem;
+}
+
+.experience__date i {
+    font-size: 1.2rem;
+}
+
+.experience__description {
+    font-size: var(--normal-font-size);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .experience__card {
+    background: var(--card-bg);
+}
+[data-theme="dark"] .experience__marker {
+    border-color: var(--body-color);
+}
+
+/* Responsive adjustments */
+@media screen and (min-width: 768px) {
+    .experience__content::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .experience__data {
+        width: 50%;
+        padding-left: 0;
+    }
+
+    /* Target odd and even items */
+    .experience__data:nth-child(odd) {
+        text-align: right;
+        padding-right: 3rem;
+    }
+
+    .experience__data:nth-child(even) {
+        margin-left: auto;
+        padding-left: 3rem;
+    }
+
+    /* Position markers on center line */
+    .experience__data:nth-child(odd) .experience__marker {
+        left: auto;
+        right: -10px;
+    }
+
+    .experience__data:nth-child(even) .experience__marker {
+        left: -10px;
+    }
+
+    .experience__data:nth-child(odd) .experience__date {
+        justify-content: flex-end;
+    }
+}

@@ -3,6 +3,7 @@
         "home": "Home",
         "about": "About",
         "skills": "Skills",
+        "experience": "Experience",
         "projects": "Projects",
         "contact": "Contact",
         "tour": "🧭 Tour"
@@ -21,7 +22,19 @@
     "skills": {
         "title": "Skills",
         "title2" : "Technical Skills",
+        "databases_title": "Databases",
         "description": "These are some of my main technical skills, with levels of mastery that reflect my experience and constant practice in each area. I am committed to continuous learning to improve and expand my knowledge."
+    },
+    "experience": {
+        "title": "Experience",
+        "job1_title": "Full Stack Developer",
+        "job1_company": "QUIBOR WEB",
+        "job1_date": "2025 - Present",
+        "job1_description": "Development of modern and responsive user interfaces. Optimization of web application performance and enhancement of user experience.",
+        "job2_title": "Freelance Web Developer",
+        "job2_company": "Independent",
+        "job2_date": "2021 - 2023",
+        "job2_description": "Creation of custom websites for various clients using HTML, CSS, JavaScript, and React. Focus on minimalist design and robust functionality."
     },
     "projects": {
         "title": "Projects",

@@ -3,6 +3,7 @@
         "home": "Inicio",
         "about": "Acerca de",
         "skills": "Habilidades",
+        "experience": "Experiencia",
         "projects": "Proyectos",
         "contact": "Contacto",
         "tour": "🧭 Recorrido"
@@ -21,7 +22,19 @@
     "skills": {
         "title": "Habilidades",
         "title2" : "Habilidades técnicas",
+        "databases_title": "Bases de Datos",
         "description": "Estas son algunas de mis principales habilidades técnicas, con niveles de dominio que reflejan mi experiencia y práctica constante en cada área. Estoy comprometido con el aprendizaje continuo para mejorar y ampliar mis conocimientos."
+    },
+    "experience": {
+        "title": "Experiencia",
+        "job1_title": "Desarrollador Frontend",
+        "job1_company": "Empresa ABC",
+        "job1_date": "2023 - Presente",
+        "job1_description": "Desarrollo de interfaces de usuario modernas y responsivas. Optimización del rendimiento de la aplicación web y mejora de la experiencia del usuario.",
+        "job2_title": "Desarrollador Web Freelance",
+        "job2_company": "Independiente",
+        "job2_date": "2021 - 2023",
+        "job2_description": "Creación de sitios web personalizados para diversos clientes, utilizando HTML, CSS, JavaScript y React. Enfoque en diseño minimalista y funcionalidad robusta."
     },
     "projects": {
         "title": "Proyectos",
