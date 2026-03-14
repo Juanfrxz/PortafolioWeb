@@ -17,7 +17,7 @@
         "title": "Acerca de mi",
         "i am": "Soy Juan Rodriguez",
         "description": "Soy de Colombia, me encanta enfrentar desafíos y contribuir a proyectos significativos en entornos diversos y multiculturales.",
-        "description2": "Tecnólogo en Implementación de Infraestructura TIC y Desarrollador de Software en formación, con experiencia en redes y desarrollo frontend. Me destaco por mi pensamiento ágil y mi capacidad para crear soluciones innovadoras."
+        "description2": "Desarrollador de Software y Tecnólogo en Implementación de Infraestructura TIC, con experiencia en redes y desarrollo Full Stack. Me destaco por mi pensamiento ágil y mi capacidad para crear soluciones innovadoras."
     },
     "skills": {
         "title": "Habilidades",
@@ -27,14 +27,14 @@
     },
     "experience": {
         "title": "Experiencia",
-        "job1_title": "Desarrollador Frontend",
-        "job1_company": "Empresa ABC",
-        "job1_date": "2023 - Presente",
+        "job1_title": "Desarrollador Full Stack",
+        "job1_company": "QUIBOR WEB",
+        "job1_date": "2025 - Presente",
         "job1_description": "Desarrollo de interfaces de usuario modernas y responsivas. Optimización del rendimiento de la aplicación web y mejora de la experiencia del usuario.",
-        "job2_title": "Desarrollador Web Freelance",
-        "job2_company": "Independiente",
-        "job2_date": "2021 - 2023",
-        "job2_description": "Creación de sitios web personalizados para diversos clientes, utilizando HTML, CSS, JavaScript y React. Enfoque en diseño minimalista y funcionalidad robusta."
+        "job2_title": "Técnico de Redes",
+        "job2_company": "ItComunicaciones",
+        "job2_date": "2024 - 2024",
+        "job2_description": "Instalación, configuración y mantenimiento de la infraestructura de red. Resolución de problemas de red y garantía de un rendimiento óptimo."
     },
     "projects": {
         "title": "Proyectos",

@@ -17,7 +17,7 @@
         "title": "About me",
         "i am": "I'm Juan Rodriguez",
         "description": "I'm from Colombia, I love facing challenges and contributing to meaningful projects in diverse and multicultural environments.",
-        "description2": "ICT Infrastructure Implementation Technologist and Software Developer in training, with experience in networks and frontend development. I stand out for my agile thinking and ability to create innovative solutions."
+        "description2": "Software Developer and ICT Infrastructure Implementation Technologist with experience in networking and full-stack development. I stand out for my agile mindset and my ability to create innovative solutions."
     },
     "skills": {
         "title": "Skills",
@@ -31,10 +31,10 @@
         "job1_company": "QUIBOR WEB",
         "job1_date": "2025 - Present",
         "job1_description": "Development of modern and responsive user interfaces. Optimization of web application performance and enhancement of user experience.",
-        "job2_title": "Freelance Web Developer",
-        "job2_company": "Independent",
-        "job2_date": "2021 - 2023",
-        "job2_description": "Creation of custom websites for various clients using HTML, CSS, JavaScript, and React. Focus on minimalist design and robust functionality."
+        "job2_title": "Network Technician",
+        "job2_company": "ItComunicaciones",
+        "job2_date": "2024 - 2024",
+        "job2_description": "Installation, configuration, and maintenance of network infrastructure. Troubleshooting network issues and ensuring optimal performance."
     },
     "projects": {
         "title": "Projects",
