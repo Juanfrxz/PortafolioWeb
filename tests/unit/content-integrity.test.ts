@@ -129,6 +129,29 @@ describe('recursive JSON loading', () => {
     expect(loadJsonDirectory(pathToFileURL(directory))).toEqual(expected);
   });
 
+  it('ignores dot-prefixed files and directories at every depth', () => {
+    const directory = createTemporaryDirectory();
+    writeJsonFixture(join(directory, 'visible.json'), { id: 'visible-root' });
+    writeJsonFixture(join(directory, 'nested', 'visible.json'), {
+      id: 'visible-nested',
+    });
+    writeJsonFixture(join(directory, '.hidden.json'), { id: 'hidden-file' });
+    writeJsonFixture(join(directory, 'nested', '.hidden.json'), {
+      id: 'nested-hidden-file',
+    });
+    writeJsonFixture(join(directory, '.draft', 'hidden.json'), {
+      id: 'hidden-directory',
+    });
+    writeJsonFixture(join(directory, 'nested', '.draft', 'hidden.json'), {
+      id: 'nested-hidden-directory',
+    });
+
+    const expected = [{ id: 'visible-nested' }, { id: 'visible-root' }];
+
+    expect(loadJsonDirectory(directory)).toEqual(expected);
+    expect(loadJsonDirectory(pathToFileURL(directory))).toEqual(expected);
+  });
+
   it('reports the source path when nested JSON is invalid', () => {
     const directory = createTemporaryDirectory();
     const invalidPath = join(directory, 'nested', 'broken.json');

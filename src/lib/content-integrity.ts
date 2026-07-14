@@ -21,6 +21,7 @@ function compareNames(left: string, right: string): number {
 
 function collectJsonFiles(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true })
+    .filter((entry) => !entry.name.startsWith('.'))
     .sort((left, right) => compareNames(left.name, right.name))
     .flatMap((entry) => {
       const entryPath = join(directory, entry.name);
