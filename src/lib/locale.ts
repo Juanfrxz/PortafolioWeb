@@ -10,6 +10,8 @@ const workIndexPaths: Record<Locale, string> = {
   es: '/es/proyectos/',
 };
 
+const caseStudySlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
 export function homePath(locale: Locale): string {
   return homePaths[locale];
 }
@@ -19,22 +21,47 @@ export function workIndexPath(locale: Locale): string {
 }
 
 export function caseStudyPath(slug: string, locale: Locale): string {
+  assertCaseStudySlug(slug);
+
   return `${workIndexPath(locale)}${slug}/`;
 }
 
-function withTrailingSlash(path: string): string {
-  if (path === '/') {
-    return path;
+function isCaseStudySlug(slug: string): boolean {
+  return caseStudySlugPattern.test(slug);
+}
+
+function assertCaseStudySlug(slug: string): void {
+  if (!isCaseStudySlug(slug)) {
+    throw new TypeError(
+      'Case-study slug must be a lowercase kebab-case segment.',
+    );
+  }
+}
+
+function normalizedPathname(path: string): string | null {
+  const separatorIndex = path.search(/[?#]/);
+  const pathname = separatorIndex === -1 ? path : path.slice(0, separatorIndex);
+
+  if (!pathname.startsWith('/') || pathname.includes('//')) {
+    return null;
   }
 
-  return `${path.replace(/\/+$/, '')}/`;
+  if (pathname === '/' || pathname.endsWith('/')) {
+    return pathname;
+  }
+
+  return `${pathname}/`;
 }
 
 export function alternateLocalePath(
   currentPath: string,
   targetLocale: Locale,
 ): string {
-  const path = withTrailingSlash(currentPath);
+  const path = normalizedPathname(currentPath);
+
+  if (path === null) {
+    return homePath(targetLocale);
+  }
 
   if (path === homePath('en') || path === homePath('es')) {
     return homePath(targetLocale);
@@ -46,7 +73,7 @@ export function alternateLocalePath(
 
   const caseStudyMatch = path.match(/^\/(?:work|es\/proyectos)\/([^/]+)\/$/);
 
-  if (caseStudyMatch?.[1]) {
+  if (caseStudyMatch?.[1] && isCaseStudySlug(caseStudyMatch[1])) {
     return caseStudyPath(caseStudyMatch[1], targetLocale);
   }
 
