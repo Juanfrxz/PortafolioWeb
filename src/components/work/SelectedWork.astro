@@ -32,6 +32,8 @@ const variant = headingLevel === 1 ? 'index' : 'home';
 <section
   id="selected-work"
   class:list={['selected-work', `selected-work--${variant}`]}
+  data-selected-work
+  data-track-mode="vertical"
   tabindex="-1"
 >
   <header class="selected-work__header wrapper flow">
@@ -46,24 +48,26 @@ const variant = headingLevel === 1 ? 'index' : 'home';
     }
   </header>
 
-  <div class="selected-work__chapters">
-    {
-      projects.map((project, index) => (
-        <div
-          class="selected-work__chapter"
-          data-featured-project={project.data.slug}
-        >
-          <ProjectChapter
-            locale={locale}
-            project={project}
-            index={index + 1}
-            headingLevel={headingLevel === 1 ? 2 : 3}
-            caseHref={caseStudyPath(project.data.slug, locale)}
-            variant={variant}
-          />
-        </div>
-      ))
-    }
+  <div class="selected-work__stage" data-selected-work-stage>
+    <div class="selected-work__chapters" data-selected-work-track>
+      {
+        projects.map((project, index) => (
+          <div
+            class="selected-work__chapter"
+            data-featured-project={project.data.slug}
+          >
+            <ProjectChapter
+              locale={locale}
+              project={project}
+              index={index + 1}
+              headingLevel={headingLevel === 1 ? 2 : 3}
+              caseHref={caseStudyPath(project.data.slug, locale)}
+              variant={variant}
+            />
+          </div>
+        ))
+      }
+    </div>
   </div>
 
   {
@@ -155,6 +159,7 @@ const variant = headingLevel === 1 ? 'index' : 'home';
   @layer components {
     .selected-work {
       padding-block: clamp(5rem, 10vw, 10rem);
+      overflow-x: clip;
       scroll-margin-block-start: 5rem;
     }
 
@@ -184,6 +189,27 @@ const variant = headingLevel === 1 ? 'index' : 'home';
 
     .selected-work__chapters {
       display: grid;
+    }
+
+    @media (min-width: 68.75rem) {
+      .selected-work[data-track-mode='horizontal'] .selected-work__stage {
+        block-size: calc(var(--selected-work-track-viewports, 4) * 100dvb);
+      }
+
+      .selected-work[data-track-mode='horizontal'] .selected-work__chapters {
+        position: sticky;
+        inset-block-start: 0;
+        display: flex;
+        inline-size: max-content;
+        min-block-size: 100dvb;
+        will-change: transform;
+      }
+
+      .selected-work[data-track-mode='horizontal'] .selected-work__chapter {
+        flex: 0 0 100vw;
+        inline-size: 100vw;
+        min-block-size: 100dvb;
+      }
     }
 
     .selected-work__chapter:nth-child(even) {
@@ -300,3 +326,27 @@ const variant = headingLevel === 1 ? 'index' : 'home';
     }
   }
 </style>
+
+<script>
+  import { createSelectedWorkTrack } from '../../lib/selected-work-track';
+
+  const selectedWorkCleanups = Array.from(
+    document.querySelectorAll<HTMLElement>('[data-selected-work]'),
+    (root) => createSelectedWorkTrack(root),
+  );
+  const handlePageHide = (event: PageTransitionEvent) => {
+    if (!event.persisted) {
+      cleanupSelectedWork();
+    }
+  };
+  const cleanupSelectedWork = () => {
+    selectedWorkCleanups.splice(0).forEach((cleanup) => cleanup());
+    window.removeEventListener('pagehide', handlePageHide);
+    document.removeEventListener('astro:before-swap', cleanupSelectedWork);
+  };
+
+  window.addEventListener('pagehide', handlePageHide);
+  document.addEventListener('astro:before-swap', cleanupSelectedWork, {
+    once: true,
+  });
+</script>

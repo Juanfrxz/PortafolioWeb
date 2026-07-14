@@ -88,6 +88,7 @@ const fallbackAlt =
 <article
   class:list={['project-chapter', `project-chapter--${variant}`]}
   data-project-chapter={data.slug}
+  data-track-chapter
   data-ownership={data.ownership}
   data-project-index={index}
   aria-labelledby={`${data.slug}-${variant}-title`}
@@ -401,6 +402,139 @@ const fallbackAlt =
       .project-chapter__evidence,
       .project-chapter__links {
         grid-column: auto;
+      }
+    }
+
+    @media (min-width: 68.75rem) {
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case) {
+        min-block-size: calc(100dvb - 1px);
+        padding-block: clamp(1.5rem, 3dvb, 2.75rem);
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__inner {
+        min-block-size: calc(100dvb - clamp(3rem, 6dvb, 5.5rem) - 1px);
+        grid-template-rows: auto 1fr auto;
+        gap: clamp(1rem, 2dvb, 2rem) clamp(2rem, 4vw, 5rem);
+        align-content: start;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__header {
+        grid-row: 1 / 3;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__header
+        :is(h1, h2, h3) {
+        font-size: clamp(2rem, 4vw, 3.75rem);
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__summary {
+        font-size: 1rem;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__identity {
+        grid-column: 2;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__identity
+        :global(img) {
+        block-size: clamp(11rem, 24dvb, 18rem);
+        object-fit: contain;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__identity
+        :global([data-identity-fallback]) {
+        min-block-size: clamp(11rem, 24dvb, 18rem);
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__evidence {
+        grid-column: 2;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(0.75rem, 1.5dvb, 1.25rem);
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__evidence
+        section {
+        padding-block-start: 0.65rem;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__evidence
+        :is(p, .project-chapter__decisions) {
+        font-size: clamp(0.78rem, 1.1dvb, 0.95rem);
+        line-height: 1.45;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__architecture
+        :global([data-architecture-map]) {
+        gap: 0.4rem;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__architecture
+        :global([data-architecture-map] ol) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.35rem 0.65rem;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__architecture
+        :global([data-architecture-map] li) {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+        padding-block: 0.3rem;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__architecture
+        :global([data-architecture-map] li::before),
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__architecture
+        :global([data-architecture-map] li code),
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__architecture
+        :global([data-architecture-map] li span) {
+        grid-column: 1;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__architecture
+        :global([data-architecture-map] svg[aria-hidden='true']) {
+        display: none;
+      }
+
+      :global([data-selected-work][data-track-mode='horizontal'])
+        .project-chapter:not(.project-chapter--case)
+        .project-chapter__links {
+        grid-column: 1 / -1;
+        padding-block-start: 1rem;
       }
     }
   }
