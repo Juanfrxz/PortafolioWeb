@@ -23,3 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+.superpowers/
+.astro/
+.lighthouseci/
+coverage/
+playwright-report/
+test-results/

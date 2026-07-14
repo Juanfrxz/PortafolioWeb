@@ -107,7 +107,7 @@ Run:
 
 ```powershell
 npm install --save-exact astro@7.0.9 @astrojs/react@6.0.1 @astrojs/sitemap@3.7.3 react@19.2.7 react-dom@19.2.7 three@0.185.1 @react-three/fiber@9.6.1 @react-three/drei@10.7.7 @react-three/postprocessing@3.0.4 postprocessing@6.39.2 gsap@3.15.0 @gsap/react@2.1.2 zod@4.4.3 @fontsource-variable/instrument-sans@5.2.8 @fontsource/dm-mono@5.2.7
-npm install --save-dev --save-exact @astrojs/check@0.9.9 typescript@7.0.2 @types/node@26.1.1 @types/react@19.2.17 @types/react-dom@19.2.3 @types/three@0.185.1 vitest@4.1.10 @vitest/coverage-v8@4.1.10 jsdom@29.1.1 @testing-library/react@16.3.2 @testing-library/jest-dom@6.9.1 @testing-library/user-event@14.6.1 @playwright/test@1.61.1 @axe-core/playwright@4.12.1 @lhci/cli@0.15.1 @gltf-transform/cli@4.4.1 gltfjsx@6.5.3 sharp@0.35.3 prettier@3.9.5 prettier-plugin-astro@0.14.1 tsx@4.23.1 fast-glob@3.3.3 cheerio@1.2.0
+npm install --save-dev --save-exact @astrojs/check@0.9.9 typescript@6.0.3 @types/node@26.1.1 @types/react@19.2.17 @types/react-dom@19.2.3 @types/three@0.185.1 vitest@4.1.10 @vitest/coverage-v8@4.1.10 jsdom@29.1.1 @testing-library/react@16.3.2 @testing-library/jest-dom@6.9.1 @testing-library/user-event@14.6.1 @playwright/test@1.61.1 @axe-core/playwright@4.12.1 @lhci/cli@0.15.1 @gltf-transform/cli@4.4.1 gltfjsx@6.5.3 sharp@0.35.3 prettier@3.9.5 prettier-plugin-astro@0.14.1 tsx@4.23.1 fast-glob@3.3.3 cheerio@1.2.0
 ```
 
 - [ ] **Step 3: Replace scripts and configure Astro**
