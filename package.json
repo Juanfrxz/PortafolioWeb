@@ -15,7 +15,7 @@
     "build": "npm run check && astro build",
     "preview": "astro preview",
     "test:e2e": "playwright test",
-    "test:a11y": "playwright test tests/e2e/accessibility",
+    "test:a11y": "playwright test tests/e2e/capability-graph.spec.ts --grep @a11y",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "assets:avatar": "node scripts/optimize-avatar.mjs",
