@@ -1,0 +1,29 @@
+@layer reset, tokens, base, components, utilities;
+
+@layer tokens {
+  :root {
+    --font-sans: 'Instrument Sans Variable', system-ui, sans-serif;
+    --font-mono: 'DM Mono', ui-monospace, monospace;
+    --color-bg: #05070a;
+    --color-panel: #0b0f15;
+    --color-primary: #6077ff;
+    --color-signal: #58f9a1;
+    --color-text: #f4f6f8;
+    --color-muted: #9098a8;
+    --focus-ring: 0 0 0 3px
+      color-mix(in srgb, var(--color-signal), transparent 35%);
+    --color-border: color-mix(in srgb, var(--color-muted), transparent 68%);
+    --content-width: 90rem;
+    --page-gutter: clamp(1rem, 4vw, 4rem);
+    --transition-fast: 160ms ease;
+  }
+
+  :root[data-theme='light'] {
+    --color-bg: #eeece5;
+    --color-panel: #e4e1d9;
+    --color-primary: #4059ef;
+    --color-signal: #087352;
+    --color-text: #101216;
+    --color-muted: #666b76;
+  }
+}

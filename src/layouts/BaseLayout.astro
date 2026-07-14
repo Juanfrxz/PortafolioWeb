@@ -1,0 +1,49 @@
+---
+import '@fontsource-variable/instrument-sans/index.css';
+import '@fontsource/dm-mono/400.css';
+import '../styles/tokens.css';
+import '../styles/reset.css';
+import '../styles/global.css';
+import '../styles/utilities.css';
+
+import { SITE } from '../config/site';
+import type { Locale } from '../lib/locale';
+import { THEME_BOOTSTRAP_SCRIPT } from '../lib/theme';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  canonicalPath: string;
+  alternatePath: string;
+}
+
+const { locale, title, description, canonicalPath, alternatePath } =
+  Astro.props;
+
+const absoluteSiteUrl = (path: string) =>
+  new URL(`/${path.replace(/^\/+/, '')}`, SITE.url).href;
+
+const canonicalUrl = absoluteSiteUrl(canonicalPath);
+const alternateUrl = absoluteSiteUrl(alternatePath);
+const englishUrl = locale === 'en' ? canonicalUrl : alternateUrl;
+const spanishUrl = locale === 'es' ? canonicalUrl : alternateUrl;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline set:html={THEME_BOOTSTRAP_SCRIPT} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={englishUrl} />
+    <link rel="alternate" hreflang="es" href={spanishUrl} />
+    <link rel="alternate" hreflang="x-default" href={englishUrl} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

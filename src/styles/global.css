@@ -1,0 +1,117 @@
+@layer base {
+  :root {
+    color-scheme: dark;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  :root[data-theme='light'] {
+    color-scheme: light;
+  }
+
+  html {
+    min-inline-size: 20rem;
+    background: var(--color-bg);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-inline-size: 20rem;
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-text);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    box-shadow: var(--focus-ring);
+  }
+
+  a {
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
+  }
+}
+
+@layer components {
+  .theme-control {
+    display: inline-flex;
+    min-block-size: 2.75rem;
+    min-inline-size: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    background: var(--color-panel);
+    color: var(--color-text);
+    padding-inline: 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition:
+      border-color var(--transition-fast),
+      color var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+
+  .theme-control:hover {
+    border-color: var(--color-signal);
+    color: var(--color-signal);
+  }
+
+  .theme-control__label--use-dark,
+  :root[data-theme='light'] .theme-control__label--use-light {
+    display: none;
+  }
+
+  :root[data-theme='light'] .theme-control__label--use-dark {
+    display: inline;
+  }
+
+  .locale-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  .locale-links a {
+    display: inline-flex;
+    min-block-size: 2.75rem;
+    min-inline-size: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .locale-links a:hover {
+    color: var(--color-signal);
+  }
+
+  .locale-links a[aria-current='page'] {
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .system-label {
+    color: var(--color-signal);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+}

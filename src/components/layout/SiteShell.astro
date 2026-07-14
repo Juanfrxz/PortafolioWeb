@@ -1,0 +1,47 @@
+<div class="site-shell">
+  <slot />
+</div>
+
+<style>
+  @layer components {
+    .site-shell {
+      position: relative;
+      isolation: isolate;
+      min-block-size: 100vh;
+      min-block-size: 100dvb;
+      overflow: clip;
+      background:
+        radial-gradient(
+          circle at 12% 0%,
+          color-mix(in srgb, var(--color-primary), transparent 82%),
+          transparent 34rem
+        ),
+        radial-gradient(
+          circle at 94% 42%,
+          color-mix(in srgb, var(--color-signal), transparent 92%),
+          transparent 28rem
+        ),
+        var(--color-bg);
+    }
+
+    .site-shell::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(
+          color-mix(in srgb, var(--color-muted), transparent 88%) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--color-muted), transparent 88%) 1px,
+          transparent 1px
+        );
+      background-size: clamp(2.5rem, 5vw, 4.5rem) clamp(2.5rem, 5vw, 4.5rem);
+      content: '';
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+      pointer-events: none;
+    }
+  }
+</style>

@@ -1,0 +1,14 @@
+---
+type LabelElement = 'h2' | 'h3' | 'p' | 'span';
+
+interface Props {
+  as?: LabelElement;
+  class?: string;
+}
+
+const { as: Tag = 'span', class: className }: Props = Astro.props;
+---
+
+<Tag class:list={['system-label', className]}>
+  <slot />
+</Tag>
