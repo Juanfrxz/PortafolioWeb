@@ -1,0 +1,105 @@
+<figure class="hero-fallback" data-hero-fallback aria-hidden="true">
+  <svg
+    viewBox="0 0 640 640"
+    role="presentation"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <defs>
+      <radialGradient id="core-glow" cx="50%" cy="45%" r="55%">
+        <stop offset="0" stop-color="var(--color-signal)" stop-opacity="0.72"
+        ></stop>
+        <stop offset="0.38" stop-color="var(--color-primary)" stop-opacity="0.3"
+        ></stop>
+        <stop offset="1" stop-color="var(--color-primary)" stop-opacity="0"
+        ></stop>
+      </radialGradient>
+      <pattern
+        id="lab-grid"
+        width="48"
+        height="48"
+        patternUnits="userSpaceOnUse"
+      >
+        <path
+          d="M 48 0 L 0 0 0 48"
+          fill="none"
+          stroke="currentColor"
+          stroke-opacity="0.16"></path>
+      </pattern>
+    </defs>
+
+    <rect width="640" height="640" fill="url(#lab-grid)"></rect>
+    <circle
+      cx="320"
+      cy="320"
+      r="242"
+      fill="none"
+      stroke="currentColor"
+      stroke-opacity="0.22"></circle>
+    <circle cx="320" cy="320" r="168" fill="url(#core-glow)"></circle>
+    <path
+      d="M254 454c5-63 23-110 66-110s61 47 66 110M272 253c0-31 20-56 48-56s48 25 48 56-20 62-48 62-48-31-48-62Z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="3"
+      stroke-linecap="round"></path>
+    <g fill="var(--color-signal)">
+      <circle cx="96" cy="224" r="5"></circle>
+      <circle cx="508" cy="132" r="5"></circle>
+      <circle cx="542" cy="424" r="5"></circle>
+      <circle cx="156" cy="512" r="5"></circle>
+    </g>
+    <g fill="none" stroke="var(--color-primary)" stroke-opacity="0.7">
+      <path d="M96 224 272 253M508 132 368 253M542 424 386 454M156 512 254 454"
+      ></path>
+    </g>
+  </svg>
+</figure>
+
+<style>
+  @layer components {
+    .hero-fallback {
+      position: relative;
+      align-self: center;
+      aspect-ratio: 1;
+      max-inline-size: 40rem;
+      border: 1px solid var(--color-border);
+      background:
+        linear-gradient(
+          145deg,
+          transparent,
+          color-mix(in srgb, var(--color-primary), transparent 92%)
+        ),
+        var(--color-panel);
+      color: var(--color-text);
+      overflow: hidden;
+    }
+
+    .hero-fallback::before,
+    .hero-fallback::after {
+      position: absolute;
+      z-index: 1;
+      color: var(--color-signal);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-fallback::before {
+      inset-block-start: 1rem;
+      inset-inline-start: 1rem;
+      content: 'CORE / 01';
+    }
+
+    .hero-fallback::after {
+      inset-block-end: 1rem;
+      inset-inline-end: 1rem;
+      content: 'STATIC SIGNAL';
+    }
+
+    .hero-fallback svg {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+import { en, es } from '../../i18n';
+import type { Locale } from '../../lib/locale';
+import SystemLabel from '../ui/SystemLabel.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+---
+
+<div class="hero-copy flow">
+  <SystemLabel as="p">{dictionary.hero.label}</SystemLabel>
+  <h1>{dictionary.hero.heading}</h1>
+  <p class="hero-copy__support">{dictionary.hero.support}</p>
+  <p class="hero-copy__availability">
+    <span aria-hidden="true"></span>
+    {dictionary.hero.availability}
+  </p>
+  <div class="hero-copy__actions cluster">
+    <a class="hero-copy__primary" href="#selected-work">
+      {dictionary.hero.primaryCta}
+    </a>
+    <a class="hero-copy__secondary" href="#contact">
+      {dictionary.hero.secondaryCta}
+    </a>
+  </div>
+</div>
+
+<style>
+  @layer components {
+    .hero-copy {
+      --flow-space: 1.5rem;
+      align-self: center;
+      max-inline-size: 48rem;
+    }
+
+    .hero-copy h1 {
+      max-inline-size: 12ch;
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      font-weight: 560;
+      letter-spacing: -0.06em;
+      line-height: 0.92;
+      text-wrap: balance;
+    }
+
+    .hero-copy__support {
+      max-inline-size: 42rem;
+      color: var(--color-muted);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      line-height: 1.55;
+    }
+
+    .hero-copy__availability {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      color: var(--color-text);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-copy__availability span {
+      inline-size: 0.55rem;
+      block-size: 0.55rem;
+      border-radius: 50%;
+      background: var(--color-signal);
+      box-shadow: 0 0 1rem
+        color-mix(in srgb, var(--color-signal), transparent 30%);
+    }
+
+    .hero-copy__actions {
+      --cluster-space: 0.75rem;
+    }
+
+    .hero-copy__actions a {
+      display: inline-flex;
+      min-block-size: 2.75rem;
+      align-items: center;
+      justify-content: center;
+      padding-inline: 1.125rem;
+      border: 1px solid var(--color-primary);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+    }
+
+    .hero-copy__primary {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    .hero-copy__secondary {
+      color: var(--color-text);
+    }
+
+    .hero-copy__actions a:hover {
+      border-color: var(--color-signal);
+      background: var(--color-signal);
+      color: var(--color-bg);
+    }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { en, es } from '../../i18n';
+import type { Locale } from '../../lib/locale';
+import SystemLabel from '../ui/SystemLabel.astro';
+import ProjectChapter from './ProjectChapter.astro';
+
+type ProjectEntry = CollectionEntry<'projects'>;
+
+interface Props {
+  locale: Locale;
+  projects: readonly ProjectEntry[];
+}
+
+const { locale, projects } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+---
+
+<section id="selected-work" class="selected-work" tabindex="-1">
+  <header class="selected-work__header wrapper flow">
+    <SystemLabel as="p">{dictionary.work.label}</SystemLabel>
+    <h2>{dictionary.work.heading}</h2>
+  </header>
+
+  <div class="selected-work__chapters">
+    {
+      projects.map((project, index) => (
+        <ProjectChapter locale={locale} project={project} index={index + 1} />
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  @layer components {
+    .selected-work {
+      padding-block: clamp(5rem, 10vw, 10rem);
+      scroll-margin-block-start: 5rem;
+    }
+
+    .selected-work__header {
+      --flow-space: 1rem;
+      margin-block-end: clamp(2.5rem, 6vw, 5rem);
+    }
+
+    .selected-work__header h2 {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 560;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+    }
+
+    .selected-work__chapters {
+      display: grid;
+    }
+  }
+</style>

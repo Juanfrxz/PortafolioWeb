@@ -107,4 +107,42 @@ describe('localized dictionaries', () => {
       delivery: 'Entrega y herramientas',
     });
   });
+
+  it('uses the approved capability domains and explicit ownership labels', () => {
+    expect({
+      frontend: en.capabilities.frontend,
+      backend: en.capabilities.backend,
+      data: en.capabilities.data,
+      immersive: en.capabilities.immersive,
+      delivery: en.capabilities.delivery,
+      individual: en.work.individual,
+      collaborative: en.work.collaborative,
+    }).toEqual({
+      frontend: 'Frontend systems',
+      backend: 'Backend architecture',
+      data: 'Data and persistence',
+      immersive: 'Immersive web and 3D',
+      delivery: 'Delivery and tooling',
+      individual: 'Individual project',
+      collaborative: 'Collaborative project',
+    });
+
+    expect({
+      frontend: es.capabilities.frontend,
+      backend: es.capabilities.backend,
+      data: es.capabilities.data,
+      immersive: es.capabilities.immersive,
+      delivery: es.capabilities.delivery,
+      individual: es.work.individual,
+      collaborative: es.work.collaborative,
+    }).toEqual({
+      frontend: 'Sistemas frontend',
+      backend: 'Arquitectura backend',
+      data: 'Datos y persistencia',
+      immersive: 'Web inmersiva y 3D',
+      delivery: 'Entrega y herramientas',
+      individual: 'Proyecto individual',
+      collaborative: 'Proyecto colaborativo',
+    });
+  });
 });

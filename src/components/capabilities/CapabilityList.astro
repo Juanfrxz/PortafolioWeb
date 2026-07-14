@@ -1,0 +1,166 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { en, es } from '../../i18n';
+import type { Locale } from '../../lib/locale';
+import SystemLabel from '../ui/SystemLabel.astro';
+
+type ProjectEntry = CollectionEntry<'projects'>;
+
+interface Props {
+  locale: Locale;
+  projects: readonly ProjectEntry[];
+}
+
+const { locale, projects } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+const domains = [
+  dictionary.capabilities.frontend,
+  dictionary.capabilities.backend,
+  dictionary.capabilities.data,
+  dictionary.capabilities.immersive,
+  dictionary.capabilities.delivery,
+];
+---
+
+<div class="capability-list wrapper">
+  <header class="capability-list__header flow">
+    <SystemLabel as="p">{dictionary.capabilities.label}</SystemLabel>
+    <h2>{dictionary.capabilities.heading}</h2>
+  </header>
+
+  <ol class="capability-list__domains" role="list">
+    {
+      domains.map((domain, index) => (
+        <li data-capability-domain>
+          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <h3>{domain}</h3>
+        </li>
+      ))
+    }
+  </ol>
+
+  <section class="capability-list__evidence flow">
+    <h3>{dictionary.work.technologies}</h3>
+    <ul role="list">
+      {
+        projects.map((project) => (
+          <li data-capability-evidence={project.data.slug}>
+            <strong>{project.data.title[locale]}</strong>
+            <ul role="list">
+              {project.data.technologies.map((technology) => (
+                <li>
+                  <code>{technology}</code>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</div>
+
+<style>
+  @layer components {
+    .capability-list {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: clamp(2.5rem, 8vw, 9rem);
+    }
+
+    .capability-list__header {
+      --flow-space: 1rem;
+      grid-column: 1 / -1;
+    }
+
+    .capability-list__header h2 {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 560;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+    }
+
+    .capability-list__domains,
+    .capability-list__evidence > ul,
+    .capability-list__evidence li ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    .capability-list__domains {
+      display: grid;
+    }
+
+    .capability-list__domains > li {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      align-items: center;
+      gap: 1rem;
+      padding-block: 1.25rem;
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .capability-list__domains span,
+    .capability-list__evidence h3 {
+      color: var(--color-signal);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .capability-list__domains h3 {
+      font-size: clamp(1.2rem, 2.5vw, 2rem);
+      font-weight: 520;
+      letter-spacing: -0.025em;
+    }
+
+    .capability-list__evidence {
+      --flow-space: 1rem;
+      padding: clamp(1.25rem, 4vw, 2.5rem);
+      border: 1px solid var(--color-border);
+      background: color-mix(in srgb, var(--color-panel), transparent 12%);
+    }
+
+    .capability-list__evidence > ul {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .capability-list__evidence > ul > li {
+      display: grid;
+      gap: 0.75rem;
+      padding-block-start: 1rem;
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .capability-list__evidence strong {
+      font-size: 1.05rem;
+    }
+
+    .capability-list__evidence li ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .capability-list__evidence li li {
+      padding: 0.35rem 0.5rem;
+      border: 1px solid var(--color-border);
+      color: var(--color-muted);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 50rem) {
+      .capability-list {
+        grid-template-columns: 1fr;
+      }
+
+      .capability-list__header {
+        grid-column: auto;
+      }
+    }
+  }
+</style>

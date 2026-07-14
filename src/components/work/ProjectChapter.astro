@@ -1,0 +1,327 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { en, es } from '../../i18n';
+import type { Locale } from '../../lib/locale';
+
+type ProjectEntry = CollectionEntry<'projects'>;
+
+interface Props {
+  locale: Locale;
+  project: ProjectEntry;
+  index: number;
+}
+
+const { locale, project, index } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+const data = project.data;
+
+const ownershipLabel =
+  data.ownership === 'individual'
+    ? dictionary.work.individual
+    : dictionary.work.collaborative;
+
+const statusLabel = {
+  shipped: dictionary.projectStatus.shipped,
+  'in-progress': dictionary.projectStatus.inProgress,
+  archived: dictionary.projectStatus.archived,
+}[data.status];
+
+const projectLinks = [
+  {
+    kind: 'repository',
+    label: dictionary.projectStatus.repository,
+    availability: data.repository,
+  },
+  {
+    kind: 'demo',
+    label: dictionary.projectStatus.demo,
+    availability: data.demo,
+  },
+  {
+    kind: 'documentation',
+    label: dictionary.projectStatus.documentation,
+    availability: data.documentation,
+  },
+] as const;
+
+const availableLinks = projectLinks.filter(
+  (link) => link.availability.state === 'available',
+);
+const unavailableLinks = projectLinks.filter(
+  (link) => link.availability.state !== 'available',
+);
+---
+
+<article
+  class="project-chapter"
+  data-project-chapter={data.slug}
+  data-ownership={data.ownership}
+  data-project-index={index}
+  aria-labelledby={`${data.slug}-title`}
+>
+  <div class="project-chapter__inner wrapper">
+    <header class="project-chapter__header flow">
+      <p class="project-chapter__index" aria-hidden="true">
+        {String(index).padStart(2, '0')}
+      </p>
+      <div class="project-chapter__signals cluster">
+        <span data-project-status={data.status}>{statusLabel}</span>
+        <span data-project-ownership={data.ownership}>{ownershipLabel}</span>
+      </div>
+      <h3 id={`${data.slug}-title`}>{data.title[locale]}</h3>
+      <p class="project-chapter__summary">{data.summary[locale]}</p>
+    </header>
+
+    <div class="project-chapter__evidence">
+      <section class="flow">
+        <h4>{dictionary.work.problem}</h4>
+        <p>{data.problem[locale]}</p>
+      </section>
+
+      <section class="flow">
+        <h4>{dictionary.work.contribution}</h4>
+        <p>{data.contribution[locale]}</p>
+      </section>
+
+      <section class="flow project-chapter__architecture">
+        <h4>{dictionary.work.architecture}</h4>
+        <ol role="list" data-architecture-nodes>
+          {
+            data.architectureNodes.map((node) => (
+              <li>
+                <code>{node}</code>
+              </li>
+            ))
+          }
+        </ol>
+        <ul role="list" data-architecture-edges>
+          {
+            data.architectureEdges.map(([source, target]) => (
+              <li>
+                <code>{source}</code>
+                <span aria-hidden="true"> → </span>
+                <code>{target}</code>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="flow">
+        <h4>{dictionary.work.decisions}</h4>
+        <ul class="project-chapter__decisions">
+          {data.decisions[locale].map((decision) => <li>{decision}</li>)}
+        </ul>
+      </section>
+
+      <section class="flow">
+        <h4>{dictionary.work.outcome}</h4>
+        <p>{data.outcome[locale]}</p>
+      </section>
+
+      <section class="flow">
+        <h4>{dictionary.work.technologies}</h4>
+        <ul class="project-chapter__technologies" role="list">
+          {
+            data.technologies.map((technology) => (
+              <li>
+                <code>{technology}</code>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+
+    <footer class="project-chapter__links">
+      {
+        availableLinks.map((link) => (
+          <a
+            href={link.availability.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-project-link={link.kind}
+            data-link-state="available"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      {
+        unavailableLinks.map((link) => (
+          <span
+            data-project-link={link.kind}
+            data-link-state={link.availability.state}
+          >
+            {link.availability.state === 'source-only'
+              ? dictionary.work.sourceOnly
+              : `${link.label}: ${dictionary.projectStatus.unavailable}`}
+          </span>
+        ))
+      }
+    </footer>
+  </div>
+</article>
+
+<style>
+  @layer components {
+    .project-chapter {
+      min-block-size: 85vh;
+      min-block-size: 85dvb;
+      padding-block: clamp(4rem, 9vw, 9rem);
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .project-chapter:nth-child(even) {
+      background: color-mix(in srgb, var(--color-panel), transparent 28%);
+    }
+
+    .project-chapter__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: clamp(2rem, 7vw, 8rem);
+    }
+
+    .project-chapter__header {
+      --flow-space: 1.25rem;
+      align-self: start;
+    }
+
+    .project-chapter__index,
+    .project-chapter__signals,
+    .project-chapter__links {
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .project-chapter__signals span {
+      padding: 0.35rem 0.55rem;
+      border: 1px solid var(--color-border);
+    }
+
+    .project-chapter__signals [data-project-ownership='individual'] {
+      border-color: var(--color-signal);
+      color: var(--color-signal);
+    }
+
+    .project-chapter h3 {
+      max-inline-size: 12ch;
+      font-size: clamp(2.5rem, 5vw, 5.25rem);
+      font-weight: 560;
+      letter-spacing: -0.055em;
+      line-height: 0.96;
+      text-wrap: balance;
+    }
+
+    .project-chapter__summary {
+      max-inline-size: 42rem;
+      color: var(--color-muted);
+      font-size: 1.12rem;
+    }
+
+    .project-chapter__evidence {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .project-chapter__evidence section {
+      --flow-space: 0.8rem;
+      padding-block-start: 1rem;
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .project-chapter__evidence h4 {
+      color: var(--color-signal);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 400;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .project-chapter__evidence p,
+    .project-chapter__decisions {
+      max-inline-size: 50rem;
+      color: var(--color-muted);
+    }
+
+    .project-chapter__decisions {
+      display: grid;
+      gap: 0.55rem;
+      padding-inline-start: 1.25rem;
+    }
+
+    .project-chapter__architecture ol,
+    .project-chapter__architecture ul,
+    .project-chapter__technologies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .project-chapter__architecture li,
+    .project-chapter__technologies li {
+      padding: 0.4rem 0.6rem;
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      font-size: 0.78rem;
+    }
+
+    .project-chapter__architecture [data-architecture-edges] li {
+      border-style: dashed;
+      color: var(--color-muted);
+    }
+
+    .project-chapter__links {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding-block-start: 2rem;
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .project-chapter__links a,
+    .project-chapter__links span {
+      display: inline-flex;
+      min-block-size: 2.75rem;
+      align-items: center;
+      padding-inline: 0.875rem;
+      border: 1px solid var(--color-border);
+    }
+
+    .project-chapter__links a {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .project-chapter__links a:hover {
+      border-color: var(--color-signal);
+      color: var(--color-signal);
+    }
+
+    .project-chapter__links span {
+      color: var(--color-muted);
+    }
+
+    @media (max-width: 56rem) {
+      .project-chapter {
+        min-block-size: auto;
+      }
+
+      .project-chapter__inner {
+        grid-template-columns: 1fr;
+      }
+
+      .project-chapter__links {
+        grid-column: auto;
+      }
+    }
+  }
+</style>

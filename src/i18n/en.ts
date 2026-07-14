@@ -20,6 +20,7 @@ export const en = defineDictionary({
     label: 'SELECTED SYSTEMS',
     heading: 'Selected Work',
     sourceOnly: 'Source only',
+    individual: 'Individual project',
     collaborative: 'Collaborative project',
     problem: 'Problem',
     contribution: 'Contribution',
@@ -46,8 +47,8 @@ export const en = defineDictionary({
     hideGraph: 'Hide capability graph',
     frontend: 'Frontend systems',
     backend: 'Backend architecture',
-    data: 'Data and intelligence',
-    immersive: 'Immersive 3D',
+    data: 'Data and persistence',
+    immersive: 'Immersive web and 3D',
     delivery: 'Delivery and tooling',
   },
   trail: {

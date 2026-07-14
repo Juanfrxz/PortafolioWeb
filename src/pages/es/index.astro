@@ -1,22 +1,22 @@
 ---
 import { getCollection } from 'astro:content';
 
-import CapabilityList from '../components/capabilities/CapabilityList.astro';
-import ContactSection from '../components/contact/ContactSection.astro';
-import HeroCopy from '../components/hero/HeroCopy.astro';
-import HeroFallback from '../components/hero/HeroFallback.astro';
-import Footer from '../components/layout/Footer.astro';
-import HudNavigation from '../components/layout/HudNavigation.astro';
-import SiteShell from '../components/layout/SiteShell.astro';
-import SignalTrail from '../components/profile/SignalTrail.astro';
-import SelectedWork from '../components/work/SelectedWork.astro';
-import { en as dictionary } from '../i18n';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { homePath, type Locale } from '../lib/locale';
-import { getFeaturedProjects, getSortedExperience } from '../lib/projects';
+import CapabilityList from '../../components/capabilities/CapabilityList.astro';
+import ContactSection from '../../components/contact/ContactSection.astro';
+import HeroCopy from '../../components/hero/HeroCopy.astro';
+import HeroFallback from '../../components/hero/HeroFallback.astro';
+import Footer from '../../components/layout/Footer.astro';
+import HudNavigation from '../../components/layout/HudNavigation.astro';
+import SiteShell from '../../components/layout/SiteShell.astro';
+import SignalTrail from '../../components/profile/SignalTrail.astro';
+import SelectedWork from '../../components/work/SelectedWork.astro';
+import { es as dictionary } from '../../i18n';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { homePath, type Locale } from '../../lib/locale';
+import { getFeaturedProjects, getSortedExperience } from '../../lib/projects';
 
-const locale: Locale = 'en';
-const alternateLocale: Locale = 'es';
+const locale: Locale = 'es';
+const alternateLocale: Locale = 'en';
 
 const [projectEntries, rawExperienceEntries] = await Promise.all([
   getCollection('projects'),
@@ -29,7 +29,7 @@ const experienceEntries = getSortedExperience(rawExperienceEntries);
 
 <BaseLayout
   locale={locale}
-  title="Juan Rodriguez — Creative Full-Stack Developer"
+  title="Juan Rodriguez — Desarrollador Full-Stack Creativo"
   description={dictionary.hero.support}
   canonicalPath={homePath(locale)}
   alternatePath={homePath(alternateLocale)}

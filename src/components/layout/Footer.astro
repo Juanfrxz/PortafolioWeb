@@ -1,0 +1,83 @@
+---
+import { SITE } from '../../config/site';
+import { en, es } from '../../i18n';
+import { homePath, type Locale } from '../../lib/locale';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner wrapper">
+    <a class="site-footer__identity" href={homePath(locale)}>{SITE.name}</a>
+    <p>{dictionary.hero.label}</p>
+    <nav aria-label={dictionary.contact.professionalLinks}>
+      {
+        SITE.professionalLinks.map((link) => (
+          <a href={link.href} target="_blank" rel="noopener noreferrer">
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</footer>
+
+<style>
+  @layer components {
+    .site-footer {
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .site-footer__inner {
+      display: grid;
+      min-block-size: 8rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: center;
+      gap: 1rem;
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .site-footer__identity {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .site-footer__inner p {
+      text-align: center;
+    }
+
+    .site-footer nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .site-footer a:hover {
+      color: var(--color-signal);
+    }
+
+    @media (max-width: 42rem) {
+      .site-footer__inner {
+        grid-template-columns: 1fr;
+        padding-block: 2rem;
+      }
+
+      .site-footer__inner p {
+        text-align: start;
+      }
+
+      .site-footer nav {
+        justify-content: flex-start;
+      }
+    }
+  }
+</style>

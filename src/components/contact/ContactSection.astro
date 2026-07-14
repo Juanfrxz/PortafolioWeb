@@ -1,0 +1,233 @@
+---
+import { SITE } from '../../config/site';
+import { en, es } from '../../i18n';
+import type { Locale } from '../../lib/locale';
+import SystemLabel from '../ui/SystemLabel.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+const fieldPrefix = `contact-${locale}`;
+---
+
+<section id="contact" class="contact" tabindex="-1">
+  <div class="contact__inner wrapper">
+    <div class="contact__copy flow">
+      <SystemLabel as="p">{dictionary.contact.label}</SystemLabel>
+      <h2>{dictionary.contact.heading}</h2>
+      <p class="contact__availability">{dictionary.contact.availability}</p>
+      <p>{dictionary.contact.invitation}</p>
+
+      <nav
+        class="contact__professional-links"
+        aria-label={dictionary.contact.professionalLinks}
+      >
+        {
+          SITE.professionalLinks.map((link) => (
+            <a href={link.href} target="_blank" rel="noopener noreferrer">
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <p class="contact__email">
+        <span>{dictionary.contact.email}</span>
+        {SITE.email}
+      </p>
+    </div>
+
+    <form
+      class="contact__form"
+      aria-describedby={`${fieldPrefix}-unavailable`}
+      onsubmit="return false"
+    >
+      <div class="contact__field">
+        <label for={`${fieldPrefix}-name`}>{dictionary.contact.name}</label>
+        <input
+          id={`${fieldPrefix}-name`}
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+        />
+      </div>
+
+      <div class="contact__field">
+        <label for={`${fieldPrefix}-email`}>{dictionary.contact.email}</label>
+        <input
+          id={`${fieldPrefix}-email`}
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+        />
+      </div>
+
+      <div class="contact__field">
+        <label for={`${fieldPrefix}-message`}
+          >{dictionary.contact.message}</label
+        >
+        <textarea id={`${fieldPrefix}-message`} name="message" rows="6" required
+        ></textarea>
+      </div>
+
+      <button type="submit" disabled>{dictionary.contact.submit}</button>
+      <p
+        id={`${fieldPrefix}-unavailable`}
+        class="contact__unavailable"
+        role="status"
+      >
+        {dictionary.contact.unavailable}
+      </p>
+    </form>
+  </div>
+</section>
+
+<style>
+  @layer components {
+    .contact {
+      padding-block: clamp(5rem, 11vw, 11rem);
+      border-block-start: 1px solid var(--color-border);
+      scroll-margin-block-start: 5rem;
+    }
+
+    .contact__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: clamp(2.5rem, 8vw, 9rem);
+    }
+
+    .contact__copy {
+      --flow-space: 1.25rem;
+      align-self: start;
+    }
+
+    .contact h2 {
+      max-inline-size: 8ch;
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 560;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+    }
+
+    .contact__copy > p:not(.contact__email) {
+      max-inline-size: 34rem;
+      color: var(--color-muted);
+      font-size: 1.08rem;
+    }
+
+    .contact__copy .contact__availability {
+      color: var(--color-signal);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .contact__professional-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .contact__professional-links a {
+      display: inline-flex;
+      min-block-size: 2.75rem;
+      align-items: center;
+      padding-inline: 0.875rem;
+      border: 1px solid var(--color-border);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .contact__professional-links a:hover {
+      border-color: var(--color-signal);
+      color: var(--color-signal);
+    }
+
+    .contact__email {
+      display: grid;
+      gap: 0.25rem;
+      font-family: var(--font-mono);
+      overflow-wrap: anywhere;
+    }
+
+    .contact__email span {
+      color: var(--color-muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .contact__form {
+      display: grid;
+      gap: 1.25rem;
+      padding: clamp(1.25rem, 4vw, 2.5rem);
+      border: 1px solid var(--color-border);
+      background: color-mix(in srgb, var(--color-panel), transparent 8%);
+    }
+
+    .contact__field {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .contact__field label {
+      color: var(--color-signal);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .contact__field input,
+    .contact__field textarea {
+      inline-size: 100%;
+      border: 1px solid var(--color-border);
+      border-radius: 0;
+      background: var(--color-bg);
+      color: var(--color-text);
+      padding: 0.875rem;
+      resize: vertical;
+    }
+
+    .contact__field input {
+      min-block-size: 2.75rem;
+    }
+
+    .contact__form button {
+      min-block-size: 2.75rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-panel);
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .contact__form button:disabled {
+      cursor: not-allowed;
+      opacity: 0.72;
+    }
+
+    .contact__unavailable {
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 50rem) {
+      .contact__inner {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+</style>

@@ -20,6 +20,7 @@ export const es = defineDictionary({
     label: 'SISTEMAS SELECCIONADOS',
     heading: 'Proyectos seleccionados',
     sourceOnly: 'Solo código fuente',
+    individual: 'Proyecto individual',
     collaborative: 'Proyecto colaborativo',
     problem: 'Problema',
     contribution: 'Contribución',
@@ -46,8 +47,8 @@ export const es = defineDictionary({
     hideGraph: 'Ocultar grafo de capacidades',
     frontend: 'Sistemas frontend',
     backend: 'Arquitectura backend',
-    data: 'Datos e inteligencia',
-    immersive: 'Experiencias 3D',
+    data: 'Datos y persistencia',
+    immersive: 'Web inmersiva y 3D',
     delivery: 'Entrega y herramientas',
   },
   trail: {

@@ -21,6 +21,7 @@ export const dictionarySchema = z.strictObject({
     label: nonemptyString,
     heading: nonemptyString,
     sourceOnly: nonemptyString,
+    individual: nonemptyString,
     collaborative: nonemptyString,
     problem: nonemptyString,
     contribution: nonemptyString,
