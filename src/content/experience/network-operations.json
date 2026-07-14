@@ -1,0 +1,22 @@
+{
+  "id": "network-operations",
+  "order": 2,
+  "role": {
+    "en": "Network operations",
+    "es": "Operaciones de red"
+  },
+  "summary": {
+    "en": "Installation, configuration, maintenance, and troubleshooting of network infrastructure.",
+    "es": "Instalación, configuración, mantenimiento y resolución de problemas de infraestructura de red."
+  },
+  "timeframe": {
+    "en": "2024",
+    "es": "2024"
+  },
+  "organization": {
+    "en": "ItComunicaciones",
+    "es": "ItComunicaciones"
+  },
+  "status": "past",
+  "capabilities": ["network-infrastructure", "operations", "troubleshooting"]
+}

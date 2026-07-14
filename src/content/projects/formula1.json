@@ -1,0 +1,83 @@
+{
+  "slug": "formula1",
+  "type": "web-experience",
+  "status": "shipped",
+  "visibility": "featured",
+  "featuredOrder": 1,
+  "archiveOrder": null,
+  "ownership": "collaborative",
+  "teamAttribution": ["Formula1 repository collaborators"],
+  "title": {
+    "en": "Formula1",
+    "es": "Formula1"
+  },
+  "summary": {
+    "en": "A modular motorsport management experience that connects data, CRUD flows, simulation, and interactive 3D.",
+    "es": "Una experiencia modular de gestión de automovilismo que conecta datos, flujos CRUD, simulación y 3D interactivo."
+  },
+  "problem": {
+    "en": "Bring teams, cars, drivers, race data, and simulation flows into one coherent browser experience.",
+    "es": "Integrar equipos, autos, pilotos, datos de carrera y flujos de simulación en una experiencia web coherente."
+  },
+  "contribution": {
+    "en": "The collaborative implementation connects modular JavaScript and Web Components with data operations and Three.js scenes.",
+    "es": "La implementación colaborativa conecta JavaScript modular y Web Components con operaciones de datos y escenas en Three.js."
+  },
+  "decisions": {
+    "en": [
+      "Separate interface responsibilities into reusable Web Components.",
+      "Keep data operations and simulation behavior in explicit modules.",
+      "Use Three.js for the repository's interactive 3D layer."
+    ],
+    "es": [
+      "Separar las responsabilidades de interfaz en Web Components reutilizables.",
+      "Mantener las operaciones de datos y la simulación en módulos explícitos.",
+      "Usar Three.js para la capa 3D interactiva del repositorio."
+    ]
+  },
+  "outcome": {
+    "en": "The repository demonstrates connected management, data, simulation, and 3D flows; live demo behavior remains unverified.",
+    "es": "El repositorio demuestra flujos conectados de gestión, datos, simulación y 3D; el funcionamiento de la demo en vivo sigue sin verificar."
+  },
+  "technologies": ["javascript", "web-components", "three-js", "vite"],
+  "capabilities": ["frontend-systems", "data-integration", "immersive-web"],
+  "architectureNodes": [
+    "web-components",
+    "data-services",
+    "simulation",
+    "three-js-scene"
+  ],
+  "architectureEdges": [
+    ["web-components", "data-services"],
+    ["data-services", "simulation"],
+    ["simulation", "three-js-scene"]
+  ],
+  "repository": {
+    "state": "available",
+    "url": "https://github.com/Juanfrxz/Formula1"
+  },
+  "demo": {
+    "state": "unverified",
+    "url": null
+  },
+  "documentation": {
+    "state": "unavailable",
+    "url": null
+  },
+  "media": [
+    {
+      "kind": "identity-fallback",
+      "src": null,
+      "width": null,
+      "height": null,
+      "alt": {
+        "en": "Formula1 project identity",
+        "es": "Identidad del proyecto Formula1"
+      }
+    }
+  ],
+  "evidenceNotes": [
+    "Public repository supports the modular JavaScript, Web Components, CRUD, simulation, and Three.js inventory.",
+    "Demo availability remains unverified; no live URL is published."
+  ]
+}

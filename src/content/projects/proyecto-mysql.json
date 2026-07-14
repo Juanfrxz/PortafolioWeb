@@ -1,0 +1,75 @@
+{
+  "slug": "proyecto-mysql",
+  "type": "data-project",
+  "status": "archived",
+  "visibility": "archive",
+  "featuredOrder": null,
+  "archiveOrder": 1,
+  "ownership": "individual",
+  "teamAttribution": [],
+  "title": {
+    "en": "Proyecto MySQL",
+    "es": "Proyecto MySQL"
+  },
+  "summary": {
+    "en": "A source-focused data project organized around relational modeling and SQL operations in MySQL.",
+    "es": "Un proyecto de datos centrado en código fuente y organizado alrededor del modelado relacional y operaciones SQL en MySQL."
+  },
+  "problem": {
+    "en": "Represent related records with explicit relational structures and repeatable SQL operations.",
+    "es": "Representar registros relacionados mediante estructuras relacionales explícitas y operaciones SQL repetibles."
+  },
+  "contribution": {
+    "en": "The repository captures schema and query work focused on MySQL data relationships.",
+    "es": "El repositorio reúne trabajo de esquemas y consultas enfocado en relaciones de datos con MySQL."
+  },
+  "decisions": {
+    "en": [
+      "Model related information with explicit tables and keys.",
+      "Keep data operations inspectable as SQL source."
+    ],
+    "es": [
+      "Modelar información relacionada mediante tablas y claves explícitas.",
+      "Mantener las operaciones de datos verificables como código SQL."
+    ]
+  },
+  "outcome": {
+    "en": "The archived repository remains available as focused SQL and relational-data evidence.",
+    "es": "El repositorio archivado permanece disponible como evidencia enfocada en SQL y datos relacionales."
+  },
+  "technologies": ["mysql", "sql"],
+  "capabilities": ["data-modeling", "relational-databases"],
+  "architectureNodes": ["relational-model", "sql-operations", "mysql-database"],
+  "architectureEdges": [
+    ["relational-model", "sql-operations"],
+    ["sql-operations", "mysql-database"]
+  ],
+  "repository": {
+    "state": "available",
+    "url": "https://github.com/Juanfrxz/Proyecto_mysql_JuanDavidRodriguez"
+  },
+  "demo": {
+    "state": "source-only",
+    "url": null
+  },
+  "documentation": {
+    "state": "unavailable",
+    "url": null
+  },
+  "media": [
+    {
+      "kind": "identity-fallback",
+      "src": null,
+      "width": null,
+      "height": null,
+      "alt": {
+        "en": "Proyecto MySQL data project identity",
+        "es": "Identidad del proyecto de datos Proyecto MySQL"
+      }
+    }
+  ],
+  "evidenceNotes": [
+    "Public repository URL is retained as focused MySQL and SQL evidence.",
+    "No public runtime demo is claimed."
+  ]
+}

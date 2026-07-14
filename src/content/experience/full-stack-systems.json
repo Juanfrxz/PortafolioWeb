@@ -1,0 +1,26 @@
+{
+  "id": "full-stack-systems",
+  "order": 3,
+  "role": {
+    "en": "Full-stack systems development",
+    "es": "Desarrollo de sistemas full-stack"
+  },
+  "summary": {
+    "en": "Current work on modern web interfaces and the application systems that support responsive product experiences.",
+    "es": "Trabajo actual en interfaces web modernas y en los sistemas de aplicación que respaldan experiencias de producto responsivas."
+  },
+  "timeframe": {
+    "en": "2025–present",
+    "es": "2025–presente"
+  },
+  "organization": {
+    "en": "QUIBOR WEB",
+    "es": "QUIBOR WEB"
+  },
+  "status": "current",
+  "capabilities": [
+    "frontend-systems",
+    "backend-architecture",
+    "delivery-tooling"
+  ]
+}

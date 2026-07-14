@@ -1,0 +1,75 @@
+{
+  "slug": "facturaweb-lit",
+  "type": "web-application",
+  "status": "archived",
+  "visibility": "archive",
+  "featuredOrder": null,
+  "archiveOrder": 2,
+  "ownership": "individual",
+  "teamAttribution": [],
+  "title": {
+    "en": "FacturaWeb-Lit",
+    "es": "FacturaWeb-Lit"
+  },
+  "summary": {
+    "en": "A source-available web application centered on invoice interface flows built with Lit.",
+    "es": "Una aplicación web con código disponible centrada en flujos de interfaz para facturas construidos con Lit."
+  },
+  "problem": {
+    "en": "Organize invoice-oriented interface states as a maintainable browser application.",
+    "es": "Organizar estados de interfaz orientados a facturas como una aplicación web mantenible."
+  },
+  "contribution": {
+    "en": "The repository exposes the Lit-based interface structure and application source for inspection.",
+    "es": "El repositorio expone la estructura de interfaz basada en Lit y el código de la aplicación para su revisión."
+  },
+  "decisions": {
+    "en": [
+      "Compose invoice interface behavior from Lit components.",
+      "Keep the source repository as the verified public entry point."
+    ],
+    "es": [
+      "Componer el comportamiento de la interfaz de facturación mediante componentes Lit.",
+      "Mantener el repositorio de código como punto de acceso público verificado."
+    ]
+  },
+  "outcome": {
+    "en": "The archived source remains inspectable; demo availability has not been verified.",
+    "es": "El código archivado permanece disponible para revisión; la disponibilidad de la demo no ha sido verificada."
+  },
+  "technologies": ["lit", "javascript", "web-components"],
+  "capabilities": ["frontend-systems", "web-applications"],
+  "architectureNodes": ["lit-components", "invoice-state", "application-shell"],
+  "architectureEdges": [
+    ["lit-components", "invoice-state"],
+    ["invoice-state", "application-shell"]
+  ],
+  "repository": {
+    "state": "available",
+    "url": "https://github.com/Juanfrxz/FacturaWeb-Lit"
+  },
+  "demo": {
+    "state": "unverified",
+    "url": null
+  },
+  "documentation": {
+    "state": "unavailable",
+    "url": null
+  },
+  "media": [
+    {
+      "kind": "identity-fallback",
+      "src": null,
+      "width": null,
+      "height": null,
+      "alt": {
+        "en": "FacturaWeb-Lit application identity",
+        "es": "Identidad de la aplicación FacturaWeb-Lit"
+      }
+    }
+  ],
+  "evidenceNotes": [
+    "Public repository URL is verified; the source is the only launch-safe action.",
+    "Demo state remains unverified and carries no URL."
+  ]
+}

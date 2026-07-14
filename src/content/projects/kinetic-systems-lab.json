@@ -1,0 +1,90 @@
+{
+  "slug": "kinetic-systems-lab",
+  "type": "portfolio-system",
+  "status": "in-progress",
+  "visibility": "featured",
+  "featuredOrder": 3,
+  "archiveOrder": null,
+  "ownership": "individual",
+  "teamAttribution": [],
+  "title": {
+    "en": "Kinetic Systems Lab",
+    "es": "Laboratorio de Sistemas Cinéticos"
+  },
+  "summary": {
+    "en": "An in-progress portfolio architecture connecting Astro content, localization, accessible interaction, and adaptive 3D foundations.",
+    "es": "Una arquitectura de portafolio en progreso que conecta contenido en Astro, localización, interacción accesible y fundamentos de 3D adaptativo."
+  },
+  "problem": {
+    "en": "Replace a static portfolio inventory with a bilingual system that can present verified work through clear content and interaction boundaries.",
+    "es": "Reemplazar un inventario estático del portafolio por un sistema bilingüe capaz de presentar trabajo verificado mediante límites claros de contenido e interacción."
+  },
+  "contribution": {
+    "en": "I am structuring the content model, localized routes, accessible interface contracts, and progressive visual architecture in this repository.",
+    "es": "Estoy estructurando el modelo de contenido, las rutas localizadas, los contratos de interfaz accesible y la arquitectura visual progresiva en este repositorio."
+  },
+  "decisions": {
+    "en": [
+      "Use Astro content collections as a validated build-time boundary.",
+      "Keep bilingual copy and locale routes deterministic.",
+      "Treat rich 3D as a progressive layer rather than a content dependency."
+    ],
+    "es": [
+      "Usar colecciones de contenido de Astro como límite validado durante el build.",
+      "Mantener deterministas el contenido bilingüe y las rutas por idioma.",
+      "Tratar el 3D enriquecido como una capa progresiva y no como dependencia del contenido."
+    ]
+  },
+  "outcome": {
+    "en": "The repository currently contains the typed foundation for an in-progress portfolio system; final behavior and verification remain pending.",
+    "es": "El repositorio contiene actualmente la base tipada de un sistema de portafolio en progreso; el comportamiento final y su verificación siguen pendientes."
+  },
+  "technologies": ["astro", "typescript", "react", "three-js"],
+  "capabilities": [
+    "content-architecture",
+    "localization",
+    "accessible-interaction",
+    "immersive-web"
+  ],
+  "architectureNodes": [
+    "content-collections",
+    "localized-routes",
+    "astro-pages",
+    "interactive-islands",
+    "adaptive-visuals"
+  ],
+  "architectureEdges": [
+    ["content-collections", "localized-routes"],
+    ["localized-routes", "astro-pages"],
+    ["astro-pages", "interactive-islands"],
+    ["interactive-islands", "adaptive-visuals"]
+  ],
+  "repository": {
+    "state": "available",
+    "url": "https://github.com/Juanfrxz/PortafolioWeb"
+  },
+  "demo": {
+    "state": "unverified",
+    "url": null
+  },
+  "documentation": {
+    "state": "unavailable",
+    "url": null
+  },
+  "media": [
+    {
+      "kind": "identity-fallback",
+      "src": null,
+      "width": null,
+      "height": null,
+      "alt": {
+        "en": "Kinetic Systems Lab project identity",
+        "es": "Identidad del proyecto Laboratorio de Sistemas Cinéticos"
+      }
+    }
+  ],
+  "evidenceNotes": [
+    "The configured origin remote confirms the public PortafolioWeb repository URL.",
+    "Copy is limited to the current in-progress architecture and contains no final performance or outcome metrics."
+  ]
+}
