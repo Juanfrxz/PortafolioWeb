@@ -37,13 +37,18 @@ export const availabilitySchema = z.discriminatedUnion('state', [
   unavailableLinkSchema('unavailable'),
 ]);
 
+function hasSafeRootRelativeShape(value: string): boolean {
+  return (
+    value.startsWith('/') &&
+    !value.startsWith('//') &&
+    !value.includes('//') &&
+    !value.includes('\\') &&
+    !/[?#]/.test(value)
+  );
+}
+
 function isSafeRootRelativePath(value: string): boolean {
-  if (
-    !value.startsWith('/') ||
-    value.startsWith('//') ||
-    value.includes('\\') ||
-    /[?#]/.test(value)
-  ) {
+  if (!hasSafeRootRelativeShape(value)) {
     return false;
   }
 
@@ -51,7 +56,10 @@ function isSafeRootRelativePath(value: string): boolean {
     const decodedPath = decodeURIComponent(value);
     const segments = decodedPath.split('/');
 
-    return !segments.some((segment) => segment === '.' || segment === '..');
+    return (
+      hasSafeRootRelativeShape(decodedPath) &&
+      !segments.some((segment) => segment === '.' || segment === '..')
+    );
   } catch {
     return false;
   }

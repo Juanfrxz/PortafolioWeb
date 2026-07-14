@@ -1,3 +1,7 @@
+import { readdirSync, readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { z } from 'zod';
 
 import {
@@ -6,6 +10,46 @@ import {
   type Experience,
   type Project,
 } from '../content/schema';
+
+function compareNames(left: string, right: string): number {
+  if (left === right) {
+    return 0;
+  }
+
+  return left < right ? -1 : 1;
+}
+
+function collectJsonFiles(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true })
+    .sort((left, right) => compareNames(left.name, right.name))
+    .flatMap((entry) => {
+      const entryPath = join(directory, entry.name);
+
+      if (entry.isDirectory()) {
+        return collectJsonFiles(entryPath);
+      }
+
+      return entry.isFile() && entry.name.endsWith('.json') ? [entryPath] : [];
+    });
+}
+
+function directoryPath(root: string | URL): string {
+  return root instanceof URL ? fileURLToPath(root) : resolve(root);
+}
+
+export function loadJsonDirectory(root: string | URL): unknown[] {
+  return collectJsonFiles(directoryPath(root)).map((filePath) => {
+    try {
+      return JSON.parse(readFileSync(filePath, 'utf8'));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+
+      throw new Error(`Failed to parse JSON file "${filePath}": ${message}`, {
+        cause: error,
+      });
+    }
+  });
+}
 
 function assertUniqueValue(
   values: readonly (string | number)[],
@@ -62,4 +106,12 @@ export function assertExperienceIntegrity(input: unknown): Experience[] {
   }
 
   return experience;
+}
+
+export function assertContentDirectories(roots: {
+  projects: string | URL;
+  experience: string | URL;
+}): void {
+  assertProjectIntegrity(loadJsonDirectory(roots.projects));
+  assertExperienceIntegrity(loadJsonDirectory(roots.experience));
 }
