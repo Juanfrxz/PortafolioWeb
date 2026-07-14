@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import CapabilityList from '../components/capabilities/CapabilityList.astro';
 import ContactSection from '../components/contact/ContactSection.astro';
 import HeroCopy from '../components/hero/HeroCopy.astro';
+import { HeroExperience } from '../components/hero/HeroExperience';
 import HeroFallback from '../components/hero/HeroFallback.astro';
 import Footer from '../components/layout/Footer.astro';
 import HudNavigation from '../components/layout/HudNavigation.astro';
@@ -39,7 +40,10 @@ const experienceEntries = getSortedExperience(rawExperienceEntries);
     <main id="main-content" tabindex="-1">
       <section id="system-core" tabindex="-1">
         <HeroCopy locale={locale} />
-        <HeroFallback />
+        <div class="hero-visual" data-hero-visual data-render-state="poster">
+          <HeroFallback />
+          <HeroExperience client:idle={{ timeout: 1_000 }} />
+        </div>
       </section>
       <SelectedWork locale={locale} projects={featuredProjects} />
       <section id="capabilities" tabindex="-1">
@@ -73,6 +77,37 @@ const experienceEntries = getSortedExperience(rawExperienceEntries);
     padding-block: clamp(5rem, 11vw, 11rem);
     border-block-start: 1px solid var(--color-border);
     scroll-margin-block-start: 5rem;
+  }
+
+  .hero-visual {
+    position: relative;
+    align-self: center;
+    aspect-ratio: 1;
+    inline-size: 100%;
+    max-inline-size: 40rem;
+    overflow: hidden;
+  }
+
+  .hero-visual :global([data-hero-fallback]) {
+    z-index: 2;
+    inline-size: 100%;
+    margin: 0;
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  .hero-visual :global([data-hero-experience]) {
+    z-index: 1;
+  }
+
+  .hero-visual[data-render-state='ready'] :global([data-hero-fallback]) {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-visual :global([data-hero-fallback]) {
+      transition: opacity 240ms ease-out;
+    }
   }
 
   @media (max-width: 56rem) {

@@ -391,6 +391,35 @@ describe('useHeroQuality', () => {
     );
   });
 
+  it('registers context creation failure and degrades to terminal static', () => {
+    const canvas = document.createElement('canvas');
+    const addEventListener = vi.spyOn(canvas, 'addEventListener');
+    const removeEventListener = vi.spyOn(canvas, 'removeEventListener');
+    const { result, unmount } = renderHook(() => useHeroQuality());
+
+    act(() => result.current.registerCanvas(canvas));
+    const creationError = new Event('webglcontextcreationerror', {
+      cancelable: true,
+    });
+    act(() => canvas.dispatchEvent(creationError));
+
+    expect(creationError.defaultPrevented).toBe(true);
+    expect(result.current.tier).toBe('static');
+    expect(result.current.machine.phase).toBe('static');
+    expect(addEventListener).toHaveBeenCalledWith(
+      'webglcontextcreationerror',
+      expect.any(Function),
+    );
+
+    unmount();
+    expect(removeEventListener).toHaveBeenCalledWith(
+      'webglcontextcreationerror',
+      addEventListener.mock.calls.find(
+        ([eventName]) => eventName === 'webglcontextcreationerror',
+      )?.[1],
+    );
+  });
+
   it('removes context loss from the previous canvas when the ref changes', () => {
     const firstCanvas = document.createElement('canvas');
     const secondCanvas = document.createElement('canvas');
@@ -404,6 +433,10 @@ describe('useHeroQuality', () => {
     expect(removeFirst).toHaveBeenCalledWith(
       'webglcontextlost',
       addFirst.mock.calls[0]?.[1],
+    );
+    expect(removeFirst).toHaveBeenCalledWith(
+      'webglcontextcreationerror',
+      expect.any(Function),
     );
   });
 

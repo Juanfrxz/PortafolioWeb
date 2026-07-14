@@ -173,7 +173,7 @@ export function useHeroQuality(): HeroQualityController {
     [degradeTier],
   );
 
-  const handleContextLost = useCallback(
+  const handleContextFailure = useCallback(
     (event: Event) => {
       event.preventDefault();
       dispatchMachine({ type: 'CONTEXT_LOST' });
@@ -190,15 +190,23 @@ export function useHeroQuality(): HeroQualityController {
 
       canvasRef.current?.removeEventListener(
         'webglcontextlost',
-        handleContextLost,
+        handleContextFailure,
+      );
+      canvasRef.current?.removeEventListener(
+        'webglcontextcreationerror',
+        handleContextFailure,
       );
       canvasRef.current = canvas;
       canvasRef.current?.addEventListener(
         'webglcontextlost',
-        handleContextLost,
+        handleContextFailure,
+      );
+      canvasRef.current?.addEventListener(
+        'webglcontextcreationerror',
+        handleContextFailure,
       );
     },
-    [handleContextLost],
+    [handleContextFailure],
   );
 
   const reportPerformanceRegression = useCallback(() => {
@@ -293,11 +301,15 @@ export function useHeroQuality(): HeroQualityController {
     () => () => {
       canvasRef.current?.removeEventListener(
         'webglcontextlost',
-        handleContextLost,
+        handleContextFailure,
+      );
+      canvasRef.current?.removeEventListener(
+        'webglcontextcreationerror',
+        handleContextFailure,
       );
       canvasRef.current = null;
     },
-    [handleContextLost],
+    [handleContextFailure],
   );
 
   return {
