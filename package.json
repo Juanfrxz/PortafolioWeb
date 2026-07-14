@@ -17,12 +17,16 @@
     "test:e2e": "playwright test",
     "test:a11y": "playwright test tests/e2e/accessibility",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "assets:avatar": "node scripts/optimize-avatar.mjs",
+    "check:models": "node scripts/check-model-budgets.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.9",
     "@axe-core/playwright": "4.12.1",
     "@gltf-transform/cli": "4.4.1",
+    "@gltf-transform/core": "4.4.1",
+    "@gltf-transform/extensions": "4.4.1",
     "@lhci/cli": "0.15.1",
     "@playwright/test": "1.61.1",
     "@testing-library/jest-dom": "6.9.1",
@@ -37,6 +41,7 @@
     "fast-glob": "3.3.3",
     "gltfjsx": "6.5.3",
     "jsdom": "29.1.1",
+    "meshoptimizer": "1.0.1",
     "prettier": "3.9.5",
     "prettier-plugin-astro": "0.14.1",
     "sharp": "0.35.3",
