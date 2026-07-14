@@ -6,7 +6,10 @@
   "featuredOrder": null,
   "archiveOrder": 2,
   "ownership": "individual",
-  "teamAttribution": [],
+  "teamAttribution": {
+    "en": [],
+    "es": []
+  },
   "title": {
     "en": "FacturaWeb-Lit",
     "es": "FacturaWeb-Lit"

@@ -1,0 +1,25 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import CaseStudyLayout from '../../../layouts/CaseStudyLayout.astro';
+import { getFeaturedProjects } from '../../../lib/projects';
+
+type ProjectEntry = CollectionEntry<'projects'>;
+
+interface Props {
+  project: ProjectEntry;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection('projects');
+
+  return getFeaturedProjects(entries).map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<CaseStudyLayout locale="es" project={project} />

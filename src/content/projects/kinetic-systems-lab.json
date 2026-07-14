@@ -6,7 +6,10 @@
   "featuredOrder": 3,
   "archiveOrder": null,
   "ownership": "individual",
-  "teamAttribution": [],
+  "teamAttribution": {
+    "en": [],
+    "es": []
+  },
   "title": {
     "en": "Kinetic Systems Lab",
     "es": "Laboratorio de Sistemas Cinéticos"

@@ -1,7 +1,7 @@
 ---
 import { SITE } from '../../config/site';
 import { en, es } from '../../i18n';
-import { homePath, type Locale } from '../../lib/locale';
+import { alternateLocalePath, homePath, type Locale } from '../../lib/locale';
 import LocaleLinks from '../ui/LocaleLinks.astro';
 import ThemeControl from '../ui/ThemeControl';
 
@@ -12,11 +12,28 @@ interface Props {
 const { locale } = Astro.props;
 const dictionary = locale === 'en' ? en : es;
 const alternateLocale: Locale = locale === 'en' ? 'es' : 'en';
+const currentPath = Astro.url.pathname;
+const localizedHomePath = homePath(locale);
+const isHomeRoute = currentPath === localizedHomePath;
+const localizedAnchor = (id: string) =>
+  isHomeRoute ? `#${id}` : `${localizedHomePath}#${id}`;
 
 const navigation = [
-  { label: dictionary.nav.work, href: '#selected-work' },
-  { label: dictionary.nav.about, href: '#signal-trail' },
-  { label: dictionary.nav.contact, href: '#contact' },
+  {
+    label: dictionary.nav.work,
+    href: localizedAnchor('selected-work'),
+    id: 'work',
+  },
+  {
+    label: dictionary.nav.about,
+    href: localizedAnchor('signal-trail'),
+    id: 'about',
+  },
+  {
+    label: dictionary.nav.contact,
+    href: localizedAnchor('contact'),
+    id: 'contact',
+  },
 ];
 ---
 
@@ -33,7 +50,13 @@ const navigation = [
     <nav class="hud__desktop-navigation" aria-label={dictionary.nav.menu}>
       {
         navigation.map((item) => (
-          <a href={item.href} data-hud-anchor>
+          <a
+            href={item.href}
+            data-hud-anchor
+            data-hud-work={item.id === 'work' ? true : undefined}
+            data-hud-about={item.id === 'about' ? true : undefined}
+            data-hud-contact={item.id === 'contact' ? true : undefined}
+          >
             {item.label}
           </a>
         ))
@@ -53,7 +76,7 @@ const navigation = [
         {
           navigation.map((item) => (
             <a href={item.href} data-hud-anchor>
-              {item.label}
+              <span>{item.label}</span>
             </a>
           ))
         }
@@ -64,8 +87,8 @@ const navigation = [
       <ThemeControl client:load labels={dictionary.theme} />
       <LocaleLinks
         locale={locale}
-        currentPath={homePath(locale)}
-        alternatePath={homePath(alternateLocale)}
+        currentPath={currentPath}
+        alternatePath={alternateLocalePath(currentPath, alternateLocale)}
         label={dictionary.accessibility.changeLanguage}
       />
     </div>
@@ -121,7 +144,15 @@ const navigation = [
         const summary = details?.querySelector<HTMLElement>('summary');
 
         if (details) details.open = false;
-        focusHashTarget(anchor, summary ?? anchor);
+
+        const destination = new URL(anchor.href, window.location.href);
+        const isSameDocument =
+          destination.pathname === window.location.pathname &&
+          destination.search === window.location.search;
+
+        if (isSameDocument) {
+          focusHashTarget(anchor, summary ?? anchor);
+        }
       });
     });
 </script>

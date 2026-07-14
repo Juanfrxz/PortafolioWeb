@@ -6,7 +6,10 @@
   "featuredOrder": 2,
   "archiveOrder": null,
   "ownership": "collaborative",
-  "teamAttribution": ["SGCI-app repository collaborators"],
+  "teamAttribution": {
+    "en": ["SGCI-app repository collaborators"],
+    "es": ["Colaboradores del repositorio SGCI-app"]
+  },
   "title": {
     "en": "SGCI-app",
     "es": "SGCI-app"

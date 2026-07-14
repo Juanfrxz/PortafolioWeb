@@ -6,7 +6,10 @@
   "featuredOrder": 1,
   "archiveOrder": null,
   "ownership": "collaborative",
-  "teamAttribution": ["Formula1 repository collaborators"],
+  "teamAttribution": {
+    "en": ["Formula1 repository collaborators"],
+    "es": ["Colaboradores del repositorio Formula1"]
+  },
   "title": {
     "en": "Formula1",
     "es": "Formula1"
@@ -66,13 +69,13 @@
   },
   "media": [
     {
-      "kind": "identity-fallback",
-      "src": null,
-      "width": null,
-      "height": null,
+      "kind": "image",
+      "src": "/projects/formula1/hero.png",
+      "width": 1275,
+      "height": 805,
       "alt": {
-        "en": "Formula1 project identity",
-        "es": "Identidad del proyecto Formula1"
+        "en": "Glowing Formula1 emblem above a red digital grid",
+        "es": "Emblema luminoso de Formula1 sobre una cuadrícula digital roja"
       }
     }
   ],

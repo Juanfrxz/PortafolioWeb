@@ -19,9 +19,16 @@ export const es = defineDictionary({
   work: {
     label: 'SISTEMAS SELECCIONADOS',
     heading: 'Proyectos seleccionados',
+    indexDescription:
+      'Casos de estudio basados en evidencia que conectan diseño de interfaces, arquitectura de sistemas y decisiones de implementación verificables.',
+    caseStudyTitle: 'Caso de estudio',
+    backToIndex: 'Volver a proyectos seleccionados',
     sourceOnly: 'Solo código fuente',
     individual: 'Proyecto individual',
     collaborative: 'Proyecto colaborativo',
+    connectsTo: 'conecta con',
+    nodeLabel: 'Nodo',
+    identitySignal: 'Señal de identidad',
     problem: 'Problema',
     contribution: 'Contribución',
     architecture: 'Arquitectura',

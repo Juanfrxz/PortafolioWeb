@@ -1,0 +1,179 @@
+---
+interface Props {
+  nodes: readonly string[];
+  edges: readonly (readonly [string, string])[];
+  connectsToLabel: string;
+}
+
+const { nodes, edges, connectsToLabel } = Astro.props;
+const nodePositions = new Map(
+  nodes.map((node, index) => [
+    node,
+    {
+      x: 72 + index * (576 / Math.max(nodes.length - 1, 1)),
+      y: index % 2 === 0 ? 78 : 142,
+    },
+  ]),
+);
+---
+
+<div class="architecture-map" data-architecture-map>
+  <ol role="list">
+    {
+      nodes.map((node) => (
+        <li>
+          <code>{node}</code>
+          {edges
+            .filter(([source]) => source === node)
+            .map(([, target]) => (
+              <span aria-label={`${connectsToLabel} ${target}`}>
+                <span aria-hidden="true">→</span> {target}
+              </span>
+            ))}
+        </li>
+      ))
+    }
+  </ol>
+
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 720 220">
+    <path class="architecture-map__axis" d="M32 110H688"></path>
+    {
+      edges.map(([source, target]) => {
+        const start = nodePositions.get(source);
+        const end = nodePositions.get(target);
+
+        if (!start || !end) return null;
+
+        return (
+          <path
+            class="architecture-map__edge"
+            d={`M${start.x} ${start.y} C${(start.x + end.x) / 2} ${start.y}, ${(start.x + end.x) / 2} ${end.y}, ${end.x} ${end.y}`}
+          />
+        );
+      })
+    }
+    {
+      nodes.map((node, index) => {
+        const position = nodePositions.get(node);
+
+        if (!position) return null;
+
+        return (
+          <g transform={`translate(${position.x} ${position.y})`}>
+            <circle class="architecture-map__halo" r="18" />
+            <circle class="architecture-map__node" r="5" />
+            <text y={index % 2 === 0 ? -28 : 34} text-anchor="middle">
+              {String(index + 1).padStart(2, '0')}
+            </text>
+          </g>
+        );
+      })
+    }
+  </svg>
+</div>
+
+<style>
+  @layer components {
+    .architecture-map {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .architecture-map ol {
+      display: grid;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0;
+      counter-reset: architecture;
+    }
+
+    .architecture-map li {
+      display: grid;
+      grid-template-columns: minmax(8rem, auto) 1fr;
+      gap: 1rem;
+      align-items: baseline;
+      padding-block: 0.65rem;
+      border-block-end: 1px solid var(--color-border);
+      counter-increment: architecture;
+    }
+
+    .architecture-map li::before {
+      grid-column: 1;
+      color: var(--color-signal);
+      content: counter(architecture, decimal-leading-zero);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+    }
+
+    .architecture-map li code {
+      grid-column: 1;
+    }
+
+    .architecture-map li span {
+      grid-column: 2;
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+    }
+
+    .architecture-map svg {
+      inline-size: 100%;
+      min-block-size: 10rem;
+      border: 1px solid var(--color-border);
+      background:
+        linear-gradient(
+          color-mix(in srgb, var(--color-muted), transparent 88%) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--color-muted), transparent 88%) 1px,
+          transparent 1px
+        ),
+        var(--color-panel);
+      background-size: 2rem 2rem;
+    }
+
+    .architecture-map__axis,
+    .architecture-map__edge {
+      fill: none;
+      stroke: var(--color-border);
+      stroke-width: 1;
+    }
+
+    .architecture-map__edge {
+      stroke: var(--color-primary);
+      stroke-width: 1.5;
+    }
+
+    .architecture-map__halo {
+      fill: color-mix(in srgb, var(--color-signal), transparent 88%);
+      stroke: color-mix(in srgb, var(--color-signal), transparent 48%);
+    }
+
+    .architecture-map__node {
+      fill: var(--color-signal);
+    }
+
+    .architecture-map text {
+      fill: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+
+    @media (max-width: 35rem) {
+      .architecture-map li {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+
+      .architecture-map li span {
+        grid-column: 1;
+      }
+
+      .architecture-map svg {
+        min-block-size: 8rem;
+      }
+    }
+  }
+</style>

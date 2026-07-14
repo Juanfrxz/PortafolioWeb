@@ -15,6 +15,11 @@ export const localizedStringArraySchema = z.strictObject({
   es: z.array(nonemptyStringSchema).min(1),
 });
 
+const localizedAttributionSchema = z.strictObject({
+  en: z.array(nonemptyStringSchema),
+  es: z.array(nonemptyStringSchema),
+});
+
 const availableLinkSchema = z.strictObject({
   state: z.literal('available'),
   url: z
@@ -151,7 +156,7 @@ export const projectSchema = z
     featuredOrder: nullableOrderSchema,
     archiveOrder: nullableOrderSchema,
     ownership: z.enum(['individual', 'collaborative']),
-    teamAttribution: z.array(nonemptyStringSchema),
+    teamAttribution: localizedAttributionSchema,
     title: localizedStringSchema,
     summary: localizedStringSchema,
     problem: localizedStringSchema,
@@ -199,7 +204,8 @@ export const projectSchema = z
 
     if (
       project.ownership === 'collaborative' &&
-      project.teamAttribution.length === 0
+      (project.teamAttribution.en.length === 0 ||
+        project.teamAttribution.es.length === 0)
     ) {
       context.addIssue({
         code: 'custom',

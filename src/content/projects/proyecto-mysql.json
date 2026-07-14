@@ -6,7 +6,10 @@
   "featuredOrder": null,
   "archiveOrder": 1,
   "ownership": "individual",
-  "teamAttribution": [],
+  "teamAttribution": {
+    "en": [],
+    "es": []
+  },
   "title": {
     "en": "Proyecto MySQL",
     "es": "Proyecto MySQL"

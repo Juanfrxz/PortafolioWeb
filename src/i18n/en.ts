@@ -19,9 +19,16 @@ export const en = defineDictionary({
   work: {
     label: 'SELECTED SYSTEMS',
     heading: 'Selected Work',
+    indexDescription:
+      'Evidence-led case studies connecting interface craft, system architecture, and verifiable implementation decisions.',
+    caseStudyTitle: 'Case study',
+    backToIndex: 'Back to selected work',
     sourceOnly: 'Source only',
     individual: 'Individual project',
     collaborative: 'Collaborative project',
+    connectsTo: 'connects to',
+    nodeLabel: 'Node',
+    identitySignal: 'Identity signal',
     problem: 'Problem',
     contribution: 'Contribution',
     architecture: 'Architecture',

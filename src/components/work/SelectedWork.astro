@@ -2,7 +2,8 @@
 import type { CollectionEntry } from 'astro:content';
 
 import { en, es } from '../../i18n';
-import type { Locale } from '../../lib/locale';
+import { caseStudyPath, type Locale } from '../../lib/locale';
+import { technologyLabel } from '../../lib/project-media';
 import SystemLabel from '../ui/SystemLabel.astro';
 import ProjectChapter from './ProjectChapter.astro';
 
@@ -11,25 +12,143 @@ type ProjectEntry = CollectionEntry<'projects'>;
 interface Props {
   locale: Locale;
   projects: readonly ProjectEntry[];
+  archiveProjects?: readonly ProjectEntry[];
+  headingLevel?: 1 | 2;
 }
 
-const { locale, projects } = Astro.props;
+const {
+  locale,
+  projects,
+  archiveProjects = [],
+  headingLevel = 2,
+} = Astro.props;
 const dictionary = locale === 'en' ? en : es;
+const Heading = headingLevel === 1 ? 'h1' : 'h2';
+const ArchiveHeading = headingLevel === 1 ? 'h2' : 'h3';
+const ArchiveProjectHeading = headingLevel === 1 ? 'h3' : 'h4';
+const variant = headingLevel === 1 ? 'index' : 'home';
 ---
 
-<section id="selected-work" class="selected-work" tabindex="-1">
+<section
+  id="selected-work"
+  class:list={['selected-work', `selected-work--${variant}`]}
+  tabindex="-1"
+>
   <header class="selected-work__header wrapper flow">
     <SystemLabel as="p">{dictionary.work.label}</SystemLabel>
-    <h2>{dictionary.work.heading}</h2>
+    <Heading>{dictionary.work.heading}</Heading>
+    {
+      headingLevel === 1 && (
+        <p class="selected-work__description">
+          {dictionary.work.indexDescription}
+        </p>
+      )
+    }
   </header>
 
   <div class="selected-work__chapters">
     {
       projects.map((project, index) => (
-        <ProjectChapter locale={locale} project={project} index={index + 1} />
+        <div
+          class="selected-work__chapter"
+          data-featured-project={project.data.slug}
+        >
+          <ProjectChapter
+            locale={locale}
+            project={project}
+            index={index + 1}
+            headingLevel={headingLevel === 1 ? 2 : 3}
+            caseHref={caseStudyPath(project.data.slug, locale)}
+            variant={variant}
+          />
+        </div>
       ))
     }
   </div>
+
+  {
+    archiveProjects.length > 0 && (
+      <section
+        class="selected-work__archive wrapper"
+        aria-labelledby="project-archive-title"
+      >
+        <header class="selected-work__archive-header flow">
+          <SystemLabel as="p">
+            {dictionary.work.archive.toUpperCase()} /{' '}
+            {String(archiveProjects.length).padStart(2, '0')}
+          </SystemLabel>
+          <ArchiveHeading id="project-archive-title">
+            {dictionary.work.archive}
+          </ArchiveHeading>
+        </header>
+
+        <div class="selected-work__archive-list">
+          {archiveProjects.map((project, index) => {
+            const data = project.data;
+
+            return (
+              <article data-archive-project={data.slug}>
+                <p class="selected-work__archive-index" aria-hidden="true">
+                  A{String(index + 1).padStart(2, '0')}
+                </p>
+                <div class="flow">
+                  <ArchiveProjectHeading>
+                    {data.title[locale]}
+                  </ArchiveProjectHeading>
+                  <p>{data.summary[locale]}</p>
+                  <ul role="list">
+                    {data.technologies.map((technology) => (
+                      <li>
+                        <code>{technologyLabel(technology)}</code>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="selected-work__archive-links">
+                  {data.repository.state === 'available' ? (
+                    <a
+                      href={data.repository.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-project-link="repository"
+                      data-link-state="available"
+                    >
+                      {dictionary.projectStatus.repository}
+                    </a>
+                  ) : (
+                    <span
+                      data-project-link="repository"
+                      data-link-state={data.repository.state}
+                    >
+                      {dictionary.projectStatus.unavailable}
+                    </span>
+                  )}
+                  {data.demo.state === 'available' ? (
+                    <a
+                      href={data.demo.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-project-link="demo"
+                      data-link-state="available"
+                    >
+                      {dictionary.projectStatus.demo}
+                    </a>
+                  ) : (
+                    <span
+                      data-project-link="demo"
+                      data-link-state={data.demo.state}
+                    >
+                      {dictionary.work.sourceOnly}
+                    </span>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    )
+  }
 </section>
 
 <style>
@@ -39,20 +158,145 @@ const dictionary = locale === 'en' ? en : es;
       scroll-margin-block-start: 5rem;
     }
 
+    .selected-work--index {
+      padding-block-start: clamp(4rem, 8vw, 8rem);
+    }
+
     .selected-work__header {
       --flow-space: 1rem;
       margin-block-end: clamp(2.5rem, 6vw, 5rem);
     }
 
-    .selected-work__header h2 {
-      font-size: clamp(2.5rem, 6vw, 5.5rem);
+    .selected-work__header :is(h1, h2) {
+      max-inline-size: 12ch;
+      font-size: clamp(2.8rem, 7vw, 7rem);
       font-weight: 560;
-      letter-spacing: -0.05em;
-      line-height: 0.95;
+      letter-spacing: -0.055em;
+      line-height: 0.92;
+      text-wrap: balance;
+    }
+
+    .selected-work__description {
+      max-inline-size: 48rem;
+      color: var(--color-muted);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
     }
 
     .selected-work__chapters {
       display: grid;
+    }
+
+    .selected-work__chapter:nth-child(even) {
+      background: color-mix(in srgb, var(--color-panel), transparent 28%);
+    }
+
+    .selected-work__archive {
+      padding-block-start: clamp(5rem, 10vw, 9rem);
+    }
+
+    .selected-work__archive-header {
+      --flow-space: 0.9rem;
+      margin-block-end: 2rem;
+    }
+
+    .selected-work__archive-header :is(h2, h3) {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      font-weight: 560;
+      letter-spacing: -0.045em;
+    }
+
+    .selected-work__archive-list {
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .selected-work__archive-list article {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: clamp(1rem, 4vw, 4rem);
+      align-items: start;
+      padding-block: clamp(1.5rem, 4vw, 3rem);
+      border-block-end: 1px solid var(--color-border);
+    }
+
+    .selected-work__archive-index,
+    .selected-work__archive-links {
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .selected-work__archive-list :is(h3, h4) {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 560;
+      letter-spacing: -0.04em;
+    }
+
+    .selected-work__archive-list .flow > p {
+      max-inline-size: 48rem;
+      color: var(--color-muted);
+    }
+
+    .selected-work__archive-list ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .selected-work__archive-list li {
+      padding: 0.35rem 0.5rem;
+      border: 1px solid var(--color-border);
+      font-size: 0.72rem;
+    }
+
+    .selected-work__archive-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    .selected-work__archive-links a,
+    .selected-work__archive-links span {
+      display: inline-flex;
+      min-block-size: 2.75rem;
+      align-items: center;
+      padding-inline: 0.75rem;
+      border: 1px solid var(--color-border);
+    }
+
+    .selected-work__archive-links a {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .selected-work__archive-links a:hover {
+      border-color: var(--color-signal);
+      color: var(--color-signal);
+    }
+
+    @media (max-width: 48rem) {
+      .selected-work__archive-list article {
+        grid-template-columns: auto minmax(0, 1fr);
+      }
+
+      .selected-work__archive-links {
+        grid-column: 2;
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 28rem) {
+      .selected-work__archive-list article {
+        grid-template-columns: 1fr;
+      }
+
+      .selected-work__archive-links {
+        grid-column: auto;
+      }
     }
   }
 </style>

@@ -28,7 +28,10 @@ function makeProject(overrides: Record<string, unknown> = {}) {
     featuredOrder: 1,
     archiveOrder: null,
     ownership: 'collaborative',
-    teamAttribution: ['Juan Rodriguez', 'Project collaborators'],
+    teamAttribution: {
+      en: ['Juan Rodriguez', 'Project collaborators'],
+      es: ['Juan Rodriguez', 'Colaboradores del proyecto'],
+    },
     title: { en: 'Formula1', es: 'Formula1' },
     summary: {
       en: 'A modular motorsport management experience.',
@@ -300,7 +303,9 @@ describe('project content integrity', () => {
   });
 
   it('rejects a collaborative project without meaningful attribution', () => {
-    const invalid = makeProject({ teamAttribution: ['   '] });
+    const invalid = makeProject({
+      teamAttribution: { en: ['   '], es: ['Colaboradores del proyecto'] },
+    });
 
     expect(() => projectSchema.parse(invalid)).toThrow(/attribution/i);
   });

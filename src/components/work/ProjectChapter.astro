@@ -1,20 +1,41 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 import { en, es } from '../../i18n';
 import type { Locale } from '../../lib/locale';
+import { resolveProjectImage, technologyLabel } from '../../lib/project-media';
+import ArchitectureMap from './ArchitectureMap.astro';
+import ProjectIdentityFallback from './ProjectIdentityFallback.astro';
 
 type ProjectEntry = CollectionEntry<'projects'>;
 
 interface Props {
   locale: Locale;
   project: ProjectEntry;
-  index: number;
+  index?: number;
+  headingLevel?: 1 | 2 | 3;
+  caseHref?: string;
+  backHref?: string;
+  variant?: 'home' | 'index' | 'case';
 }
 
-const { locale, project, index } = Astro.props;
+const {
+  locale,
+  project,
+  index = project.data.featuredOrder ?? 1,
+  headingLevel = 3,
+  caseHref,
+  backHref,
+  variant = 'home',
+} = Astro.props;
 const dictionary = locale === 'en' ? en : es;
 const data = project.data;
+const teamAttribution = data.teamAttribution[locale];
+const TitleHeading =
+  headingLevel === 1 ? 'h1' : headingLevel === 2 ? 'h2' : 'h3';
+const SectionHeading =
+  headingLevel === 1 ? 'h2' : headingLevel === 2 ? 'h3' : 'h4';
 
 const ownershipLabel =
   data.ownership === 'individual'
@@ -51,14 +72,25 @@ const availableLinks = projectLinks.filter(
 const unavailableLinks = projectLinks.filter(
   (link) => link.availability.state !== 'available',
 );
+const visualMedia = data.media.find(
+  (media) => media.kind === 'image' || media.kind === 'diagram',
+);
+const fallbackMedia = data.media.find(
+  (media) => media.kind === 'identity-fallback',
+);
+const projectImage = visualMedia
+  ? resolveProjectImage(visualMedia.src)
+  : undefined;
+const fallbackAlt =
+  fallbackMedia?.alt[locale] ?? `${data.title[locale]} project identity`;
 ---
 
 <article
-  class="project-chapter"
+  class:list={['project-chapter', `project-chapter--${variant}`]}
   data-project-chapter={data.slug}
   data-ownership={data.ownership}
   data-project-index={index}
-  aria-labelledby={`${data.slug}-title`}
+  aria-labelledby={`${data.slug}-${variant}-title`}
 >
   <div class="project-chapter__inner wrapper">
     <header class="project-chapter__header flow">
@@ -69,64 +101,84 @@ const unavailableLinks = projectLinks.filter(
         <span data-project-status={data.status}>{statusLabel}</span>
         <span data-project-ownership={data.ownership}>{ownershipLabel}</span>
       </div>
-      <h3 id={`${data.slug}-title`}>{data.title[locale]}</h3>
+      <TitleHeading id={`${data.slug}-${variant}-title`}>
+        {data.title[locale]}
+      </TitleHeading>
       <p class="project-chapter__summary">{data.summary[locale]}</p>
+      {
+        data.ownership === 'collaborative' && teamAttribution.length > 0 && (
+          <p class="project-chapter__attribution" data-team-attribution>
+            {teamAttribution.join(' · ')}
+          </p>
+        )
+      }
     </header>
+
+    <figure class="project-chapter__identity" data-project-identity>
+      {
+        visualMedia && projectImage ? (
+          <Image
+            src={projectImage}
+            alt={visualMedia.alt[locale]}
+            width={visualMedia.width}
+            height={visualMedia.height}
+            widths={[480, 768, 1024, 1275]}
+            sizes="(max-width: 56rem) 100vw, 60vw"
+            format="webp"
+            loading={variant === 'case' ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        ) : (
+          <ProjectIdentityFallback
+            title={data.title[locale]}
+            alt={fallbackAlt}
+            index={index}
+            nodeLabel={dictionary.work.nodeLabel}
+            identitySignalLabel={dictionary.work.identitySignal}
+          />
+        )
+      }
+    </figure>
 
     <div class="project-chapter__evidence">
       <section class="flow">
-        <h4>{dictionary.work.problem}</h4>
+        <SectionHeading>{dictionary.work.problem}</SectionHeading>
         <p>{data.problem[locale]}</p>
       </section>
 
       <section class="flow">
-        <h4>{dictionary.work.contribution}</h4>
+        <SectionHeading>{dictionary.work.contribution}</SectionHeading>
         <p>{data.contribution[locale]}</p>
       </section>
 
       <section class="flow project-chapter__architecture">
-        <h4>{dictionary.work.architecture}</h4>
-        <ol role="list" data-architecture-nodes>
-          {
-            data.architectureNodes.map((node) => (
-              <li>
-                <code>{node}</code>
-              </li>
-            ))
-          }
-        </ol>
-        <ul role="list" data-architecture-edges>
-          {
-            data.architectureEdges.map(([source, target]) => (
-              <li>
-                <code>{source}</code>
-                <span aria-hidden="true"> → </span>
-                <code>{target}</code>
-              </li>
-            ))
-          }
-        </ul>
+        <SectionHeading>{dictionary.work.architecture}</SectionHeading>
+        <ArchitectureMap
+          nodes={data.architectureNodes}
+          edges={data.architectureEdges}
+          connectsToLabel={dictionary.work.connectsTo}
+        />
       </section>
 
       <section class="flow">
-        <h4>{dictionary.work.decisions}</h4>
+        <SectionHeading>{dictionary.work.decisions}</SectionHeading>
         <ul class="project-chapter__decisions">
           {data.decisions[locale].map((decision) => <li>{decision}</li>)}
         </ul>
       </section>
 
       <section class="flow">
-        <h4>{dictionary.work.outcome}</h4>
+        <SectionHeading>{dictionary.work.outcome}</SectionHeading>
         <p>{data.outcome[locale]}</p>
       </section>
 
       <section class="flow">
-        <h4>{dictionary.work.technologies}</h4>
+        <SectionHeading>{dictionary.work.technologies}</SectionHeading>
         <ul class="project-chapter__technologies" role="list">
           {
             data.technologies.map((technology) => (
               <li>
-                <code>{technology}</code>
+                <code>{technologyLabel(technology)}</code>
               </li>
             ))
           }
@@ -135,6 +187,20 @@ const unavailableLinks = projectLinks.filter(
     </div>
 
     <footer class="project-chapter__links">
+      {
+        backHref && (
+          <a href={backHref} data-back-to-work>
+            <span aria-hidden="true">←</span> {dictionary.work.backToIndex}
+          </a>
+        )
+      }
+      {
+        caseHref && (
+          <a href={caseHref} data-case-study-link>
+            {dictionary.work.viewCase} <span aria-hidden="true">↗</span>
+          </a>
+        )
+      }
       {
         availableLinks.map((link) => (
           <a
@@ -154,7 +220,7 @@ const unavailableLinks = projectLinks.filter(
             data-project-link={link.kind}
             data-link-state={link.availability.state}
           >
-            {link.availability.state === 'source-only'
+            {link.kind === 'demo' || link.availability.state === 'source-only'
               ? dictionary.work.sourceOnly
               : `${link.label}: ${dictionary.projectStatus.unavailable}`}
           </span>
@@ -173,14 +239,16 @@ const unavailableLinks = projectLinks.filter(
       border-block-start: 1px solid var(--color-border);
     }
 
-    .project-chapter:nth-child(even) {
-      background: color-mix(in srgb, var(--color-panel), transparent 28%);
+    .project-chapter--case {
+      min-block-size: auto;
+      padding-block-start: clamp(2.5rem, 6vw, 6rem);
+      border-block-start: 0;
     }
 
     .project-chapter__inner {
       display: grid;
-      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-      gap: clamp(2rem, 7vw, 8rem);
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+      gap: clamp(2rem, 6vw, 7rem);
     }
 
     .project-chapter__header {
@@ -190,6 +258,7 @@ const unavailableLinks = projectLinks.filter(
 
     .project-chapter__index,
     .project-chapter__signals,
+    .project-chapter__attribution,
     .project-chapter__links {
       color: var(--color-muted);
       font-family: var(--font-mono);
@@ -208,7 +277,7 @@ const unavailableLinks = projectLinks.filter(
       color: var(--color-signal);
     }
 
-    .project-chapter h3 {
+    .project-chapter__header :is(h1, h2, h3) {
       max-inline-size: 12ch;
       font-size: clamp(2.5rem, 5vw, 5.25rem);
       font-weight: 560;
@@ -217,13 +286,30 @@ const unavailableLinks = projectLinks.filter(
       text-wrap: balance;
     }
 
+    .project-chapter--case .project-chapter__header h1 {
+      font-size: clamp(3.2rem, 8vw, 8rem);
+    }
+
     .project-chapter__summary {
       max-inline-size: 42rem;
       color: var(--color-muted);
       font-size: 1.12rem;
     }
 
+    .project-chapter__identity {
+      align-self: start;
+      margin: 0;
+    }
+
+    .project-chapter__identity :global(img) {
+      inline-size: 100%;
+      block-size: auto;
+      border: 1px solid var(--color-border);
+      background: var(--color-panel);
+    }
+
     .project-chapter__evidence {
+      grid-column: 2;
       display: grid;
       gap: 2.5rem;
     }
@@ -234,7 +320,7 @@ const unavailableLinks = projectLinks.filter(
       border-block-start: 1px solid var(--color-border);
     }
 
-    .project-chapter__evidence h4 {
+    .project-chapter__evidence :is(h2, h3, h4) {
       color: var(--color-signal);
       font-family: var(--font-mono);
       font-size: 0.74rem;
@@ -255,8 +341,6 @@ const unavailableLinks = projectLinks.filter(
       padding-inline-start: 1.25rem;
     }
 
-    .project-chapter__architecture ol,
-    .project-chapter__architecture ul,
     .project-chapter__technologies {
       display: flex;
       flex-wrap: wrap;
@@ -265,17 +349,11 @@ const unavailableLinks = projectLinks.filter(
       padding: 0;
     }
 
-    .project-chapter__architecture li,
     .project-chapter__technologies li {
       padding: 0.4rem 0.6rem;
       border: 1px solid var(--color-border);
       color: var(--color-text);
       font-size: 0.78rem;
-    }
-
-    .project-chapter__architecture [data-architecture-edges] li {
-      border-style: dashed;
-      color: var(--color-muted);
     }
 
     .project-chapter__links {
@@ -288,10 +366,11 @@ const unavailableLinks = projectLinks.filter(
     }
 
     .project-chapter__links a,
-    .project-chapter__links span {
+    .project-chapter__links > span {
       display: inline-flex;
       min-block-size: 2.75rem;
       align-items: center;
+      gap: 0.4rem;
       padding-inline: 0.875rem;
       border: 1px solid var(--color-border);
     }
@@ -306,7 +385,7 @@ const unavailableLinks = projectLinks.filter(
       color: var(--color-signal);
     }
 
-    .project-chapter__links span {
+    .project-chapter__links > span {
       color: var(--color-muted);
     }
 
@@ -319,6 +398,7 @@ const unavailableLinks = projectLinks.filter(
         grid-template-columns: 1fr;
       }
 
+      .project-chapter__evidence,
       .project-chapter__links {
         grid-column: auto;
       }
