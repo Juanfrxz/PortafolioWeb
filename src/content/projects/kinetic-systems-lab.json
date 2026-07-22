@@ -1,0 +1,96 @@
+{
+  "slug": "kinetic-systems-lab",
+  "type": "portfolio-system",
+  "status": "in-progress",
+  "visibility": "featured",
+  "featuredOrder": 3,
+  "archiveOrder": null,
+  "ownership": "individual",
+  "teamAttribution": {
+    "en": [],
+    "es": []
+  },
+  "title": {
+    "en": "Kinetic Systems Lab",
+    "es": "Laboratorio de Sistemas Cinéticos"
+  },
+  "summary": {
+    "en": "An in-progress portfolio architecture connecting Astro content, localization, accessible interaction, and adaptive 3D foundations.",
+    "es": "Una arquitectura de portafolio en progreso que conecta contenido en Astro, localización, interacción accesible y fundamentos de 3D adaptativo."
+  },
+  "problem": {
+    "en": "Replace a static portfolio inventory with a bilingual system that can present verified work through clear content and interaction boundaries.",
+    "es": "Reemplazar un inventario estático del portafolio por un sistema bilingüe capaz de presentar trabajo verificado mediante límites claros de contenido e interacción."
+  },
+  "contribution": {
+    "en": "I am structuring the content model, localized routes, accessible interface contracts, and progressive visual architecture in this repository.",
+    "es": "Estoy estructurando el modelo de contenido, las rutas localizadas, los contratos de interfaz accesible y la arquitectura visual progresiva en este repositorio."
+  },
+  "decisions": {
+    "en": [
+      "Use Astro content collections as a validated build-time boundary.",
+      "Keep bilingual copy and locale routes deterministic.",
+      "Treat rich 3D as a progressive layer rather than a content dependency."
+    ],
+    "es": [
+      "Usar colecciones de contenido de Astro como límite validado durante el build.",
+      "Mantener deterministas el contenido bilingüe y las rutas por idioma.",
+      "Tratar el 3D enriquecido como una capa progresiva y no como dependencia del contenido."
+    ]
+  },
+  "outcome": {
+    "en": "The verified build produces 11 static pages, limits initial non-3D JavaScript to 61.6 KiB gzip, defers the 310.3 KiB hero closure, and serves 2,070,924-byte full and 782,400-byte light avatar variants. Twenty automated axe combinations pass; stable Lighthouse medians and physical-device checks remain pending.",
+    "es": "El build verificado produce 11 páginas estáticas, limita el JavaScript inicial sin 3D a 61,6 KiB gzip, difiere el cierre del hero de 310,3 KiB y sirve variantes del avatar de 2.070.924 bytes y 782.400 bytes. Pasan veinte combinaciones automatizadas de axe; siguen pendientes medianas estables de Lighthouse y pruebas en dispositivos físicos."
+  },
+  "technologies": ["astro", "typescript", "react", "three-js"],
+  "capabilities": [
+    "content-architecture",
+    "localization",
+    "accessible-interaction",
+    "immersive-web"
+  ],
+  "architectureNodes": [
+    "content-collections",
+    "localized-routes",
+    "astro-pages",
+    "interactive-islands",
+    "adaptive-visuals"
+  ],
+  "architectureEdges": [
+    ["content-collections", "localized-routes"],
+    ["localized-routes", "astro-pages"],
+    ["astro-pages", "interactive-islands"],
+    ["interactive-islands", "adaptive-visuals"]
+  ],
+  "repository": {
+    "state": "available",
+    "url": "https://github.com/Juanfrxz/PortafolioWeb"
+  },
+  "demo": {
+    "state": "unverified",
+    "url": null
+  },
+  "documentation": {
+    "state": "unavailable",
+    "url": null
+  },
+  "media": [
+    {
+      "kind": "identity-fallback",
+      "src": null,
+      "width": null,
+      "height": null,
+      "alt": {
+        "en": "Kinetic Systems Lab project identity",
+        "es": "Identidad del proyecto Laboratorio de Sistemas Cinéticos"
+      }
+    }
+  ],
+  "evidenceNotes": [
+    "The configured origin remote confirms the public PortafolioWeb repository URL.",
+    "The 2026-07-22 production build reported 11 pages and passed the static build audit.",
+    "The 2026-07-22 bundle analyzer reported 61.6 KiB gzip initial non-3D JavaScript and a 310.3 KiB deferred hero closure.",
+    "The model audit measured 2,070,924-byte full and 782,400-byte light GLB variants.",
+    "The automated axe matrix passed 20 of 20 locale, route, and theme combinations; Lighthouse and physical-device release gates are still explicitly pending."
+  ]
+}

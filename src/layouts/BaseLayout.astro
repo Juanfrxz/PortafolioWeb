@@ -1,0 +1,66 @@
+---
+import '@fontsource-variable/instrument-sans/index.css';
+import '@fontsource/dm-mono/400.css';
+import '../styles/tokens.css';
+import '../styles/reset.css';
+import '../styles/global.css';
+import '../styles/utilities.css';
+
+import JsonLd from '../components/seo/JsonLd.astro';
+import SeoHead from '../components/seo/SeoHead.astro';
+import type { Locale } from '../lib/locale';
+import { buildSeo, type JsonLdObject, type OpenGraphType } from '../lib/seo';
+import { THEME_BOOTSTRAP_SCRIPT } from '../lib/theme';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  canonicalPath: string;
+  alternatePath: string;
+  socialImagePath: string;
+  openGraphType?: OpenGraphType;
+  structuredData?: JsonLdObject | readonly JsonLdObject[];
+}
+
+const {
+  locale,
+  title,
+  description,
+  canonicalPath,
+  alternatePath,
+  socialImagePath,
+  openGraphType,
+  structuredData = [],
+} = Astro.props;
+const seo = buildSeo({
+  locale,
+  title,
+  description,
+  canonicalPath,
+  alternatePath,
+  socialImagePath,
+  openGraphType: openGraphType ?? 'website',
+});
+const structuredDataItems = Array.isArray(structuredData)
+  ? structuredData
+  : [structuredData];
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <style is:inline>
+      @layer reset, tokens, base, components, utilities;
+    </style>
+    <script is:inline set:html={THEME_BOOTSTRAP_SCRIPT} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <SeoHead seo={seo} />
+    {structuredDataItems.map((data) => <JsonLd data={data} />)}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,321 @@
+---
+import { SITE } from '../../config/site';
+import { en, es } from '../../i18n';
+import { alternateLocalePath, homePath, type Locale } from '../../lib/locale';
+import LocaleLinks from '../ui/LocaleLinks.astro';
+import ThemeControl from '../ui/ThemeControl';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+const alternateLocale: Locale = locale === 'en' ? 'es' : 'en';
+const currentPath = Astro.url.pathname;
+const localizedHomePath = homePath(locale);
+const isHomeRoute = currentPath === localizedHomePath;
+const localizedAnchor = (id: string) =>
+  isHomeRoute ? `#${id}` : `${localizedHomePath}#${id}`;
+
+const navigation = [
+  {
+    label: dictionary.nav.work,
+    href: localizedAnchor('selected-work'),
+    id: 'work',
+  },
+  {
+    label: dictionary.nav.about,
+    href: localizedAnchor('signal-trail'),
+    id: 'about',
+  },
+  {
+    label: dictionary.nav.contact,
+    href: localizedAnchor('contact'),
+    id: 'contact',
+  },
+];
+---
+
+<a class="skip-link" href="#main-content">
+  {dictionary.accessibility.skipToContent}
+</a>
+
+<header class="hud">
+  <div class="hud__inner wrapper">
+    <a class="hud__identity" href={homePath(locale)} aria-label={SITE.name}>
+      <span aria-hidden="true">JR / SYS</span>
+    </a>
+
+    <nav class="hud__desktop-navigation" aria-label={dictionary.nav.menu}>
+      {
+        navigation.map((item) => (
+          <a
+            href={item.href}
+            data-hud-anchor
+            data-hud-work={item.id === 'work' ? true : undefined}
+            data-hud-about={item.id === 'about' ? true : undefined}
+            data-hud-contact={item.id === 'contact' ? true : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <details
+      class="hud__mobile-menu"
+      data-hud-menu
+      data-open-label={dictionary.accessibility.openMenu}
+      data-close-label={dictionary.accessibility.closeMenu}
+    >
+      <summary aria-label={dictionary.accessibility.openMenu}>
+        <span aria-hidden="true">{dictionary.nav.menu}</span>
+      </summary>
+      <nav class="hud__mobile-navigation" aria-label={dictionary.nav.menu}>
+        {
+          navigation.map((item) => (
+            <a href={item.href} data-hud-anchor>
+              <span>{item.label}</span>
+            </a>
+          ))
+        }
+      </nav>
+    </details>
+
+    <div class="hud__utilities">
+      <ThemeControl client:load labels={dictionary.theme} />
+      <LocaleLinks
+        locale={locale}
+        currentPath={currentPath}
+        alternatePath={alternateLocalePath(currentPath, alternateLocale)}
+        label={dictionary.accessibility.changeLanguage}
+      />
+    </div>
+  </div>
+</header>
+
+<script>
+  function focusHashTarget(anchor: HTMLAnchorElement, fallback: HTMLElement) {
+    const targetId = decodeURIComponent(anchor.hash.slice(1));
+    const target = document.getElementById(targetId);
+
+    requestAnimationFrame(() => {
+      if (target) {
+        target.focus({ preventScroll: true });
+      } else {
+        fallback.focus();
+      }
+    });
+  }
+
+  const skipLink = document.querySelector<HTMLAnchorElement>('.skip-link');
+
+  skipLink?.addEventListener('click', () => {
+    focusHashTarget(skipLink, skipLink);
+  });
+
+  document
+    .querySelectorAll<HTMLDetailsElement>('details[data-hud-menu]')
+    .forEach((details) => {
+      const summary = details.querySelector<HTMLElement>('summary');
+
+      if (!summary) return;
+
+      const updateLabel = () => {
+        const label = details.open
+          ? details.dataset.closeLabel
+          : details.dataset.openLabel;
+
+        if (label) summary.setAttribute('aria-label', label);
+      };
+
+      details.addEventListener('toggle', updateLabel);
+      updateLabel();
+    });
+
+  document
+    .querySelectorAll<HTMLAnchorElement>('[data-hud-anchor]')
+    .forEach((anchor) => {
+      anchor.addEventListener('click', () => {
+        const details = anchor.closest<HTMLDetailsElement>(
+          'details[data-hud-menu]',
+        );
+        const summary = details?.querySelector<HTMLElement>('summary');
+
+        if (details) details.open = false;
+
+        const destination = new URL(anchor.href, window.location.href);
+        const isSameDocument =
+          destination.pathname === window.location.pathname &&
+          destination.search === window.location.search;
+
+        if (isSameDocument) {
+          focusHashTarget(anchor, summary ?? anchor);
+        }
+      });
+    });
+</script>
+
+<style>
+  @layer components {
+    .skip-link {
+      position: fixed;
+      inset-block-start: 0.75rem;
+      inset-inline-start: 0.75rem;
+      z-index: 100;
+      display: inline-flex;
+      min-block-size: 2.75rem;
+      align-items: center;
+      padding-inline: 1rem;
+      border: 1px solid var(--color-signal);
+      background: var(--color-panel);
+      color: var(--color-text);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      transform: translateY(calc(-100% - 1rem));
+      transition: transform var(--transition-fast);
+    }
+
+    .skip-link:focus-visible {
+      transform: translateY(0);
+    }
+
+    .hud {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 20;
+      border-block-end: 1px solid var(--color-border);
+      background: color-mix(in srgb, var(--color-bg), transparent 12%);
+      backdrop-filter: blur(1rem);
+    }
+
+    .hud__inner {
+      display: grid;
+      min-block-size: 4.5rem;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: clamp(0.75rem, 2vw, 2rem);
+    }
+
+    .hud__identity,
+    .hud__desktop-navigation a,
+    .hud__mobile-navigation a,
+    .hud__mobile-menu summary {
+      display: inline-flex;
+      min-block-size: 2.75rem;
+      min-inline-size: 2.75rem;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .hud__identity {
+      justify-content: flex-start;
+      color: var(--color-signal);
+    }
+
+    .hud__desktop-navigation {
+      display: flex;
+      justify-content: center;
+      gap: clamp(0.5rem, 2vw, 2rem);
+    }
+
+    .hud__desktop-navigation a,
+    .hud__mobile-navigation a {
+      padding-inline: 0.75rem;
+      color: var(--color-muted);
+    }
+
+    .hud__desktop-navigation a:hover,
+    .hud__mobile-navigation a:hover {
+      color: var(--color-signal);
+    }
+
+    .hud__utilities {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    .hud__mobile-menu {
+      position: relative;
+      display: none;
+    }
+
+    .hud__mobile-menu summary {
+      border: 1px solid var(--color-border);
+      background: var(--color-panel);
+      cursor: pointer;
+      list-style: none;
+      padding-inline: 0.75rem;
+    }
+
+    .hud__mobile-menu summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .hud__mobile-navigation {
+      position: absolute;
+      inset-block-start: calc(100% + 0.75rem);
+      inset-inline-start: 0;
+      display: grid;
+      min-inline-size: 12rem;
+      padding: 0.5rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-panel);
+      box-shadow: 0 1rem 3rem
+        color-mix(in srgb, var(--color-bg), transparent 20%);
+    }
+
+    .hud__mobile-navigation a {
+      justify-content: flex-start;
+    }
+
+    @media (max-width: 48rem) {
+      .hud__inner {
+        min-block-size: 4rem;
+        grid-template-columns: auto 1fr;
+      }
+
+      .hud__identity,
+      .hud__desktop-navigation {
+        display: none;
+      }
+
+      .hud__mobile-menu {
+        display: block;
+      }
+
+      .hud__utilities {
+        min-inline-size: 0;
+      }
+    }
+
+    @media (max-width: 24rem) {
+      .hud__utilities {
+        gap: 0.25rem;
+      }
+
+      .hud__utilities :global(.theme-control) {
+        inline-size: 2.75rem;
+        padding-inline: 0;
+        overflow: hidden;
+      }
+
+      .hud__utilities :global(.theme-control__label) {
+        inline-size: 1px;
+        block-size: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+    }
+  }
+</style>

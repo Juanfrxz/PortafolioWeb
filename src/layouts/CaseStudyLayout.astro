@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import Footer from '../components/layout/Footer.astro';
+import HudNavigation from '../components/layout/HudNavigation.astro';
+import SiteShell from '../components/layout/SiteShell.astro';
+import ProjectChapter from '../components/work/ProjectChapter.astro';
+import { en, es } from '../i18n';
+import { caseStudyPath, type Locale, workIndexPath } from '../lib/locale';
+import { buildProjectStructuredData } from '../lib/seo';
+import BaseLayout from './BaseLayout.astro';
+
+type ProjectEntry = CollectionEntry<'projects'>;
+
+interface Props {
+  locale: Locale;
+  project: ProjectEntry;
+}
+
+const { locale, project } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+const alternateLocale: Locale = locale === 'en' ? 'es' : 'en';
+const data = project.data;
+const title = `${data.title[locale]} — ${dictionary.work.caseStudyTitle} | Juan Rodriguez`;
+---
+
+<BaseLayout
+  locale={locale}
+  title={title}
+  description={data.summary[locale]}
+  canonicalPath={caseStudyPath(data.slug, locale)}
+  alternatePath={caseStudyPath(data.slug, alternateLocale)}
+  socialImagePath={`/social/${data.slug}-${locale}.webp`}
+  openGraphType="article"
+  structuredData={buildProjectStructuredData(data, locale)}
+>
+  <SiteShell>
+    <HudNavigation locale={locale} />
+    <main id="main-content" class="case-study" tabindex="-1">
+      <ProjectChapter
+        locale={locale}
+        project={project}
+        index={data.featuredOrder ?? 1}
+        headingLevel={1}
+        backHref={workIndexPath(locale)}
+        variant="case"
+      />
+    </main>
+    <Footer locale={locale} />
+  </SiteShell>
+</BaseLayout>
+
+<style>
+  .case-study {
+    background:
+      radial-gradient(
+        circle at 80% 8%,
+        color-mix(in srgb, var(--color-primary), transparent 88%),
+        transparent 28rem
+      ),
+      var(--color-bg);
+  }
+</style>

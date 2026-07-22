@@ -1,0 +1,92 @@
+{
+  "slug": "sgci-app",
+  "type": "business-system",
+  "status": "shipped",
+  "visibility": "featured",
+  "featuredOrder": 2,
+  "archiveOrder": null,
+  "ownership": "collaborative",
+  "teamAttribution": {
+    "en": ["SGCI-app repository collaborators"],
+    "es": ["Colaboradores del repositorio SGCI-app"]
+  },
+  "title": {
+    "en": "SGCI-app",
+    "es": "SGCI-app"
+  },
+  "summary": {
+    "en": "A collaborative business system spanning inventory, purchasing, sales, persistence, and SQL-backed workflows.",
+    "es": "Un sistema empresarial colaborativo que abarca inventario, compras, ventas, persistencia y flujos respaldados por SQL."
+  },
+  "problem": {
+    "en": "Organize related inventory, purchasing, and sales operations without coupling domain flow directly to persistence.",
+    "es": "Organizar operaciones relacionadas de inventario, compras y ventas sin acoplar el flujo de dominio directamente a la persistencia."
+  },
+  "contribution": {
+    "en": "The collaborative repository separates business workflows, repository access, persistence, and SQL concerns into visible layers.",
+    "es": "El repositorio colaborativo separa los flujos de negocio, el acceso mediante repositorios, la persistencia y las responsabilidades SQL en capas visibles."
+  },
+  "decisions": {
+    "en": [
+      "Group inventory, purchasing, and sales behavior by business responsibility.",
+      "Use repository boundaries between application logic and persistence.",
+      "Keep SQL storage concerns behind the persistence layer."
+    ],
+    "es": [
+      "Agrupar inventario, compras y ventas por responsabilidad de negocio.",
+      "Usar límites de repositorio entre la lógica de aplicación y la persistencia.",
+      "Mantener las responsabilidades de almacenamiento SQL detrás de la capa de persistencia."
+    ]
+  },
+  "outcome": {
+    "en": "The source provides an inspectable layered implementation of connected business operations; no public demo is claimed.",
+    "es": "El código ofrece una implementación por capas verificable de operaciones empresariales conectadas; no se afirma que exista una demo pública."
+  },
+  "technologies": ["c-sharp", "dotnet", "sql"],
+  "capabilities": [
+    "backend-architecture",
+    "business-systems",
+    "data-persistence"
+  ],
+  "architectureNodes": [
+    "business-workflows",
+    "application-layer",
+    "repositories",
+    "persistence",
+    "sql-database"
+  ],
+  "architectureEdges": [
+    ["business-workflows", "application-layer"],
+    ["application-layer", "repositories"],
+    ["repositories", "persistence"],
+    ["persistence", "sql-database"]
+  ],
+  "repository": {
+    "state": "available",
+    "url": "https://github.com/Juanfrxz/SGCI-app"
+  },
+  "demo": {
+    "state": "source-only",
+    "url": null
+  },
+  "documentation": {
+    "state": "unavailable",
+    "url": null
+  },
+  "media": [
+    {
+      "kind": "identity-fallback",
+      "src": null,
+      "width": null,
+      "height": null,
+      "alt": {
+        "en": "SGCI-app system identity",
+        "es": "Identidad del sistema SGCI-app"
+      }
+    }
+  ],
+  "evidenceNotes": [
+    "Public repository inventory supports purchasing, sales, layered organization, repository, persistence, and SQL claims.",
+    "No verified public demo is attached to this record."
+  ]
+}

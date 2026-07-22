@@ -1,0 +1,160 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { en, es } from '../../i18n';
+import type { Locale } from '../../lib/locale';
+import SystemLabel from '../ui/SystemLabel.astro';
+
+type ExperienceEntry = CollectionEntry<'experience'>;
+
+interface Props {
+  locale: Locale;
+  entries: readonly ExperienceEntry[];
+}
+
+const { locale, entries } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+---
+
+<section id="signal-trail" class="signal-trail" tabindex="-1">
+  <div class="signal-trail__inner wrapper">
+    <header class="signal-trail__header flow">
+      <SystemLabel as="p">{dictionary.trail.label}</SystemLabel>
+      <h2>{dictionary.trail.heading}</h2>
+    </header>
+
+    <ol class="signal-trail__entries" role="list">
+      {
+        entries.map((entry) => {
+          const data = entry.data;
+          const isCurrent = data.status === 'current';
+
+          return (
+            <li
+              data-trail-entry
+              data-experience-id={data.id}
+              data-current={isCurrent ? 'true' : undefined}
+            >
+              <div class="signal-trail__marker" aria-hidden="true" />
+              <article class="flow" aria-labelledby={`${data.id}-role`}>
+                <div class="signal-trail__meta cluster">
+                  <span>{data.timeframe[locale]}</span>
+                  {isCurrent && <strong>{dictionary.trail.current}</strong>}
+                </div>
+                <h3 id={`${data.id}-role`}>{data.role[locale]}</h3>
+                {data.organization && <p>{data.organization[locale]}</p>}
+                <p>{data.summary[locale]}</p>
+              </article>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  @layer components {
+    .signal-trail {
+      padding-block: clamp(5rem, 11vw, 11rem);
+      scroll-margin-block-start: 5rem;
+    }
+
+    .signal-trail__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: clamp(2.5rem, 8vw, 9rem);
+    }
+
+    .signal-trail__header {
+      --flow-space: 1rem;
+    }
+
+    .signal-trail__header h2 {
+      max-inline-size: 8ch;
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 560;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+    }
+
+    .signal-trail__entries {
+      margin: 0;
+      padding: 0;
+    }
+
+    .signal-trail__entries > li {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.25rem 1fr;
+      gap: 1.25rem;
+      padding-block: 0 3rem;
+    }
+
+    .signal-trail__entries > li::before {
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0.36rem;
+      inline-size: 1px;
+      background: var(--color-border);
+      content: '';
+    }
+
+    .signal-trail__entries > li:last-child {
+      padding-block-end: 0;
+    }
+
+    .signal-trail__marker {
+      position: relative;
+      z-index: 1;
+      inline-size: 0.75rem;
+      block-size: 0.75rem;
+      margin-block-start: 0.25rem;
+      border: 2px solid var(--color-muted);
+      border-radius: 50%;
+      background: var(--color-bg);
+    }
+
+    [data-current='true'] .signal-trail__marker {
+      border-color: var(--color-signal);
+      background: var(--color-signal);
+      box-shadow: 0 0 1.25rem
+        color-mix(in srgb, var(--color-signal), transparent 35%);
+    }
+
+    .signal-trail article {
+      --flow-space: 0.65rem;
+    }
+
+    .signal-trail__meta {
+      --cluster-space: 0.6rem;
+      color: var(--color-muted);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .signal-trail__meta strong {
+      color: var(--color-signal);
+      font-weight: 400;
+    }
+
+    .signal-trail h3 {
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-weight: 520;
+      letter-spacing: -0.03em;
+    }
+
+    .signal-trail article p {
+      max-inline-size: 50rem;
+      color: var(--color-muted);
+    }
+
+    @media (max-width: 50rem) {
+      .signal-trail__inner {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+</style>

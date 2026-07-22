@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+
+import Footer from '../../components/layout/Footer.astro';
+import HudNavigation from '../../components/layout/HudNavigation.astro';
+import SiteShell from '../../components/layout/SiteShell.astro';
+import SelectedWork from '../../components/work/SelectedWork.astro';
+import { en as dictionary } from '../../i18n';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { type Locale, workIndexPath } from '../../lib/locale';
+import { getArchiveProjects, getFeaturedProjects } from '../../lib/projects';
+
+const locale: Locale = 'en';
+const entries = await getCollection('projects');
+const featuredProjects = getFeaturedProjects(entries);
+const archiveProjects = getArchiveProjects(entries);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${dictionary.work.heading} — Juan Rodriguez`}
+  description={dictionary.work.indexDescription}
+  canonicalPath={workIndexPath(locale)}
+  alternatePath={workIndexPath('es')}
+  socialImagePath="/social/work-en.webp"
+>
+  <SiteShell>
+    <HudNavigation locale={locale} />
+    <main id="main-content" tabindex="-1">
+      <SelectedWork
+        locale={locale}
+        projects={featuredProjects}
+        archiveProjects={archiveProjects}
+        headingLevel={1}
+      />
+    </main>
+    <Footer locale={locale} />
+  </SiteShell>
+</BaseLayout>

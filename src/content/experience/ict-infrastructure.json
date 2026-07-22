@@ -1,0 +1,18 @@
+{
+  "id": "ict-infrastructure",
+  "order": 1,
+  "role": {
+    "en": "ICT infrastructure foundation",
+    "es": "Fundamentos de infraestructura TIC"
+  },
+  "summary": {
+    "en": "A technical foundation in infrastructure implementation, connected systems, and operational problem solving.",
+    "es": "Una base técnica en implementación de infraestructura, sistemas conectados y resolución de problemas operativos."
+  },
+  "timeframe": {
+    "en": "Professional foundation",
+    "es": "Base profesional"
+  },
+  "status": "past",
+  "capabilities": ["ict-infrastructure", "connected-systems"]
+}

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.superpowers/
+assets/
+index.html
+vite.config.js
+package-lock.json
+docs/superpowers/
+README.md
+.github/workflows/deploy.yml

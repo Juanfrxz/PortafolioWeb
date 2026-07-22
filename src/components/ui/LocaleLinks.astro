@@ -1,0 +1,40 @@
+---
+import type { Locale } from '../../lib/locale';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+  alternatePath: string;
+  label: string;
+}
+
+const { locale, currentPath, alternatePath, label } = Astro.props;
+
+const links = [
+  {
+    locale: 'en' as const,
+    href: locale === 'en' ? currentPath : alternatePath,
+    isCurrent: locale === 'en',
+  },
+  {
+    locale: 'es' as const,
+    href: locale === 'es' ? currentPath : alternatePath,
+    isCurrent: locale === 'es',
+  },
+];
+---
+
+<nav class="locale-links" aria-label={label}>
+  {
+    links.map((link) => (
+      <a
+        href={link.href}
+        hreflang={link.locale}
+        lang={link.locale}
+        aria-current={link.isCurrent ? 'page' : undefined}
+      >
+        {link.locale.toUpperCase()}
+      </a>
+    ))
+  }
+</nav>

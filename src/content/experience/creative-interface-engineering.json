@@ -1,0 +1,23 @@
+{
+  "id": "creative-interface-engineering",
+  "order": 4,
+  "role": {
+    "en": "Creative interface engineering",
+    "es": "Ingeniería creativa de interfaces"
+  },
+  "summary": {
+    "en": "A systems-and-interface practice connecting architecture, localized content, accessible interaction, and immersive interface experiments.",
+    "es": "Una práctica de sistemas e interfaces que conecta arquitectura, contenido localizado, interacción accesible y experimentos de interfaces inmersivas."
+  },
+  "timeframe": {
+    "en": "Independent project practice",
+    "es": "Práctica independiente en proyectos"
+  },
+  "status": "past",
+  "capabilities": [
+    "content-architecture",
+    "accessible-interaction",
+    "frontend-systems",
+    "immersive-web"
+  ]
+}

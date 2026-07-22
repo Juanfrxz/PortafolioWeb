@@ -1,30 +1,100 @@
-name: Deploy to GitHub Pages
+name: Verify and deploy to GitHub Pages
 
 on:
+  pull_request:
   push:
     branches:
-      - main  # or master, depending on your default branch
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  verify:
+    name: Verify portfolio
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      PUBLIC_FORMSPREE_FORM_ID: test-form-id
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '24'
+          cache: npm
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Build
+      - name: Run static, content, link, model, and bundle gates
+        run: npm run verify
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Run browser matrix
+        run: npm run test:e2e
+
+      - name: Run accessibility matrix
+        run: npm run test:a11y
+
+      - name: Run Lighthouse budgets
+        run: npm run lighthouse
+
+  deploy:
+    name: Publish production artifact
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      PUBLIC_FORMSPREE_FORM_ID: ${{ secrets.PUBLIC_FORMSPREE_FORM_ID }}
+      DEPLOY_TARGET: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Require production contact configuration
+        run: npm run check:production-env
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build production artifact
         run: npm run build
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+      - name: Validate production artifact and custom domain
+        run: |
+          npm run validate:build
+          test -f dist/CNAME
+          test "$(tr -d '\r\n' < dist/CNAME)" = "juanfrxz.dev"
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          branch: gh-pages
-          folder: dist 
+          path: dist
+
+      - name: Deploy GitHub Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4

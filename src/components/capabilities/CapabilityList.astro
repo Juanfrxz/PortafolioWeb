@@ -1,0 +1,293 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { en, es } from '../../i18n';
+import {
+  assertCapabilityProjectReferences,
+  capabilityRelationKey,
+  formatTechnologyLabel,
+  groupCapabilityProjection,
+  type CapabilityDomainId,
+  type CapabilityRelation,
+} from '../../lib/capabilities';
+import { caseStudyPath, type Locale } from '../../lib/locale';
+import SystemLabel from '../ui/SystemLabel.astro';
+
+type ProjectEntry = CollectionEntry<'projects'>;
+
+interface Props {
+  locale: Locale;
+  projects: readonly ProjectEntry[];
+  projection: readonly CapabilityRelation[];
+}
+
+const { locale, projects, projection } = Astro.props;
+const dictionary = locale === 'en' ? en : es;
+const domainLabels: Record<CapabilityDomainId, string> = {
+  frontend: dictionary.capabilities.frontend,
+  backend: dictionary.capabilities.backend,
+  data: dictionary.capabilities.data,
+  immersive: dictionary.capabilities.immersive,
+  delivery: dictionary.capabilities.delivery,
+};
+const projectBySlug = new Map(
+  projects.map((project) => [project.data.slug, project]),
+);
+assertCapabilityProjectReferences(projection, projectBySlug.keys());
+const groups = groupCapabilityProjection(projection);
+---
+
+<div class="capability-list wrapper" data-capability-list>
+  <header class="capability-list__header flow">
+    <SystemLabel as="p">{dictionary.capabilities.label}</SystemLabel>
+    <h2>{dictionary.capabilities.heading}</h2>
+  </header>
+
+  <ol class="capability-list__domains" role="list">
+    {
+      groups.map((group, index) => (
+        <li data-capability-domain={group.domainId}>
+          <header>
+            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{domainLabels[group.domainId]}</h3>
+          </header>
+
+          <ul class="capability-list__technologies" role="list">
+            {group.technologies.map((technology) => (
+              <li>
+                <h4>
+                  <code>{formatTechnologyLabel(technology.technologyId)}</code>
+                </h4>
+                <ul class="capability-list__projects" role="list">
+                  {technology.projectSlugs.map((projectSlug) => {
+                    const project = projectBySlug.get(projectSlug)!;
+                    const relation = {
+                      domainId: group.domainId,
+                      technologyId: technology.technologyId,
+                      projectSlug,
+                    };
+
+                    return (
+                      <li
+                        data-capability-relation={capabilityRelationKey(
+                          relation,
+                        )}
+                      >
+                        <a href={caseStudyPath(projectSlug, locale)}>
+                          {project.data.title[locale]}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<script>
+  type CapabilityGraphWindow = Window & {
+    __capabilityGraphDisclosureCleanup?: () => void;
+  };
+
+  const capabilityGraphWindow = window as CapabilityGraphWindow;
+  capabilityGraphWindow.__capabilityGraphDisclosureCleanup?.();
+
+  const mobileGraphQuery = window.matchMedia('(max-width: 50rem)');
+  const graphDisclosures = document.querySelectorAll<HTMLDetailsElement>(
+    '[data-capability-graph-disclosure]',
+  );
+  let isCleanedUp = false;
+
+  const syncGraphDisclosures = () => {
+    graphDisclosures.forEach((disclosure) => {
+      const containsFocus = disclosure.contains(document.activeElement);
+
+      if (mobileGraphQuery.matches && containsFocus) return;
+
+      disclosure.open = !mobileGraphQuery.matches;
+    });
+  };
+
+  const handlePageHide = (event: PageTransitionEvent) => {
+    if (!event.persisted) cleanupGraphDisclosures();
+  };
+
+  const cleanupGraphDisclosures = () => {
+    if (isCleanedUp) return;
+
+    isCleanedUp = true;
+    mobileGraphQuery.removeEventListener('change', syncGraphDisclosures);
+    window.removeEventListener('pagehide', handlePageHide);
+    document.removeEventListener('astro:before-swap', cleanupGraphDisclosures);
+
+    if (
+      capabilityGraphWindow.__capabilityGraphDisclosureCleanup ===
+      cleanupGraphDisclosures
+    ) {
+      delete capabilityGraphWindow.__capabilityGraphDisclosureCleanup;
+    }
+  };
+
+  capabilityGraphWindow.__capabilityGraphDisclosureCleanup =
+    cleanupGraphDisclosures;
+  syncGraphDisclosures();
+  mobileGraphQuery.addEventListener('change', syncGraphDisclosures);
+  window.addEventListener('pagehide', handlePageHide);
+  document.addEventListener('astro:before-swap', cleanupGraphDisclosures, {
+    once: true,
+  });
+</script>
+
+<style>
+  @layer components {
+    .capability-list {
+      display: grid;
+      gap: clamp(2.5rem, 6vw, 5rem);
+    }
+
+    .capability-list__header {
+      --flow-space: 1rem;
+    }
+
+    .capability-list__header h2 {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 560;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+    }
+
+    .capability-list__domains,
+    .capability-list__technologies,
+    .capability-list__projects {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .capability-list__domains {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border-block: 1px solid var(--color-border);
+    }
+
+    .capability-list__domains > li {
+      min-inline-size: 0;
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+      border-inline-start: 1px solid var(--color-border);
+    }
+
+    .capability-list__domains > li:first-child {
+      border-inline-start: 0;
+    }
+
+    .capability-list__domains header {
+      display: grid;
+      grid-template-columns: 2rem minmax(0, 1fr);
+      align-items: start;
+      gap: 0.55rem;
+      min-block-size: 5rem;
+    }
+
+    .capability-list__domains header span {
+      color: var(--color-signal);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+    }
+
+    .capability-list__domains h3 {
+      font-size: clamp(1rem, 1.8vw, 1.45rem);
+      font-weight: 560;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+
+    .capability-list__technologies {
+      display: grid;
+      gap: 1rem;
+      margin-block-start: 1.25rem;
+    }
+
+    .capability-list__technologies > li {
+      display: grid;
+      gap: 0.5rem;
+      padding-block-start: 0.8rem;
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .capability-list__technologies code {
+      color: var(--color-signal);
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .capability-list__projects {
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .capability-list__projects a {
+      color: var(--color-muted);
+      font-size: 0.73rem;
+      line-height: 1.35;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.18em;
+    }
+
+    .capability-list__projects a:hover {
+      color: var(--color-foreground);
+    }
+
+    @media (max-width: 70rem) {
+      .capability-list__domains {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .capability-list__domains > li,
+      .capability-list__domains > li:first-child {
+        border-block-start: 1px solid var(--color-border);
+        border-inline-start: 1px solid var(--color-border);
+      }
+
+      .capability-list__domains > li:nth-child(odd) {
+        border-inline-start: 0;
+      }
+
+      .capability-list__domains > li:first-child,
+      .capability-list__domains > li:nth-child(2) {
+        border-block-start: 0;
+      }
+
+      .capability-list__domains > li:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 38rem) {
+      .capability-list__domains {
+        grid-template-columns: 1fr;
+      }
+
+      .capability-list__domains > li,
+      .capability-list__domains > li:nth-child(2),
+      .capability-list__domains > li:nth-child(odd) {
+        grid-column: auto;
+        border-block-start: 1px solid var(--color-border);
+        border-inline-start: 0;
+      }
+
+      .capability-list__domains > li:first-child {
+        border-block-start: 0;
+      }
+
+      .capability-list__domains header {
+        min-block-size: auto;
+      }
+    }
+  }
+</style>

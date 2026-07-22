@@ -1,0 +1,118 @@
+---
+interface Props {
+  title: string;
+  alt: string;
+  index: number;
+  nodeLabel: string;
+  identitySignalLabel: string;
+}
+
+const { title, alt, index, nodeLabel, identitySignalLabel } = Astro.props;
+---
+
+<div
+  class="project-identity-fallback"
+  data-identity-fallback
+  role="img"
+  aria-label={alt}
+>
+  <span class="project-identity-fallback__label" aria-hidden="true">
+    {nodeLabel} / {String(index).padStart(2, '0')}
+  </span>
+  <strong aria-hidden="true">{title}</strong>
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 800 420">
+    <circle cx="400" cy="210" r="120"></circle>
+    <circle cx="400" cy="210" r="54"></circle>
+    <path d="M80 120 280 190M520 190 720 92M280 244 110 330M520 244 690 340"
+    ></path>
+    <circle cx="80" cy="120" r="8"></circle>
+    <circle cx="720" cy="92" r="8"></circle>
+    <circle cx="110" cy="330" r="8"></circle>
+    <circle cx="690" cy="340" r="8"></circle>
+  </svg>
+  <span class="project-identity-fallback__status" aria-hidden="true">
+    {identitySignalLabel}
+  </span>
+</div>
+
+<style>
+  @layer components {
+    .project-identity-fallback {
+      position: relative;
+      display: grid;
+      min-block-size: clamp(18rem, 42vw, 34rem);
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      background:
+        radial-gradient(
+          circle at 50% 50%,
+          color-mix(in srgb, var(--color-signal), transparent 80%),
+          transparent 35%
+        ),
+        linear-gradient(
+          color-mix(in srgb, var(--color-muted), transparent 88%) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--color-muted), transparent 88%) 1px,
+          transparent 1px
+        ),
+        var(--color-panel);
+      background-size:
+        auto,
+        2rem 2rem,
+        2rem 2rem,
+        auto;
+    }
+
+    .project-identity-fallback strong {
+      position: relative;
+      z-index: 1;
+      max-inline-size: 12ch;
+      color: var(--color-text);
+      font-size: clamp(2rem, 5vw, 5rem);
+      font-weight: 560;
+      letter-spacing: -0.055em;
+      line-height: 0.95;
+      text-align: center;
+      text-wrap: balance;
+    }
+
+    .project-identity-fallback svg {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      fill: none;
+      stroke: color-mix(in srgb, var(--color-primary), transparent 40%);
+      stroke-width: 1.5;
+    }
+
+    .project-identity-fallback svg circle:nth-of-type(n + 3) {
+      fill: var(--color-signal);
+      stroke: none;
+    }
+
+    .project-identity-fallback__label,
+    .project-identity-fallback__status {
+      position: absolute;
+      z-index: 1;
+      color: var(--color-signal);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.09em;
+    }
+
+    .project-identity-fallback__label {
+      inset-block-start: 1.25rem;
+      inset-inline-start: 1.25rem;
+    }
+
+    .project-identity-fallback__status {
+      inset-block-end: 1.25rem;
+      inset-inline-end: 1.25rem;
+    }
+  }
+</style>

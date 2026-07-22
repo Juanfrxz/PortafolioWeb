@@ -1,0 +1,75 @@
+{
+  "slug": "event-mobile-app",
+  "type": "mobile-application",
+  "status": "archived",
+  "visibility": "hidden",
+  "featuredOrder": null,
+  "archiveOrder": null,
+  "ownership": "individual",
+  "teamAttribution": {
+    "en": [],
+    "es": []
+  },
+  "title": {
+    "en": "Event Mobile App",
+    "es": "Aplicación Móvil de Eventos"
+  },
+  "summary": {
+    "en": "A retained mobile event-application record kept outside the launch catalogue until its source evidence is verified.",
+    "es": "Un registro conservado de una aplicación móvil de eventos que permanece fuera del catálogo de lanzamiento hasta verificar su evidencia de código."
+  },
+  "problem": {
+    "en": "Keep the project represented without publishing unsupported source, documentation, or launch claims.",
+    "es": "Mantener representado el proyecto sin publicar afirmaciones no respaldadas sobre código, documentación o lanzamiento."
+  },
+  "contribution": {
+    "en": "The record preserves the mobile event-system context while verification remains pending.",
+    "es": "El registro conserva el contexto del sistema móvil de eventos mientras su verificación sigue pendiente."
+  },
+  "decisions": {
+    "en": [
+      "Keep the record hidden from launch queries.",
+      "Expose no repository or documentation URL before verification."
+    ],
+    "es": [
+      "Mantener el registro oculto de las consultas de lanzamiento.",
+      "No exponer URLs de repositorio o documentación antes de verificarlas."
+    ]
+  },
+  "outcome": {
+    "en": "The project remains in the validated content archive without generating a launch route.",
+    "es": "El proyecto permanece en el archivo de contenido validado sin generar una ruta de lanzamiento."
+  },
+  "technologies": ["mobile-application"],
+  "capabilities": ["mobile-development"],
+  "architectureNodes": ["mobile-shell", "event-records"],
+  "architectureEdges": [["mobile-shell", "event-records"]],
+  "repository": {
+    "state": "unverified",
+    "url": null
+  },
+  "demo": {
+    "state": "unavailable",
+    "url": null
+  },
+  "documentation": {
+    "state": "unavailable",
+    "url": null
+  },
+  "media": [
+    {
+      "kind": "identity-fallback",
+      "src": null,
+      "width": null,
+      "height": null,
+      "alt": {
+        "en": "Event Mobile App identity",
+        "es": "Identidad de la Aplicación Móvil de Eventos"
+      }
+    }
+  ],
+  "evidenceNotes": [
+    "Retained by the approved content inventory, but source and documentation links are not verified.",
+    "Hidden visibility prevents launch rendering and route generation."
+  ]
+}

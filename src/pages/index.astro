@@ -1,0 +1,215 @@
+---
+import { getCollection } from 'astro:content';
+
+import { CapabilityGraph } from '../components/capabilities/CapabilityGraph';
+import CapabilityList from '../components/capabilities/CapabilityList.astro';
+import ContactSection from '../components/contact/ContactSection.astro';
+import HeroCopy from '../components/hero/HeroCopy.astro';
+import { DeferredHeroExperience } from '../components/hero/DeferredHeroExperience';
+import HeroFallback from '../components/hero/HeroFallback.astro';
+import Footer from '../components/layout/Footer.astro';
+import HudNavigation from '../components/layout/HudNavigation.astro';
+import SiteShell from '../components/layout/SiteShell.astro';
+import SignalTrail from '../components/profile/SignalTrail.astro';
+import SelectedWork from '../components/work/SelectedWork.astro';
+import { en as dictionary } from '../i18n';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { buildCapabilityProjection } from '../lib/capabilities';
+import { caseStudyPath, homePath, type Locale } from '../lib/locale';
+import { getFeaturedProjects, getSortedExperience } from '../lib/projects';
+import { buildHomeStructuredData } from '../lib/seo';
+
+const locale: Locale = 'en';
+const alternateLocale: Locale = 'es';
+
+const [projectEntries, rawExperienceEntries] = await Promise.all([
+  getCollection('projects'),
+  getCollection('experience'),
+]);
+
+const featuredProjects = getFeaturedProjects(projectEntries);
+const experienceEntries = getSortedExperience(rawExperienceEntries);
+const capabilityProjection = buildCapabilityProjection(featuredProjects);
+const capabilityProjects = featuredProjects.map((project) => ({
+  slug: project.data.slug,
+  title: project.data.title,
+  href: {
+    en: caseStudyPath(project.data.slug, 'en'),
+    es: caseStudyPath(project.data.slug, 'es'),
+  },
+}));
+---
+
+<BaseLayout
+  locale={locale}
+  title="Juan Rodriguez — Creative Full-Stack Developer"
+  description={dictionary.hero.support}
+  canonicalPath={homePath(locale)}
+  alternatePath={homePath(alternateLocale)}
+  socialImagePath="/social/home-en.webp"
+  structuredData={buildHomeStructuredData(locale)}
+>
+  <SiteShell>
+    <HudNavigation locale={locale} />
+    <main id="main-content" tabindex="-1">
+      <section id="system-core" tabindex="-1">
+        <HeroCopy locale={locale} />
+        <div class="hero-visual" data-hero-visual data-render-state="poster">
+          <HeroFallback />
+          <DeferredHeroExperience client:idle={{ timeout: 1_000 }} />
+        </div>
+      </section>
+      <SelectedWork locale={locale} projects={featuredProjects} />
+      <section id="capabilities" tabindex="-1">
+        <CapabilityList
+          locale={locale}
+          projects={featuredProjects}
+          projection={capabilityProjection}
+        />
+        <details
+          class="capabilities__graph-disclosure wrapper"
+          data-capability-graph-disclosure
+          open
+        >
+          <summary>
+            <span class="capabilities__show-graph">
+              {dictionary.capabilities.showGraph}
+            </span>
+            <span class="capabilities__hide-graph">
+              {dictionary.capabilities.hideGraph}
+            </span>
+          </summary>
+          <CapabilityGraph
+            client:visible
+            locale={locale}
+            projection={capabilityProjection}
+            projects={capabilityProjects}
+            labels={dictionary.capabilities}
+          />
+        </details>
+      </section>
+      <SignalTrail locale={locale} entries={experienceEntries} />
+      <ContactSection locale={locale} />
+    </main>
+    <Footer locale={locale} />
+  </SiteShell>
+</BaseLayout>
+
+<style>
+  #system-core {
+    display: grid;
+    min-block-size: calc(100vh - 4.5rem);
+    min-block-size: calc(100dvb - 4.5rem);
+    grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+    align-items: center;
+    gap: clamp(2rem, 6vw, 7rem);
+    inline-size: min(
+      calc(100% - (var(--page-gutter) * 2)),
+      var(--content-width)
+    );
+    margin-inline: auto;
+    padding-block: clamp(4rem, 8vw, 8rem);
+    scroll-margin-block-start: 5rem;
+  }
+
+  #capabilities {
+    padding-block: clamp(5rem, 11vw, 11rem);
+    border-block-start: 1px solid var(--color-border);
+    scroll-margin-block-start: 5rem;
+  }
+
+  .capabilities__graph-disclosure {
+    margin-block-start: clamp(2rem, 5vw, 4rem);
+  }
+
+  .capabilities__graph-disclosure :global(astro-island) {
+    display: block;
+  }
+
+  .capabilities__graph-disclosure summary {
+    display: none;
+  }
+
+  .capabilities__hide-graph {
+    display: none;
+  }
+
+  .capabilities__graph-disclosure[open] .capabilities__show-graph {
+    display: none;
+  }
+
+  .capabilities__graph-disclosure[open] .capabilities__hide-graph {
+    display: inline;
+  }
+
+  .hero-visual {
+    position: relative;
+    align-self: center;
+    aspect-ratio: 1;
+    inline-size: 100%;
+    max-inline-size: 40rem;
+    overflow: hidden;
+  }
+
+  .hero-visual :global([data-hero-fallback]) {
+    z-index: 2;
+    inline-size: 100%;
+    margin: 0;
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  .hero-visual :global([data-hero-experience]) {
+    z-index: 1;
+  }
+
+  .hero-visual[data-render-state='ready'] :global([data-hero-fallback]) {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-visual :global([data-hero-fallback]) {
+      transition: opacity 240ms ease-out;
+    }
+  }
+
+  @media (max-width: 56rem) {
+    #system-core {
+      min-block-size: auto;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 50rem) {
+    .capabilities__graph-disclosure {
+      border: 1px solid var(--color-border);
+    }
+
+    .capabilities__graph-disclosure summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-block-size: 3.5rem;
+      padding: 0.85rem 1rem;
+      color: var(--color-signal);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .capabilities__graph-disclosure summary::after {
+      content: '+';
+      font-size: 1.15rem;
+    }
+
+    .capabilities__graph-disclosure[open] summary::after {
+      content: '−';
+    }
+
+    .capabilities__graph-disclosure[open] summary {
+      border-block-end: 1px solid var(--color-border);
+    }
+  }
+</style>
