@@ -328,23 +328,82 @@ const variant = headingLevel === 1 ? 'index' : 'home';
 </style>
 
 <script>
-  import { createSelectedWorkTrack } from '../../lib/selected-work-track';
-
-  const selectedWorkCleanups = Array.from(
-    document.querySelectorAll<HTMLElement>('[data-selected-work]'),
-    (root) => createSelectedWorkTrack(root),
+  const eligibility = window.matchMedia(
+    '(min-width: 1100px) and (pointer: fine) and (prefers-reduced-motion: no-preference)',
   );
+  const idleWindow = window as unknown as {
+    requestIdleCallback?: (
+      callback: () => void,
+      options?: { timeout: number },
+    ) => number;
+    cancelIdleCallback?: (id: number) => void;
+  };
+  const selectedWorkCleanups: Array<() => void> = [];
+  let disposed = false;
+  let scheduled = false;
+  let idleId: number | undefined;
+  let timeoutId: number | undefined;
+
+  const initializeSelectedWork = async () => {
+    scheduled = false;
+    if (disposed || !eligibility.matches) {
+      return;
+    }
+
+    eligibility.removeEventListener('change', scheduleSelectedWork);
+    const { createSelectedWorkTrack } =
+      await import('../../lib/selected-work-track');
+    if (disposed) {
+      return;
+    }
+
+    const selectedWorkRoots = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-selected-work]'),
+    );
+    selectedWorkCleanups.push(
+      ...selectedWorkRoots.map((root) => createSelectedWorkTrack(root)),
+    );
+    selectedWorkRoots.forEach((root) => {
+      root.dataset.trackReady = 'true';
+    });
+  };
+
+  const scheduleSelectedWork = () => {
+    if (disposed || scheduled || !eligibility.matches) {
+      return;
+    }
+    scheduled = true;
+
+    if (idleWindow.requestIdleCallback) {
+      idleId = idleWindow.requestIdleCallback(initializeSelectedWork, {
+        timeout: 1_500,
+      });
+      return;
+    }
+    timeoutId = window.setTimeout(initializeSelectedWork, 0);
+  };
+
   const handlePageHide = (event: PageTransitionEvent) => {
     if (!event.persisted) {
       cleanupSelectedWork();
     }
   };
   const cleanupSelectedWork = () => {
+    disposed = true;
+    if (idleId !== undefined && idleWindow.cancelIdleCallback) {
+      idleWindow.cancelIdleCallback(idleId);
+    }
+    if (timeoutId !== undefined) {
+      window.clearTimeout(timeoutId);
+    }
     selectedWorkCleanups.splice(0).forEach((cleanup) => cleanup());
+    eligibility.removeEventListener('change', scheduleSelectedWork);
     window.removeEventListener('pagehide', handlePageHide);
     document.removeEventListener('astro:before-swap', cleanupSelectedWork);
   };
 
+  eligibility.addEventListener('change', scheduleSelectedWork);
+  scheduleSelectedWork();
   window.addEventListener('pagehide', handlePageHide);
   document.addEventListener('astro:before-swap', cleanupSelectedWork, {
     once: true,

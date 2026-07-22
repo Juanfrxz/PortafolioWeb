@@ -77,6 +77,7 @@ export const es = defineDictionary({
     invitation:
       '¿Tienes un sistema real por construir? Iniciemos una conversación.',
     professionalLinks: 'Enlaces profesionales',
+    footerLinks: 'Enlaces profesionales del pie de página',
     name: 'Nombre',
     email: 'Correo electrónico',
     message: 'Mensaje',
@@ -84,6 +85,10 @@ export const es = defineDictionary({
     sending: 'Enviando mensaje…',
     success: 'Mensaje enviado. Responderé lo antes posible.',
     invalid: 'Revisa los campos señalados e inténtalo de nuevo.',
+    nameInvalid: 'El nombre debe tener entre 2 y 80 caracteres.',
+    emailInvalid:
+      'Ingresa un correo electrónico válido de máximo 254 caracteres.',
+    messageInvalid: 'El mensaje debe tener entre 20 y 2000 caracteres.',
     offline: 'Parece que no tienes conexión. Reconéctate e inténtalo de nuevo.',
     timeout: 'La solicitud tardó demasiado. Inténtalo de nuevo.',
     rateLimit: 'Demasiados intentos. Espera antes de intentarlo de nuevo.',

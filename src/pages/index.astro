@@ -5,7 +5,7 @@ import { CapabilityGraph } from '../components/capabilities/CapabilityGraph';
 import CapabilityList from '../components/capabilities/CapabilityList.astro';
 import ContactSection from '../components/contact/ContactSection.astro';
 import HeroCopy from '../components/hero/HeroCopy.astro';
-import { HeroExperience } from '../components/hero/HeroExperience';
+import { DeferredHeroExperience } from '../components/hero/DeferredHeroExperience';
 import HeroFallback from '../components/hero/HeroFallback.astro';
 import Footer from '../components/layout/Footer.astro';
 import HudNavigation from '../components/layout/HudNavigation.astro';
@@ -17,6 +17,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { buildCapabilityProjection } from '../lib/capabilities';
 import { caseStudyPath, homePath, type Locale } from '../lib/locale';
 import { getFeaturedProjects, getSortedExperience } from '../lib/projects';
+import { buildHomeStructuredData } from '../lib/seo';
 
 const locale: Locale = 'en';
 const alternateLocale: Locale = 'es';
@@ -45,6 +46,8 @@ const capabilityProjects = featuredProjects.map((project) => ({
   description={dictionary.hero.support}
   canonicalPath={homePath(locale)}
   alternatePath={homePath(alternateLocale)}
+  socialImagePath="/social/home-en.webp"
+  structuredData={buildHomeStructuredData(locale)}
 >
   <SiteShell>
     <HudNavigation locale={locale} />
@@ -53,7 +56,7 @@ const capabilityProjects = featuredProjects.map((project) => ({
         <HeroCopy locale={locale} />
         <div class="hero-visual" data-hero-visual data-render-state="poster">
           <HeroFallback />
-          <HeroExperience client:idle={{ timeout: 1_000 }} />
+          <DeferredHeroExperience client:idle={{ timeout: 1_000 }} />
         </div>
       </section>
       <SelectedWork locale={locale} projects={featuredProjects} />

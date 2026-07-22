@@ -6,8 +6,10 @@ import '../styles/reset.css';
 import '../styles/global.css';
 import '../styles/utilities.css';
 
-import { SITE } from '../config/site';
+import JsonLd from '../components/seo/JsonLd.astro';
+import SeoHead from '../components/seo/SeoHead.astro';
 import type { Locale } from '../lib/locale';
+import { buildSeo, type JsonLdObject, type OpenGraphType } from '../lib/seo';
 import { THEME_BOOTSTRAP_SCRIPT } from '../lib/theme';
 
 interface Props {
@@ -16,32 +18,47 @@ interface Props {
   description: string;
   canonicalPath: string;
   alternatePath: string;
+  socialImagePath: string;
+  openGraphType?: OpenGraphType;
+  structuredData?: JsonLdObject | readonly JsonLdObject[];
 }
 
-const { locale, title, description, canonicalPath, alternatePath } =
-  Astro.props;
-
-const absoluteSiteUrl = (path: string) =>
-  new URL(`/${path.replace(/^\/+/, '')}`, SITE.url).href;
-
-const canonicalUrl = absoluteSiteUrl(canonicalPath);
-const alternateUrl = absoluteSiteUrl(alternatePath);
-const englishUrl = locale === 'en' ? canonicalUrl : alternateUrl;
-const spanishUrl = locale === 'es' ? canonicalUrl : alternateUrl;
+const {
+  locale,
+  title,
+  description,
+  canonicalPath,
+  alternatePath,
+  socialImagePath,
+  openGraphType,
+  structuredData = [],
+} = Astro.props;
+const seo = buildSeo({
+  locale,
+  title,
+  description,
+  canonicalPath,
+  alternatePath,
+  socialImagePath,
+  openGraphType: openGraphType ?? 'website',
+});
+const structuredDataItems = Array.isArray(structuredData)
+  ? structuredData
+  : [structuredData];
 ---
 
 <!doctype html>
 <html lang={locale}>
   <head>
     <meta charset="UTF-8" />
+    <style is:inline>
+      @layer reset, tokens, base, components, utilities;
+    </style>
     <script is:inline set:html={THEME_BOOTSTRAP_SCRIPT} />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
-    <title>{title}</title>
-    <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang="en" href={englishUrl} />
-    <link rel="alternate" hreflang="es" href={spanishUrl} />
-    <link rel="alternate" hreflang="x-default" href={englishUrl} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <SeoHead seo={seo} />
+    {structuredDataItems.map((data) => <JsonLd data={data} />)}
   </head>
   <body>
     <slot />

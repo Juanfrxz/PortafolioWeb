@@ -53,6 +53,14 @@ for (const route of routes) {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.goto(route);
 
+    const heroVisual = page.locator('[data-hero-visual]');
+    const heroBox = await heroVisual.boundingBox();
+    if (!heroBox) throw new Error('Hero visual is not measurable.');
+    await page.mouse.move(
+      heroBox.x + heroBox.width / 2,
+      heroBox.y + heroBox.height / 2,
+    );
+
     const fallback = page.locator('[data-hero-fallback]');
     const experience = page.locator('[data-hero-experience]');
 
@@ -118,6 +126,13 @@ test('WebGL2 failure deterministically falls back to Static', async ({
   });
 
   await page.goto('/');
+
+  const heroBox = await page.locator('[data-hero-visual]').boundingBox();
+  if (!heroBox) throw new Error('Hero visual is not measurable.');
+  await page.mouse.move(
+    heroBox.x + heroBox.width / 2,
+    heroBox.y + heroBox.height / 2,
+  );
 
   const experience = page.locator('[data-hero-experience]');
   await expect(experience).toHaveAttribute('data-quality-tier', 'static');

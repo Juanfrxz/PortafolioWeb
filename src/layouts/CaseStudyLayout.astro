@@ -7,6 +7,7 @@ import SiteShell from '../components/layout/SiteShell.astro';
 import ProjectChapter from '../components/work/ProjectChapter.astro';
 import { en, es } from '../i18n';
 import { caseStudyPath, type Locale, workIndexPath } from '../lib/locale';
+import { buildProjectStructuredData } from '../lib/seo';
 import BaseLayout from './BaseLayout.astro';
 
 type ProjectEntry = CollectionEntry<'projects'>;
@@ -29,6 +30,9 @@ const title = `${data.title[locale]} — ${dictionary.work.caseStudyTitle} | Jua
   description={data.summary[locale]}
   canonicalPath={caseStudyPath(data.slug, locale)}
   alternatePath={caseStudyPath(data.slug, alternateLocale)}
+  socialImagePath={`/social/${data.slug}-${locale}.webp`}
+  openGraphType="article"
+  structuredData={buildProjectStructuredData(data, locale)}
 >
   <SiteShell>
     <HudNavigation locale={locale} />

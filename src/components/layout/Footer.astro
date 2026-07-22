@@ -15,7 +15,7 @@ const dictionary = locale === 'en' ? en : es;
   <div class="site-footer__inner wrapper">
     <a class="site-footer__identity" href={homePath(locale)}>{SITE.name}</a>
     <p>{dictionary.hero.label}</p>
-    <nav aria-label={dictionary.contact.professionalLinks}>
+    <nav aria-label={dictionary.contact.footerLinks}>
       {
         SITE.professionalLinks.map((link) => (
           <a href={link.href} target="_blank" rel="noopener noreferrer">

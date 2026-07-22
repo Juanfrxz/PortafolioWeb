@@ -39,6 +39,10 @@
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.2em;
   }
+
+  code {
+    font-family: var(--font-mono);
+  }
 }
 
 @layer components {

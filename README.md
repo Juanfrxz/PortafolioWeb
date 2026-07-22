@@ -1,147 +1,98 @@
-<div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=30&duration=3000&pause=1000&color=7B2CBF&center=true&vCenter=true&width=600&lines=Hi%2C+I'm+Juan+Rodriguez+%F0%9F%91%8B;Software+Developer+%F0%9F%92%BB;ICT+Infrastructure+Specialist+%F0%9F%8C%90;Always+Learning+%26+Growing+%F0%9F%9A%80" alt="Typing SVG" />
-</div>
+# Kinetic Systems Lab
 
-<div align="center">
-  <img src="https://github.com/Juanfrxz/PortafolioWeb/blob/main/assets/img/portafolio.png?raw=true" alt="Portfolio Banner" width="400"/>
-</div>
+Portafolio bilingüe de Juan Rodriguez, construido como un sitio estático con Astro y React Islands. Presenta proyectos verificables, tema claro/oscuro, una experiencia 3D progresiva y un formulario de contacto con degradación segura.
 
----
+Producción: [juanfrxz.dev](https://juanfrxz.dev)
 
-## 🚀 About Me
+## Arquitectura
 
-I'm a passionate **Software Developer** and **ICT Infrastructure Implementation Technologist** from Colombia 🇨🇴, dedicated to creating innovative solutions that make a real impact. With a foundation in network infrastructure and a growing expertise in software development, I bring a unique perspective to every project I work on.
+- Astro 7 genera rutas estáticas en inglés y español.
+- React se reserva para islas interactivas: el avatar 3D se importa al primer gesto sobre el hero, y el gráfico de capacidades y el formulario se hidratan al entrar en contexto.
+- Las colecciones tipadas de `src/content/` validan proyectos y experiencia durante el build.
+- El contenido semántico y los fallbacks funcionan sin JavaScript, WebGL o animación.
+- GitHub Pages publica `dist/` en el dominio raíz conservando `public/CNAME`.
 
-### 💡 What Drives Me
-- **Innovation & Impact**: I believe technology should solve real problems and improve people's lives
-- **Continuous Learning**: Always exploring new technologies and methodologies to stay at the forefront
-- **Collaborative Spirit**: I thrive in diverse, multicultural environments where ideas flourish
-- **Teaching & Sharing**: Passionate about knowledge transfer and helping others grow
+## Requisitos
 
----
+- Node.js 24.x, la misma versión usada en CI.
+- npm incluido con Node.
+- Para la matriz E2E local: Chromium, Firefox y WebKit de Playwright.
 
-## 🛠️ Tech Stack & Skills
+## Inicio local
 
-<div align="center">
+```bash
+npm ci
+npx playwright install chromium firefox webkit
+npm run dev
+```
 
-### Frontend Development
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
-![Three.js](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white)
+Astro mostrará la URL local. Para comprobar exactamente el artefacto estático:
 
-### Backend & Databases
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+```bash
+npm run build
+npm run preview
+```
 
-### Currently Learning
-![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
-![.NET](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
-![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+El formulario queda deshabilitado de forma explícita cuando `PUBLIC_FORMSPREE_FORM_ID` no existe. Para probarlo con un formulario propio, cree un `.env` local que no debe versionarse:
 
-### Tools & Infrastructure
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+```dotenv
+PUBLIC_FORMSPREE_FORM_ID=su-identificador-de-formspree
+```
 
-</div>
+## Comandos de calidad
 
----
+| Comando | Alcance |
+| --- | --- |
+| `npm run check` | Tipos y diagnósticos de Astro |
+| `npm test` | Pruebas unitarias y de componentes |
+| `npm run build` | Build estático y previews sociales |
+| `npm run verify` | Formato, tipos, tests, build, enlaces, contenido y presupuestos |
+| `npm run test:e2e` | Matriz Playwright y regresión visual |
+| `npm run test:a11y` | Axe en rutas, idiomas y temas aprobados |
+| `npm run lighthouse` | Lighthouse CI con los presupuestos de `lighthouserc.cjs` y una sesión de Chromium administrada |
 
-## 💼 Professional Experience
+La lista de comprobación de lanzamiento vive en `docs/verification/2026-07-13-release-checklist.md`. Los ítems de NVDA y dispositivos físicos permanecen manuales; la emulación automatizada no los sustituye.
 
-### 🌐 Internet Network Technician
-**6 months of hands-on experience**
-- Service installation and configuration
-- Network equipment setup and troubleshooting
-- Customer support and technical consultation
-- Infrastructure optimization and maintenance
+## Flujo de contenido
 
-### 🎓 Academic & Personal Projects
-- **Frontend Development**: Creating responsive, interactive web applications
-- **3D Web Integration**: Implementing Three.js for immersive user experiences
-- **Full-Stack Solutions**: Building complete web applications from concept to deployment
+- Proyectos: `src/content/projects/*.json`.
+- Trayectoria profesional: `src/content/experience/*.json`.
+- Esquema y reglas de evidencia: `src/content/schema.ts`.
+- Traducciones de interfaz: `src/i18n/en.ts` y `src/i18n/es.ts`.
+- Configuración canónica, correo y enlaces profesionales: `src/config/site.ts`.
+- Medios públicos: `public/`; cada imagen de proyecto declara ruta, dimensiones y texto alternativo bilingüe.
 
----
+Al añadir o modificar contenido, ejecute `npm run verify`. Los dos idiomas deben mantener la misma estructura y todas las referencias internas deben resolver durante el build.
 
-## 🎯 Featured Projects
+## Política de evidencia de proyectos
 
-<div align="center">
+El portafolio no presenta como comprobado lo que el repositorio no puede demostrar:
 
-| Project | Description | Technologies |
-|---------|-------------|--------------|
-| 🏎️ **F1 Management System** | Comprehensive Formula 1 management platform with team, driver, and race data | HTML, CSS, JS, Three.js |
-| 🎵 **Concert Event Website** | Modern, responsive website for music events with booking system | Bootstrap, JavaScript |
-| 🍔 **Restaurant Ordering System** | Interactive menu and ordering platform for restaurants | HTML, CSS, JavaScript |
-| ⚽ **Liga BetPlay Manager** | Soccer league management system with statistics tracking | Frontend + Backend |
-| 🎬 **Cine Campus** | Movie database application for film enthusiasts | JavaScript, API Integration |
+- Use `available` únicamente para enlaces públicos comprobados; los demás estados no llevan URL.
+- Distinga trabajo individual de colaborativo e incluya atribución bilingüe cuando corresponda.
+- No publique métricas, resultados, demos ni estados finales sin una fuente verificable.
+- Registre en `evidenceNotes` qué respalda cada afirmación y mantenga las limitaciones visibles.
+- Las capturas y previews sociales son evidencia visual del portafolio, no prueba de resultados externos de otro proyecto.
 
-</div>
+## CI y despliegue
 
----
+`.github/workflows/deploy.yml` ejecuta en cada pull request y push a `main`:
 
-## 📊 GitHub Stats
+1. `npm ci` con Node 24 y caché de npm.
+2. `npm run verify`.
+3. La matriz Playwright, axe y Lighthouse CI.
 
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Juanfrxz&show_icons=true&theme=radical&hide_border=true" alt="GitHub Stats" />
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Juanfrxz&theme=radical&hide_border=true" alt="GitHub Streak" />
-</div>
+Solo un push verificado a `main` crea y publica el artefacto de producción mediante las acciones oficiales de GitHub Pages. El job vuelve a construir con la configuración real, valida `dist/CNAME` y despliega `dist/` en el environment `github-pages`.
 
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Juanfrxz&layout=compact&theme=radical&hide_border=true" alt="Top Languages" />
-</div>
+Configuración requerida del repositorio:
 
----
+1. En **Settings → Pages → Build and deployment**, seleccione **GitHub Actions** como source.
+2. Cree el secret de Actions `PUBLIC_FORMSPREE_FORM_ID` con el identificador real del formulario.
+3. Mantenga el dominio personalizado `juanfrxz.dev`; `public/CNAME` y el workflow impiden publicar un artefacto sin ese dominio.
+4. Proteja el environment `github-pages` si se requieren aprobaciones adicionales.
 
-## 🌟 What I Bring to Your Team
+El gate `DEPLOY_TARGET=production npm run check:production-env` rechaza un identificador ausente o el valor de prueba. Después del primer despliegue debe realizarse una entrega real del formulario y revisar el correo recibido; esa acción externa no forma parte de las pruebas automatizadas.
 
-- **🧠 Agile & Critical Thinking**: Quick problem-solving and adaptive approach to challenges
-- **🤝 Collaborative Mindset**: Experience working in diverse, multicultural environments
-- **💡 Creative Solutions**: Innovative approaches to complex technical problems
-- **📚 Teaching Ability**: Passion for knowledge sharing and team development
-- **🎯 Impact-Focused**: Commitment to projects that create meaningful change
+## Licencia y uso
 
----
-
-## 🤝 Let's Connect & Collaborate
-
-I'm always excited to discuss new opportunities, innovative projects, or simply connect with fellow developers. Whether you're looking for a dedicated team member or want to collaborate on something amazing, let's talk!
-
-<div align="center">
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Juanfrxz)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:jr563384@gmail.com)
-[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/juan_frxz/)
-[![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=todoist&logoColor=white)](https://juanfrxz.github.io/PortafolioWeb/)
-
-</div>
-
----
-
-## 🚀 Current Focus
-
-- 🔭 Working on expanding my full-stack development skills
-- 🌱 Learning C#, .NET, and Angular to broaden my technical expertise
-- 👯 Looking to collaborate on innovative web applications and open-source projects
-- 💬 Ask me about frontend development, network infrastructure, or 3D web integration
-- ⚡ Fun fact: I love combining technical skills with creative problem-solving!
-
----
-
-<div align="center">
-  <img src="https://komarev.com/ghpvc/?username=Juanfrxz&color=blueviolet&style=for-the-badge" alt="Profile Views" />
-</div>
-
-<div align="center">
-  <h3>💫 "Code is poetry written in logic" 💫</h3>
-  <p><em>Ready to turn ideas into reality through innovative software solutions</em></p>
-</div>
-
----
-
-<div align="center">
-  <sub>Built with ❤️ by Juan Rodriguez</sub>
-</div>
+El código sirve como portafolio personal. El contenido, la identidad y los medios de proyectos conservan su autoría y atribución declaradas en cada entrada.

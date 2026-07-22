@@ -27,6 +27,11 @@ for (const home of homes) {
 
     expect(response?.ok()).toBe(true);
     await expect(page.locator('html')).toHaveAttribute('lang', home.lang);
+    await expect(page.locator('link[rel="icon"]')).toHaveAttribute(
+      'href',
+      '/favicon.svg',
+    );
+    expect((await page.request.get('/favicon.svg')).ok()).toBe(true);
     await expect(
       page.getByRole('heading', { level: 1, name: home.heading }),
     ).toBeVisible();
@@ -85,7 +90,7 @@ for (const home of homes) {
       await expect(form.getByLabel(label, { exact: true })).toBeVisible();
     }
 
-    await expect(form.getByRole('button')).toBeDisabled();
+    await expect(form.getByRole('button')).toBeEnabled();
 
     for (const title of home.hiddenTitles) {
       await expect(page.getByText(title, { exact: true })).toHaveCount(0);

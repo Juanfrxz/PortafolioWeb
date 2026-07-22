@@ -3,6 +3,7 @@ import { SITE } from '../../config/site';
 import { en, es } from '../../i18n';
 import type { Locale } from '../../lib/locale';
 import SystemLabel from '../ui/SystemLabel.astro';
+import ContactForm from './ContactForm';
 
 interface Props {
   locale: Locale;
@@ -11,6 +12,7 @@ interface Props {
 const { locale } = Astro.props;
 const dictionary = locale === 'en' ? en : es;
 const fieldPrefix = `contact-${locale}`;
+const formId = import.meta.env.PUBLIC_FORMSPREE_FORM_ID?.trim() ?? '';
 ---
 
 <section id="contact" class="contact" tabindex="-1">
@@ -40,50 +42,12 @@ const fieldPrefix = `contact-${locale}`;
       </p>
     </div>
 
-    <form
-      class="contact__form"
-      aria-describedby={`${fieldPrefix}-unavailable`}
-      onsubmit="return false"
-    >
-      <div class="contact__field">
-        <label for={`${fieldPrefix}-name`}>{dictionary.contact.name}</label>
-        <input
-          id={`${fieldPrefix}-name`}
-          name="name"
-          type="text"
-          autocomplete="name"
-          required
-        />
-      </div>
-
-      <div class="contact__field">
-        <label for={`${fieldPrefix}-email`}>{dictionary.contact.email}</label>
-        <input
-          id={`${fieldPrefix}-email`}
-          name="email"
-          type="email"
-          autocomplete="email"
-          required
-        />
-      </div>
-
-      <div class="contact__field">
-        <label for={`${fieldPrefix}-message`}
-          >{dictionary.contact.message}</label
-        >
-        <textarea id={`${fieldPrefix}-message`} name="message" rows="6" required
-        ></textarea>
-      </div>
-
-      <button type="submit" disabled>{dictionary.contact.submit}</button>
-      <p
-        id={`${fieldPrefix}-unavailable`}
-        class="contact__unavailable"
-        role="status"
-      >
-        {dictionary.contact.unavailable}
-      </p>
-    </form>
+    <ContactForm
+      client:visible
+      formId={formId}
+      labels={dictionary.contact}
+      idPrefix={fieldPrefix}
+    />
   </div>
 </section>
 
@@ -166,62 +130,8 @@ const fieldPrefix = `contact-${locale}`;
       text-transform: uppercase;
     }
 
-    .contact__form {
-      display: grid;
-      gap: 1.25rem;
-      padding: clamp(1.25rem, 4vw, 2.5rem);
-      border: 1px solid var(--color-border);
-      background: color-mix(in srgb, var(--color-panel), transparent 8%);
-    }
-
-    .contact__field {
-      display: grid;
-      gap: 0.5rem;
-    }
-
-    .contact__field label {
-      color: var(--color-signal);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .contact__field input,
-    .contact__field textarea {
-      inline-size: 100%;
-      border: 1px solid var(--color-border);
-      border-radius: 0;
-      background: var(--color-bg);
-      color: var(--color-text);
-      padding: 0.875rem;
-      resize: vertical;
-    }
-
-    .contact__field input {
-      min-block-size: 2.75rem;
-    }
-
-    .contact__form button {
-      min-block-size: 2.75rem;
-      border: 1px solid var(--color-border);
-      background: var(--color-panel);
-      color: var(--color-muted);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .contact__form button:disabled {
-      cursor: not-allowed;
-      opacity: 0.72;
-    }
-
-    .contact__unavailable {
-      color: var(--color-muted);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
+    .contact :global(astro-island) {
+      display: block;
     }
 
     @media (max-width: 50rem) {

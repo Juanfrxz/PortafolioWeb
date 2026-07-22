@@ -1,0 +1,139 @@
+---
+import { homePath } from '../../lib/locale';
+---
+
+<main id="main-content" class="not-found" tabindex="-1">
+  <div class="not-found__frame" aria-hidden="true">
+    <span>ERROR NODE</span>
+    <span>404</span>
+  </div>
+
+  <div class="not-found__content">
+    <h1>
+      <span data-not-found-heading-locale="en" lang="en">Page not found.</span>
+      <span data-not-found-heading-locale="es" lang="es">
+        Página no encontrada.
+      </span>
+    </h1>
+
+    <section data-not-found-locale="en" lang="en">
+      <p class="not-found__label">KINETIC SYSTEMS LAB · LOST SIGNAL</p>
+      <p>
+        This route is outside the current system map. Return to the main signal
+        or continue in Spanish.
+      </p>
+      <div class="not-found__actions">
+        <a class="button" href={homePath('en')}>Return home</a>
+        <a class="button button--secondary" href={homePath('es')}>
+          Inicio en español
+        </a>
+      </div>
+    </section>
+
+    <section data-not-found-locale="es" lang="es">
+      <p class="not-found__label">KINETIC SYSTEMS LAB · SEÑAL PERDIDA</p>
+      <p>
+        Esta ruta está fuera del mapa actual del sistema. Regresa a la señal
+        principal o continúa en inglés.
+      </p>
+      <div class="not-found__actions">
+        <a class="button" href={homePath('es')}>Volver al inicio</a>
+        <a class="button button--secondary" href={homePath('en')}>
+          English home
+        </a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<style>
+  .not-found {
+    display: grid;
+    min-block-size: 100vh;
+    min-block-size: 100dvb;
+    place-items: center;
+    inline-size: min(calc(100% - (var(--page-gutter) * 2)), 74rem);
+    margin-inline: auto;
+    padding-block: clamp(5rem, 12vw, 10rem);
+  }
+
+  .not-found::before {
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    background:
+      linear-gradient(var(--color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border) 1px, transparent 1px),
+      radial-gradient(
+        circle at 72% 28%,
+        color-mix(in srgb, var(--color-primary), transparent 82%),
+        transparent 32rem
+      );
+    background-size:
+      4rem 4rem,
+      4rem 4rem,
+      auto;
+    content: '';
+    opacity: 0.45;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
+  }
+
+  .not-found__frame {
+    display: flex;
+    position: absolute;
+    inset-block-start: 1.5rem;
+    justify-content: space-between;
+    inline-size: min(calc(100% - (var(--page-gutter) * 2)), 74rem);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+  }
+
+  .not-found__content {
+    max-inline-size: 48rem;
+  }
+
+  [data-not-found-locale],
+  [data-not-found-heading-locale] {
+    display: none;
+  }
+
+  html:not([data-not-found-language]) [data-not-found-locale='en'],
+  html[data-not-found-language='en'] [data-not-found-locale='en'],
+  html[data-not-found-language='es'] [data-not-found-locale='es'],
+  html:not([data-not-found-language]) [data-not-found-heading-locale='en'],
+  html[data-not-found-language='en'] [data-not-found-heading-locale='en'],
+  html[data-not-found-language='es'] [data-not-found-heading-locale='es'] {
+    display: block;
+  }
+
+  .not-found__label {
+    margin-block-end: 1rem;
+    color: var(--color-signal);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  h1 {
+    max-inline-size: 12ch;
+    margin: 0 0 2rem;
+    font-size: clamp(3rem, 10vw, 7rem);
+    letter-spacing: -0.07em;
+    line-height: 0.9;
+  }
+
+  section > p:not(.not-found__label) {
+    max-inline-size: 58ch;
+    margin-block: 1rem 2rem;
+    color: var(--color-muted);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+  }
+
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

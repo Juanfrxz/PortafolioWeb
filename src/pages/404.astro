@@ -1,0 +1,40 @@
+---
+import '@fontsource-variable/instrument-sans/index.css';
+import '@fontsource/dm-mono/400.css';
+import '../styles/tokens.css';
+import '../styles/reset.css';
+import '../styles/global.css';
+import '../styles/utilities.css';
+
+import NotFound from '../components/errors/NotFound.astro';
+import { THEME_BOOTSTRAP_SCRIPT } from '../lib/theme';
+
+const NOT_FOUND_LOCALE_SCRIPT = `(() => {
+  const locale = location.pathname.startsWith('/es/') ? 'es' : 'en';
+  const root = document.documentElement;
+  root.lang = locale;
+  root.dataset.notFoundLanguage = locale;
+})();`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style is:inline>
+      @layer reset, tokens, base, components, utilities;
+    </style>
+    <script is:inline set:html={THEME_BOOTSTRAP_SCRIPT} />
+    <script is:inline set:html={NOT_FOUND_LOCALE_SCRIPT} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex, follow" />
+    <meta
+      name="description"
+      content="The requested Kinetic Systems Lab route could not be found."
+    />
+    <title>Page not found · Página no encontrada | Kinetic Systems Lab</title>
+  </head>
+  <body>
+    <NotFound />
+  </body>
+</html>

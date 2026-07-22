@@ -180,6 +180,7 @@ for (const viewport of [
     await page.goto('/');
 
     const selectedWork = page.locator('[data-selected-work]');
+    await expect(selectedWork).toHaveAttribute('data-track-ready', 'true');
     await expect(selectedWork).toHaveAttribute(
       'data-track-mode',
       /^(horizontal|vertical)$/,
@@ -237,7 +238,7 @@ test('ScrollTrigger refresh re-evaluates the safety guard after viewport changes
   const selectedWork = page.locator('[data-selected-work]');
   await expect(selectedWork).toHaveAttribute('data-track-mode', 'horizontal');
 
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1440, height: 600 });
   await expect(selectedWork).toHaveAttribute('data-track-mode', 'vertical');
 
   await page.setViewportSize({ width: 1440, height: 1200 });
