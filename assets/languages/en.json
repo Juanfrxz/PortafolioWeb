@@ -1,5 +1,5 @@
 {
-    "nav-bar":{
+    "nav-bar": {
         "home": "Home",
         "about": "About",
         "skills": "Skills",
@@ -9,9 +9,19 @@
         "tour": "🧭 Tour"
     },
     "home": {
-        "title": "Hi,<br>I'm <span class=\"home__title-color\">Juan</span><br>Junior Developer",
-        "contact": "Contact",
-        "download": "Download CV"
+        "badge": "Available for work",
+        "greeting": "Hi, I am",
+        "name": "Juan Rodriguez",
+        "roles": [
+            "Full Stack Developer",
+            "Frontend Developer",
+            "ICT Infrastructure"
+        ],
+        "description": "I build web applications end to end: interfaces with React, APIs with .NET and Node.js, and databases with SQL Server and PostgreSQL.",
+        "contact": "Contact me",
+        "download": "Download CV",
+        "hint": "Drag to rotate",
+        "scroll": "Scroll"
     },
     "about": {
         "title": "About me",
@@ -21,7 +31,7 @@
     },
     "skills": {
         "title": "Skills",
-        "title2" : "Technical Skills",
+        "title2": "Technical Skills",
         "databases_title": "Databases",
         "description": "These are some of my main technical skills, with levels of mastery that reflect my experience and constant practice in each area. I am committed to continuous learning to improve and expand my knowledge."
     },

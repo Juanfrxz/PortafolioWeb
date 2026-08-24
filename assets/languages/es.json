@@ -1,5 +1,5 @@
 {
-    "nav-bar":{
+    "nav-bar": {
         "home": "Inicio",
         "about": "Acerca de",
         "skills": "Habilidades",
@@ -9,9 +9,19 @@
         "tour": "🧭 Recorrido"
     },
     "home": {
-        "title": "Hola,<br>Soy <span class=\"home__title-color\">Juan</span><br>Desarrollador Junior",
+        "badge": "Disponible para trabajar",
+        "greeting": "Hola, soy",
+        "name": "Juan Rodríguez",
+        "roles": [
+            "Desarrollador Full Stack",
+            "Desarrollador Frontend",
+            "Infraestructura TIC"
+        ],
+        "description": "Construyo aplicaciones web de punta a punta: interfaces con React, APIs con .NET y Node.js, y bases de datos con SQL Server y PostgreSQL.",
         "contact": "Contáctame",
-        "download": "Descargar CV"
+        "download": "Descargar CV",
+        "hint": "Arrastra para rotar",
+        "scroll": "Desliza"
     },
     "about": {
         "title": "Acerca de mi",
@@ -21,7 +31,7 @@
     },
     "skills": {
         "title": "Habilidades",
-        "title2" : "Habilidades técnicas",
+        "title2": "Habilidades técnicas",
         "databases_title": "Bases de Datos",
         "description": "Estas son algunas de mis principales habilidades técnicas, con niveles de dominio que reflejan mi experiencia y práctica constante en cada área. Estoy comprometido con el aprendizaje continuo para mejorar y ampliar mis conocimientos."
     },
