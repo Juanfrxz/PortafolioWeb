@@ -1,137 +1,188 @@
-// Esperar a que el DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
+/*===================================================================
+=            MODELO 3D DEL HERO                                     =
+=  Clave: el modelo YA NO bloquea el loader. El hero se pinta de     =
+=  inmediato y el avatar entra con fade cuando termina de cargar.    =
+===================================================================*/
+
+document.addEventListener('DOMContentLoaded', function () {
     const loaderContainer = document.querySelector('.loader-container');
-    let assetsLoaded = false;
-    let modelLoaded = false;
-
-    // Función para ocultar el loader cuando todo esté listo
-    function hideLoader() {
-        if (assetsLoaded && modelLoaded) {
-            loaderContainer.classList.add('hidden');
-            // Remover el loader después de la transición
-            setTimeout(() => {
-                loaderContainer.style.display = 'none';
-            }, 500);
-        }
-    }
-
-    // Verificar que Three.js esté disponible
-    if (typeof THREE === 'undefined') {
-        console.error('Three.js no está disponible');
-        return;
-    }
-
-    console.log('Inicializando Three.js');
-    
     const container = document.getElementById('model-container');
+    const homeImg = document.querySelector('.home__img');
+
+    // Rotacion inicial del avatar. Verificado renderizando el .glb a 0, PI/2,
+    // PI y 3PI/2: el frente (cara visible) es 0 radianes.
+    const INITIAL_ROTATION = 0;
+    // Amplitud del vaiven. Antes giraba 360 completos, asi que la mitad
+    // del tiempo se le veia la nuca.
+    const SWAY_AMPLITUDE = 0.28;
+    const LOADER_MAX_WAIT = 2500; // ms: el loader nunca se queda pegado
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /*==================== LOADER ====================*/
+    let loaderHidden = false;
+
+    function hideLoader() {
+        if (loaderHidden || !loaderContainer) return;
+        loaderHidden = true;
+
+        loaderContainer.classList.add('hidden');
+        setTimeout(() => {
+            loaderContainer.style.display = 'none';
+        }, 500);
+    }
+
+    // El loader ya no espera al .glb: se va cuando la pagina esta lista,
+    // y como maximo tras LOADER_MAX_WAIT pase lo que pase.
+    if (document.readyState === 'complete') {
+        hideLoader();
+    } else {
+        window.addEventListener('load', hideLoader);
+    }
+    setTimeout(hideLoader, LOADER_MAX_WAIT);
+
+    /*==================== GUARDAS ====================*/
     if (!container) {
-        console.error('No se encontró el contenedor del modelo 3D');
+        console.warn('No existe #model-container: se omite el modelo 3D.');
         return;
     }
-    
-    // Configurar escena
+
+    if (typeof THREE === 'undefined') {
+        console.warn('Three.js no cargo: el hero funciona igual, sin avatar.');
+        return;
+    }
+
+    // No descargar el modelo si el usuario pidio ahorro de datos
+    if (navigator.connection?.saveData) {
+        console.info('Modo ahorro de datos activo: se omite el modelo 3D.');
+        return;
+    }
+
+    /*==================== ESCENA ====================*/
     const scene = new THREE.Scene();
-    
-    // Configurar cámara
-    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        container.clientWidth / container.clientHeight,
+        0.1,
+        1000
+    );
     camera.position.z = 3;
     camera.position.y = 0.4;
-    
-    // Configurar renderer
-    const renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true
-    });
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
+    // Cap a 2x: en pantallas 3x el coste de render se dispara sin ganancia visible
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
-    
-    // Añadir luces
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-    scene.add(ambientLight);
-    
+
+    /*==================== LUCES ====================*/
+    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
     directionalLight.position.set(2, 2, 2);
     scene.add(directionalLight);
 
-    // Luz de relleno desde atrás
     const backLight = new THREE.DirectionalLight(0xffffff, 0.8);
     backLight.position.set(-2, 2, -2);
     scene.add(backLight);
 
-    // Luz suave desde abajo
     const bottomLight = new THREE.DirectionalLight(0xffffff, 0.3);
     bottomLight.position.set(0, -1, 2);
     scene.add(bottomLight);
 
-    // Configurar controles
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableZoom = false;
-    controls.enablePan = false;
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.rotateSpeed = 0.5;
-    controls.maxPolarAngle = Math.PI / 1.5;
-    controls.minPolarAngle = Math.PI / 3;
-    
-    // Variable para almacenar el modelo
-    let model;
-    
-    // Función de animación
+    /*==================== CONTROLES ====================*/
+    let controls = null;
+    if (typeof THREE.OrbitControls === 'function') {
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableZoom = false;
+        controls.enablePan = false;
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.rotateSpeed = 0.5;
+        controls.maxPolarAngle = Math.PI / 1.5;
+        controls.minPolarAngle = Math.PI / 3;
+    }
+
+    /*==================== ANIMACION ====================*/
+    let model = null;
+    let userInteracted = false;
+    let rafId = null;
+
+    renderer.domElement.addEventListener('pointerdown', () => {
+        userInteracted = true; // al arrastrar, mandar el usuario
+    });
+
     function animate() {
-        requestAnimationFrame(animate);
-        
-        if (model) {
-            model.rotation.y += 0.005;
+        rafId = requestAnimationFrame(animate);
+
+        // Vaiven suave alrededor del frente en vez de giro completo
+        if (model && !userInteracted && !prefersReducedMotion) {
+            const t = performance.now() / 2200;
+            model.rotation.y = INITIAL_ROTATION + Math.sin(t) * SWAY_AMPLITUDE;
         }
-        
-        controls.update();
+
+        controls?.update();
         renderer.render(scene, camera);
     }
-    
-    // Iniciar animación
     animate();
-    
-    // Cargar el modelo 3D
-    const loader = new THREE.GLTFLoader();
-    console.log('Intentando cargar el modelo 3D desde:', 'assets/models/avatar_programador.glb');
-    
-    loader.load(
-        'assets/models/avatar_programador.glb',
-        function(gltf) {
-            console.log('¡Modelo cargado con éxito!');
-            model = gltf.scene;
-            model.scale.set(1.4, 1.4, 1.4);
-            model.position.set(0, 0.2, 0);
-            scene.add(model);
-            
-            // Marcar el modelo como cargado
-            modelLoaded = true;
-            hideLoader();
-        },
-        function(xhr) {
-            console.log('Progreso de carga: ' + Math.round(xhr.loaded / xhr.total * 100) + '%');
-        },
-        function(error) {
-            console.error('Error al cargar el modelo:', error);
-            // En caso de error, ocultar el loader de todos modos
-            modelLoaded = true;
-            hideLoader();
-        }
-    );
-    
-    // Manejar redimensionamiento de ventana
-    window.addEventListener('resize', function() {
-        if (container.clientWidth > 0 && container.clientHeight > 0) {
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
+
+    // No gastar GPU con la pestana en segundo plano
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = null;
+        } else if (!rafId) {
+            animate();
         }
     });
 
-    // Marcar los assets como cargados cuando la página esté lista
-    window.addEventListener('load', function() {
-        assetsLoaded = true;
-        hideLoader();
+    /*==================== CARGA DEL MODELO ====================*/
+    if (typeof THREE.GLTFLoader !== 'function') {
+        console.warn('GLTFLoader no cargo: se omite el avatar.');
+        return;
+    }
+
+    const loader = new THREE.GLTFLoader();
+
+    // Necesario para leer el .glb comprimido con Draco
+    if (typeof THREE.DRACOLoader === 'function') {
+        const dracoLoader = new THREE.DRACOLoader();
+        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+        loader.setDRACOLoader(dracoLoader);
+    }
+
+    loader.load(
+        'assets/models/avatar_programador.glb',
+        function (gltf) {
+            model = gltf.scene;
+            model.scale.set(1.4, 1.4, 1.4);
+            model.position.set(0, 0.2, 0);
+            model.rotation.y = INITIAL_ROTATION;
+            scene.add(model);
+
+            // Fade-in: el hero ya estaba visible, esto solo revela el avatar
+            container.classList.add('is-ready');
+            homeImg?.classList.add('is-ready');
+        },
+        undefined,
+        function (error) {
+            console.error('No se pudo cargar el modelo 3D:', error);
+            // El hero se queda con el blob morado, que es un fondo valido
+        }
+    );
+
+    /*==================== RESIZE ====================*/
+    let resizeTimer = null;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (container.clientWidth > 0 && container.clientHeight > 0) {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            }
+        }, 150);
     });
-}); 
+});

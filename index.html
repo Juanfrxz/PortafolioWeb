@@ -1,18 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!--===== SEO =====-->
+        <title>Juan Rodriguez | Desarrollador Full Stack</title>
+        <meta name="description" content="Desarrollador Full Stack y Tecnologo en Infraestructura TIC desde Colombia. Construyo aplicaciones web con React, .NET, Node.js y SQL Server. Mira mis proyectos y contactame.">
+        <meta name="author" content="Juan Rodriguez">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://juanfrxz.dev/">
+        <meta name="theme-color" content="#8557e0">
+
+        <!--===== OPEN GRAPH / TWITTER =====-->
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Juan Rodriguez">
+        <meta property="og:url" content="https://juanfrxz.dev/">
+        <meta property="og:locale" content="es_CO">
+        <meta property="og:locale:alternate" content="en_US">
+        <meta property="og:title" content="Juan Rodriguez | Desarrollador Full Stack">
+        <meta property="og:description" content="Desarrollador Full Stack y Tecnologo en Infraestructura TIC desde Colombia. Construyo aplicaciones web con React, .NET, Node.js y SQL Server.">
+        <meta property="og:image" content="https://juanfrxz.dev/assets/img/og-cover.jpg">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:image:alt" content="Juan Rodriguez, Desarrollador Full Stack">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Juan Rodriguez | Desarrollador Full Stack">
+        <meta name="twitter:description" content="Desarrollador Full Stack y Tecnologo en Infraestructura TIC desde Colombia. Construyo aplicaciones web con React, .NET, Node.js y SQL Server.">
+        <meta name="twitter:image" content="https://juanfrxz.dev/assets/img/og-cover.jpg">
+
+        <!--===== PRECONNECT (acelera el handshake con los CDNs) =====-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
         <!--===== GOOGLE FONTS =====-->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">  
-        <link rel="stylesheet" href="assets/css/styles.css">  
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+        <link rel="stylesheet" href="assets/css/styles.css">
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.css">
         <link rel="shortcut icon" href="assets/img/portafolio.png" type="image/x-icon">
-        <!-- <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.16/build/spline-viewer.js"></script> -->
-        <title>Juan Rodriguez</title>
     </head>
     <body>
         <!-- Loader -->
@@ -64,8 +91,12 @@
                         <span class="language-text">EN</span>
                     </button>
                 </div>
-                <button class="theme-toggle" id="theme-toggle">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
                     <i class='bx bx-moon'></i>
+                </button>
+
+                <button class="nav__toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">
+                    <i class='bx bx-menu'></i>
                 </button>
             </nav>
         </header>
@@ -74,23 +105,44 @@
             <!--===== HOME =====-->
             <section class="home bd-grid" id="home">
                 <div class="home__data">
-                    <h1 class="home__title" data-section="home" data-value="title">Hi,<br>I'm <span class="home__title-color">Juan</span><br> Junior Developer</h1>
+                    <!-- Estado de disponibilidad -->
+                    <span class="home__badge">
+                        <span class="home__badge-dot" aria-hidden="true"></span>
+                        <span data-section="home" data-value="badge">Available for work</span>
+                    </span>
 
-                    <!-- CONTACT -->
-                    <a href="https://wa.me/qr/UCDII2EI7QCFK1" class="button" target="_defer" data-section="home" data-value="contact">Contact</a>
-                    <!-- CV -->
-                    <a href="assets/pdf/Juan_Rodriguez_CV.pdf" class="button-cv" target="_defer" data-section="home" data-value="download">Download CV</a>
-                    
-                </div>
+                    <h1 class="home__title">
+                        <span class="home__greeting" data-section="home" data-value="greeting">Hi, I am</span>
+                        <span class="home__name" data-section="home" data-value="name">Juan Rodriguez</span>
+                        <span class="home__role"><span class="home__role-typed" id="typed-role" aria-live="polite"></span><span class="home__caret" aria-hidden="true"></span></span>
+                    </h1>
 
-                <div class="home__social">
-                    <a href="https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b" class="home__social-icon" target="_defer" id="linkedin"><i class='bx bxl-linkedin'></i></a>
-                    <a href="https://www.instagram.com/juan_frxz/" class="home__social-icon" target="_defer" id="instagram"><i class='bx bxl-instagram' ></i></a>
-                    <a href="https://github.com/Juanfrxz" class="home__social-icon" target="_defer" id="github"><i class='bx bxl-github' ></i></a>
+                    <p class="home__description" data-section="home" data-value="description">I build web applications end to end: interfaces with React, APIs with .NET and Node.js, and databases with SQL Server and PostgreSQL.</p>
+
+                    <ul class="home__stack" aria-label="Stack">
+                        <li class="home__stack-item"><i class='bx bxl-react' aria-hidden="true"></i>React</li>
+                        <li class="home__stack-item"><span class="home__stack-svg" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="16" height="16"><path fill="#3178c6" d="M2 63.91v62.5h125v-125H2zm100.73-5a15.56 15.56 0 017.82 4.5 20.58 20.58 0 013 4c0 .16-5.4 3.81-8.69 5.85-.12.08-.6-.44-1.13-1.23a7.09 7.09 0 00-5.87-3.53c-3.79-.26-6.23 1.73-6.21 5a4.58 4.58 0 00.54 2.34c.83 1.73 2.38 2.76 7.24 4.86 8.95 3.85 12.78 6.39 15.16 10 2.66 4 3.25 10.46 1.45 15.24-2 5.2-6.9 8.73-13.83 9.9a38.32 38.32 0 01-9.52-.1 23 23 0 01-12.72-6.63c-1.15-1.27-3.39-4.58-3.25-4.82a9.34 9.34 0 011.15-.73l4.6-2.64 3.59-2.08.75 1.11a16.78 16.78 0 004.74 4.54c4 2.1 9.46 1.81 12.16-.62a5.43 5.43 0 00.69-6.92c-1-1.39-3-2.56-8.59-5-6.45-2.78-9.23-4.5-11.77-7.24a16.48 16.48 0 01-3.43-6.25 25 25 0 01-.22-8c1.33-6.23 6-10.58 12.82-11.87a31.66 31.66 0 019.49.26zm-29.34 5.24v5.12H57.16v46.23H45.65V69.26H29.38v-5a49.19 49.19 0 01.14-5.16c.06-.08 10-.12 22-.1h21.83z"/></svg></span>TypeScript</li>
+                        <li class="home__stack-item"><i class='bx bxl-nodejs' aria-hidden="true"></i>Node.js</li>
+                        <li class="home__stack-item"><i class='bx bxl-microsoft' aria-hidden="true"></i>.NET</li>
+                        <li class="home__stack-item"><i class='bx bx-data' aria-hidden="true"></i>SQL Server</li>
+                    </ul>
+
+                    <div class="home__buttons">
+                        <!-- CONTACT -->
+                        <a href="https://wa.me/qr/UCDII2EI7QCFK1" class="button" target="_blank" rel="noopener noreferrer" data-section="home" data-value="contact">Contact</a>
+                        <!-- CV -->
+                        <a href="assets/pdf/Juan_Rodriguez_CV.pdf" class="button-cv" download="Juan_Rodriguez_CV.pdf" target="_blank" rel="noopener noreferrer" data-section="home" data-value="download">Download CV</a>
+                    </div>
+
+                    <div class="home__social">
+                        <a href="https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b" class="home__social-icon" target="_blank" rel="noopener noreferrer" id="linkedin" aria-label="LinkedIn"><i class='bx bxl-linkedin' aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/juan_frxz/" class="home__social-icon" target="_blank" rel="noopener noreferrer" id="instagram" aria-label="Instagram"><i class='bx bxl-instagram' aria-hidden="true"></i></a>
+                        <a href="https://github.com/Juanfrxz" class="home__social-icon" target="_blank" rel="noopener noreferrer" id="github" aria-label="GitHub"><i class='bx bxl-github' aria-hidden="true"></i></a>
+                    </div>
                 </div>
 
                 <div class="home__img">
-                    <svg class="home__blob" viewBox="0 0 479 467" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="home__blob" viewBox="0 0 479 467" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <mask id="mask0" mask-type="alpha">
                             <path d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"/>
                         </mask>
@@ -99,8 +151,13 @@
                         </g>
                     </svg>
                     <div id="model-container"></div>
-                    <!-- <spline-viewer url="https://prod.spline.design/dAqkStOMcOodTcb8/scene.splinecode"></spline-viewer> -->
+                    <p class="home__img-hint" data-section="home" data-value="hint">Drag to rotate</p>
                 </div>
+
+                <a href="#about" class="home__scroll" aria-label="Ir a la seccion Acerca de">
+                    <i class='bx bx-mouse home__scroll-icon' aria-hidden="true"></i>
+                    <span class="home__scroll-text" data-section="home" data-value="scroll">Scroll</span>
+                </a>
             </section>
 
             <!--===== ABOUT =====-->
@@ -109,7 +166,7 @@
 
                 <div class="about__container bd-grid">
                     <div class="about__img">
-                        <img src="assets/img/mifoto.png" alt="">
+                        <img src="assets/img/mifoto.webp" alt="Foto de Juan Rodriguez" width="600" height="728" loading="lazy" decoding="async">
                     </div>
                     
                     <div>
@@ -301,7 +358,7 @@
                 <div class="work__container bd-grid">
                     <div class="work__card" id="f1_content">
                         <div class="work__img-container">
-                            <img src="assets/img/image-f1.png" alt="F1 - Formula1" class="work__img">
+                            <img src="assets/img/image-f1.webp" loading="lazy" decoding="async" alt="F1 - Formula1" class="work__img">
                         </div>
                         <div class="work__content" >
                             <h3 class="work__title" id="f1_title">F1 - Formula1</h3>
@@ -328,7 +385,7 @@
                                     <span>Vite</span>
                                 </div>
                             </div>
-                            <a href="https://github.com/Juanfrxz/Formula1.git" class="work__link" target="_blank">
+                            <a href="https://github.com/Juanfrxz/Formula1.git" class="work__link" target="_blank" rel="noopener noreferrer">
                                 <i class='bx bx-link-external'></i>
                                 View Project
                             </a>
@@ -336,7 +393,7 @@
                     </div>
                     <div class="work__card">
                         <div class="work__img-container">
-                            <img src="assets/img/App-Habita.png" alt="IMC Calculator" class="work__img">
+                            <img src="assets/img/App-Habita.webp" loading="lazy" decoding="async" alt="IMC Calculator" class="work__img">
                         </div>
                         <div class="work__content">
                             <h3 class="work__title">Habita</h3>
@@ -355,7 +412,7 @@
                                     <span>JWT</span>
                                 </div>
                             </div>
-                            <a href="https://github.com/Juanfrxz/BackHackthon.git" class="work__link" target="_blank">
+                            <a href="https://github.com/Juanfrxz/BackHackthon.git" class="work__link" target="_blank" rel="noopener noreferrer">
                                 <i class='bx bx-link-external'></i>
                                 View Project
                             </a>
@@ -364,7 +421,7 @@
 
                     <div class="work__card">
                         <div class="work__img-container">
-                            <img src="assets/img/App-Campuslove.png" alt="Concert Website" class="work__img">
+                            <img src="assets/img/App-Campuslove.webp" loading="lazy" decoding="async" alt="Concert Website" class="work__img">
                         </div>
                         <div class="work__content">
                             <h3 class="work__title">Campus Love</h3>
@@ -387,7 +444,7 @@
                                     <span>Spectre.Console</span>
                                 </div>
                             </div>
-                            <a href="https://github.com/LauraVargas22/CampusLove.git" class="work__link" target="_blank">
+                            <a href="https://github.com/LauraVargas22/CampusLove.git" class="work__link" target="_blank" rel="noopener noreferrer">
                                 <i class='bx bx-link-external'></i>
                                 View Project
                             </a>
@@ -396,7 +453,7 @@
 
                     <!-- <div class="work__card">
                         <div class="work__img-container">
-                            <img src="assets/img/img-project3.png" alt="Hamburger Restaurant" class="work__img">
+                            <img src="assets/img/img-project3.webp" loading="lazy" decoding="async" alt="Hamburger Restaurant" class="work__img">
                         </div>
                         <div class="work__content">
                             <h3 class="work__title">Hamburger Restaurant</h3>
@@ -415,7 +472,7 @@
                                     <span>JavaScript</span>
                                 </div>
                             </div>
-                            <a href="https://github.com/Juanfrxz/Hamburgueseria.git" class="work__link" target="_blank">
+                            <a href="https://github.com/Juanfrxz/Hamburgueseria.git" class="work__link" target="_blank" rel="noopener noreferrer">
                                 <i class='bx bx-link-external'></i>
                                 View Project
                             </a>
@@ -424,7 +481,7 @@
 
                     <div class="work__card">
                         <div class="work__img-container">
-                            <img src="assets/img/img-project4.png" alt="Liga BetPlay" class="work__img">
+                            <img src="assets/img/img-project4.webp" loading="lazy" decoding="async" alt="Liga BetPlay" class="work__img">
                         </div>
                         <div class="work__content">
                             <h3 class="work__title">Liga BetPlay</h3>
@@ -439,7 +496,7 @@
                                     <span>SQL</span>
                                 </div>
                             </div>
-                            <a href="https://github.com/Juanfrxz/LigaBetPlay-Dicc-JuanDavidRodriguez.git" class="work__link" target="_blank">
+                            <a href="https://github.com/Juanfrxz/LigaBetPlay-Dicc-JuanDavidRodriguez.git" class="work__link" target="_blank" rel="noopener noreferrer">
                                 <i class='bx bx-link-external'></i>
                                 View Project
                             </a>
@@ -449,7 +506,7 @@
 
                     <div class="work__card">
                         <div class="work__img-container">
-                            <img src="assets/img/ine-campus.png" alt="Cine Campus" class="work__img">
+                            <img src="assets/img/ine-campus.webp" loading="lazy" decoding="async" alt="Cine Campus" class="work__img">
                         </div>
                         <div class="work__content">
                             <h3 class="work__title">Cine Campus</h3>
@@ -468,7 +525,7 @@
                                     <span>JavaScript</span>
                                 </div>
                             </div>
-                            <a href="https://github.com/Juanfrxz/CineCamp.git" class="work__link" target="_blank">
+                            <a href="https://github.com/Juanfrxz/CineCamp.git" class="work__link" target="_blank" rel="noopener noreferrer">
                                 <i class='bx bx-link-external'></i>
                                 View Project
                             </a>
@@ -509,19 +566,19 @@
                                 <i class='bx bxl-whatsapp contact__info-icon'></i>
                                 <div class="contact__info-data">
                                     <h4>WhatsApp</h4>
-                                    <a href="https://wa.me/qr/UCDII2EI7QCFK1" target="_blank">Send message</a>
+                                    <a href="https://wa.me/qr/UCDII2EI7QCFK1" target="_blank" rel="noopener noreferrer">Send message</a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="contact__social">
-                            <a href="https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b" class="contact__social-link" target="_blank">
+                            <a href="https://www.linkedin.com/in/david-rodr%C3%ADguez-13686a25b" class="contact__social-link" target="_blank" rel="noopener noreferrer">
                                 <i class='bx bxl-linkedin'></i>
                             </a>
-                            <a href="https://github.com/Juanfrxz" class="contact__social-link" target="_blank">
+                            <a href="https://github.com/Juanfrxz" class="contact__social-link" target="_blank" rel="noopener noreferrer">
                                 <i class='bx bxl-github'></i>
                             </a>
-                            <a href="https://www.instagram.com/juan_frxz/" class="contact__social-link" target="_blank">
+                            <a href="https://www.instagram.com/juan_frxz/" class="contact__social-link" target="_blank" rel="noopener noreferrer">
                                 <i class='bx bxl-instagram'></i>
                             </a>
                         </div>
@@ -566,28 +623,24 @@
 
 
         <!--===== SCROLL REVEAL =====-->
-        <script src="https://unpkg.com/scrollreveal"></script>
+        <script defer src="https://unpkg.com/scrollreveal"></script>
 
         <!--===== PARTICLES JS =====-->
-        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-        <script src="assets/js/particles.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script defer src="assets/js/particles.js"></script>
 
         <!--===== THREE.JS =====-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
-        <!--===== I18N =====-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/23.11.5/i18next.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next-http-backend/2.5.0/i18nextHttpBackend.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/7.2.1/i18nextBrowserLanguageDetector.min.js"></script>
-        <script src="assets/js/i18n.js"></script>
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
         <!--===== TOUR =====-->
         <script type="module" src="assets/js/tour.js"></script>
 
         <!--===== MAIN JS =====-->
-        <script src="assets/js/main.js"></script>
-        <script src="assets/js/3d-model.js"></script>
+        <script defer src="assets/js/main.js"></script>
+        <script defer src="assets/js/3d-model.js"></script>
+
     </body>
 </html>

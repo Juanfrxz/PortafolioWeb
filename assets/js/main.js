@@ -1,115 +1,236 @@
-/*===== MENU SHOW =====*/ 
-const showMenu = (toggleId, navId) =>{
-    const toggle = document.getElementById(toggleId),
-    nav = document.getElementById(navId)
+/*===================================================================
+=            PORTAFOLIO — LOGICA PRINCIPAL                          =
+=  Nav movil, scroll activo, tema, idioma y efecto typing del hero. =
+===================================================================*/
 
-    if(toggle && nav){
-        toggle.addEventListener('click', ()=>{
-            nav.classList.toggle('show')
-        })
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/*==================== MENU MOVIL ====================*/
+const showMenu = (toggleId, navId) => {
+    const toggle = document.getElementById(toggleId),
+          nav = document.getElementById(navId);
+
+    if (!toggle || !nav) {
+        console.warn(`No se encontro el toggle "${toggleId}" o el menu "${navId}"`);
+        return;
+    }
+
+    toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('show');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        toggle.setAttribute('aria-label', isOpen ? 'Cerrar menu' : 'Abrir menu');
+        toggle.querySelector('i')?.classList.toggle('bx-x', isOpen);
+        toggle.querySelector('i')?.classList.toggle('bx-menu', !isOpen);
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && nav.classList.contains('show')) {
+            toggle.click();
+        }
+    });
+};
+showMenu('nav-toggle', 'nav-menu');
+
+/*==================== CERRAR MENU AL NAVEGAR ====================*/
+const navLink = document.querySelectorAll('.nav__link');
+
+function linkAction() {
+    const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+    if (!navMenu) return;
+
+    navMenu.classList.remove('show');
+    if (navToggle) {
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Abrir menu');
+        navToggle.querySelector('i')?.classList.remove('bx-x');
+        navToggle.querySelector('i')?.classList.add('bx-menu');
     }
 }
-showMenu('nav-toggle','nav-menu')
+navLink.forEach(n => n.addEventListener('click', linkAction));
 
-/*==================== REMOVE MENU MOBILE ====================*/
-const navLink = document.querySelectorAll('.nav__link')
+/*==================== LINK ACTIVO SEGUN SCROLL ====================*/
+const sections = document.querySelectorAll('section[id]');
 
-function linkAction(){
-    const navMenu = document.getElementById('nav-menu')
-    // When we click on each nav__link, we remove the show-menu class
-    navMenu.classList.remove('show')
-}
-navLink.forEach(n => n.addEventListener('click', linkAction))
+const scrollActive = () => {
+    const scrollDown = window.scrollY;
 
-/*==================== SCROLL SECTIONS ACTIVE LINK ====================*/
-const sections = document.querySelectorAll('section[id]')
-
-const scrollActive = () =>{
-    const scrollDown = window.scrollY
-
-  sections.forEach(current =>{
+    sections.forEach(current => {
         const sectionHeight = current.offsetHeight,
               sectionTop = current.offsetTop - 58,
               sectionId = current.getAttribute('id'),
-              sectionsClass = document.querySelector('.nav__menu a[href*=' + sectionId + ']')
-        
-        if(scrollDown > sectionTop && scrollDown <= sectionTop + sectionHeight){
-            sectionsClass.classList.add('active-link')
-        }else{
-            sectionsClass.classList.remove('active-link')
-        }                                                    
-    })
+              sectionsClass = document.querySelector(`.nav__menu a[href*="${sectionId}"]`);
+
+        // Una seccion puede no tener link en el nav: sin esta guarda revienta
+        if (!sectionsClass) return;
+
+        if (scrollDown > sectionTop && scrollDown <= sectionTop + sectionHeight) {
+            sectionsClass.classList.add('active-link');
+        } else {
+            sectionsClass.classList.remove('active-link');
+        }
+    });
+};
+window.addEventListener('scroll', scrollActive, { passive: true });
+
+/*==================== SCROLL REVEAL ====================*/
+// Viene de un CDN: si falla la red, el sitio debe seguir funcionando.
+if (typeof ScrollReveal === 'function' && !prefersReducedMotion) {
+    const sr = ScrollReveal({
+        origin: 'top',
+        distance: '60px',
+        duration: 2000,
+        delay: 200
+    });
+
+    sr.reveal('.about__img, .skills__subtitle, .skills__text', {});
+    sr.reveal('.about__subtitle, .about__text, .skills__img', { delay: 400 });
+    sr.reveal('.skills__data, .work__img, .contact__input', { interval: 200 });
+} else if (typeof ScrollReveal !== 'function') {
+    console.warn('ScrollReveal no cargo: el contenido se muestra sin animacion.');
 }
-window.addEventListener('scroll', scrollActive)
 
-/*===== SCROLL REVEAL ANIMATION =====*/
-const sr = ScrollReveal({
-    origin: 'top',
-    distance: '60px',
-    duration: 2000,
-    delay: 200,
-//     reset: true
-});
+/*==================== EFECTO TYPING DEL HERO ====================*/
+const typedRole = document.getElementById('typed-role');
+let typingTimer = null;
 
-sr.reveal('.home__data, .about__img, .skills__subtitle, .skills__text',{}); 
-sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img',{delay: 400}); 
-sr.reveal('.home__social-icon',{ interval: 200}); 
-sr.reveal('.skills__data, .work__img, .contact__input',{interval: 200}); 
+const startTyping = (roles) => {
+    if (!typedRole || !Array.isArray(roles) || roles.length === 0) return;
 
-const flasgElement = document.getElementById('flags');
+    // Reiniciar si ya habia una animacion corriendo (p. ej. al cambiar de idioma)
+    if (typingTimer) {
+        clearTimeout(typingTimer);
+        typingTimer = null;
+    }
 
+    // Sin animacion si el usuario la desactivo en su sistema
+    if (prefersReducedMotion) {
+        typedRole.textContent = roles[0];
+        return;
+    }
+
+    let roleIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    const tick = () => {
+        const currentRole = roles[roleIndex];
+
+        charIndex += deleting ? -1 : 1;
+        typedRole.textContent = currentRole.slice(0, charIndex);
+
+        let delay = deleting ? 45 : 90;
+
+        if (!deleting && charIndex === currentRole.length) {
+            delay = 1800;          // pausa leyendo el rol completo
+            deleting = true;
+        } else if (deleting && charIndex === 0) {
+            deleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            delay = 350;
+        }
+
+        typingTimer = setTimeout(tick, delay);
+    };
+
+    typedRole.textContent = '';
+    tick();
+};
+
+/*==================== IDIOMA ====================*/
+const STORAGE_LANG = 'language';
+const SUPPORTED_LANGS = ['es', 'en'];
 const textsToChange = document.querySelectorAll('[data-section]');
 
-const changeLenguage = async (language) => {
-    const requestJson =  await fetch(`./assets/languages/${language}.json`);
-    const texts = await requestJson.json();
+const setActiveLangButton = (language) => {
+    document.querySelectorAll('.language-button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.language === language);
+        btn.setAttribute('aria-pressed', String(btn.dataset.language === language));
+    });
+};
 
-    for (const textToChange of textsToChange) {
-        const section  = textToChange.dataset.section;
-        const value = textToChange.dataset.value;
-
-        textToChange.innerHTML= texts[section][value];
+const changeLanguage = async (language) => {
+    if (!SUPPORTED_LANGS.includes(language)) {
+        console.warn(`Idioma no soportado: "${language}". Se usa "es".`);
+        language = 'es';
     }
-}
 
-// Update event listener for language buttons
+    try {
+        const response = await fetch(`./assets/languages/${language}.json`);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status} al pedir ${language}.json`);
+        }
+        const texts = await response.json();
+
+        for (const textToChange of textsToChange) {
+            const section = textToChange.dataset.section;
+            const value = textToChange.dataset.value;
+            const translation = texts?.[section]?.[value];
+
+            // Sin esta guarda, una clave faltante escribia "undefined" en pantalla
+            if (typeof translation === 'string') {
+                textToChange.innerHTML = translation;
+            } else {
+                console.warn(`Falta la traduccion "${section}.${value}" en ${language}.json`);
+            }
+        }
+
+        // Que el idioma real del documento coincida: importa para SEO y lectores de pantalla
+        document.documentElement.lang = language;
+        localStorage.setItem(STORAGE_LANG, language);
+        setActiveLangButton(language);
+
+        // Los roles del typing tambien son traducibles
+        startTyping(texts?.home?.roles);
+    } catch (error) {
+        console.error('No se pudo cargar el idioma:', error);
+    }
+};
+
 document.querySelectorAll('.language-button').forEach(button => {
     button.addEventListener('click', (e) => {
-        const language = e.currentTarget.dataset.language;
-        changeLenguage(language);
-        
-        // Update active state
-        document.querySelectorAll('.language-button').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        e.currentTarget.classList.add('active');
+        changeLanguage(e.currentTarget.dataset.language);
     });
 });
 
-// Theme switching functionality
+// Idioma inicial: lo guardado > el del navegador > espanol
+const detectLanguage = () => {
+    const saved = localStorage.getItem(STORAGE_LANG);
+    if (SUPPORTED_LANGS.includes(saved)) return saved;
+
+    const browser = (navigator.language || 'es').slice(0, 2).toLowerCase();
+    return SUPPORTED_LANGS.includes(browser) ? browser : 'es';
+};
+changeLanguage(detectLanguage());
+
+/*==================== TEMA ====================*/
+const STORAGE_THEME = 'theme';
 const themeToggle = document.getElementById('theme-toggle');
-const icon = themeToggle.querySelector('i');
 
-// Set dark theme as default
-document.documentElement.setAttribute('data-theme', 'dark');
-icon.classList.remove('bx-moon');
-icon.classList.add('bx-sun');
+const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
 
-// Theme toggle event listener
-themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    
-    // Update icon
-    if (newTheme === 'dark') {
-        icon.classList.remove('bx-moon');
-        icon.classList.add('bx-sun');
-    } else {
-        icon.classList.remove('bx-sun');
-        icon.classList.add('bx-moon');
+    const icon = themeToggle?.querySelector('i');
+    if (icon) {
+        icon.classList.toggle('bx-sun', theme === 'dark');
+        icon.classList.toggle('bx-moon', theme !== 'dark');
     }
-});
 
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+        meta.setAttribute('content', theme === 'dark' ? '#1c1526' : '#f0f0f0');
+    }
+};
+
+// Antes se forzaba "dark" en cada carga y se ignoraba lo guardado
+const savedTheme = localStorage.getItem(STORAGE_THEME);
+applyTheme(savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : 'dark');
+
+themeToggle?.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+
+    applyTheme(next);
+    localStorage.setItem(STORAGE_THEME, next);
+});

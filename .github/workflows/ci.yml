@@ -1,0 +1,37 @@
+name: CI
+
+# GitHub Pages sirve la rama main en la raiz (/), asi que el sitio se publica
+# solo con hacer push: no hace falta un job de build ni de deploy.
+#
+# El workflow anterior (deploy.yml) construia con Vite y publicaba a gh-pages,
+# una rama que nadie lee y que nunca llego a crearse porque el job venia
+# fallando desde marzo de 2026. Ademas el dist/ de Vite salia incompleto: no
+# incluia assets/js/, assets/languages/, el .glb ni el PDF, porque son archivos
+# que se piden en runtime y Vite no los ve. Publicarlo habria roto el sitio.
+#
+# Lo util aqui es validar lo que se rompe en silencio y no se nota hasta
+# que alguien entra a la pagina.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validar:
+    name: Validar el sitio
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # El script no usa dependencias: no hace falta npm install
+      - name: Rutas, traducciones, sintaxis y peso de assets
+        run: node scripts/check-site.mjs
