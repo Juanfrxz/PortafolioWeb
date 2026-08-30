@@ -6,7 +6,8 @@
         "experience": "Experiencia",
         "projects": "Proyectos",
         "contact": "Contacto",
-        "tour": "🧭 Recorrido"
+        "tour": "🧭 Recorrido",
+        "reads": "Lecturas"
     },
     "home": {
         "badge": "Disponible para trabajar",
@@ -32,19 +33,50 @@
     "skills": {
         "title": "Habilidades",
         "title2": "Habilidades técnicas",
-        "databases_title": "Bases de Datos",
-        "description": "Estas son algunas de mis principales habilidades técnicas, con niveles de dominio que reflejan mi experiencia y práctica constante en cada área. Estoy comprometido con el aprendizaje continuo para mejorar y ampliar mis conocimientos."
+        "databases_title": "Datos",
+        "description": "Estas son algunas de mis principales habilidades técnicas, con niveles de dominio que reflejan mi experiencia y práctica constante en cada área. Estoy comprometido con el aprendizaje continuo para mejorar y ampliar mis conocimientos.",
+        "intro": "Las líneas unen las tecnologías que uso juntas.",
+        "frontend_title": "Interfaz",
+        "backend_title": "Servidor",
+        "tools_title": "Herramientas",
+        "infra_title": "Infraestructura",
+        "n_routingweb": "Rutas web",
+        "n_routingnet": "Redes",
+        "n_deploy": "Despliegue",
+        "n_bootstrap": "Bootstrap",
+        "n_angular": "Angular",
+        "n_react": "React",
+        "n_javascript": "JavaScript",
+        "n_tailwind": "Tailwind",
+        "n_csharp": "C#",
+        "n_php": "PHP",
+        "n_dotnet": ".NET Core",
+        "n_laravel": "Laravel",
+        "n_nodejs": "Node.js",
+        "n_sqlserver": "SQL Server",
+        "n_postgresql": "PostgreSQL",
+        "n_mysql": "MySQL",
+        "n_vscode": "VS Code",
+        "n_git": "Git",
+        "n_github": "GitHub",
+        "n_linux": "Linux",
+        "n_docker": "Docker"
     },
     "experience": {
         "title": "Experiencia",
+        "current": "Empleo actual",
+        "job1_company": "Data Global SAS",
         "job1_title": "Desarrollador Full Stack",
-        "job1_company": "QUIBOR WEB",
-        "job1_date": "2025 - Presente",
-        "job1_description": "Desarrollo de interfaces de usuario modernas y responsivas. Optimización del rendimiento de la aplicación web y mejora de la experiencia del usuario.",
-        "job2_title": "Técnico de Redes",
-        "job2_company": "ItComunicaciones",
-        "job2_date": "2024 - 2024",
-        "job2_description": "Instalación, configuración y mantenimiento de la infraestructura de red. Resolución de problemas de red y garantía de un rendimiento óptimo."
+        "job1_date": "Abr 2026 - Presente",
+        "job1_description": "Desarrollo full stack alternando varios stacks: interfaces con React y Angular, servicios en .NET y Laravel, y bases de datos SQL Server y MySQL.",
+        "job2_company": "QUIBOR WEB",
+        "job2_title": "Desarrollador Full Stack",
+        "job2_date": "2025 - 2026",
+        "job2_description": "Desarrollo de interfaces de usuario modernas y responsivas, y mejora del rendimiento de la aplicación web.",
+        "job3_company": "ItComunicaciones",
+        "job3_title": "Técnico de Redes",
+        "job3_date": "2024",
+        "job3_description": "Instalación, configuración y mantenimiento de infraestructura de red, y resolución de incidencias."
     },
     "projects": {
         "title": "Proyectos",
@@ -66,5 +98,12 @@
     },
     "loader": {
         "text": "Cargando..."
+    },
+    "reads": {
+        "title": "Fuera del código",
+        "intro": "Pasa el ratón por un lomo para sacar el libro del estante.",
+        "st_reading": "Leyendo ahora",
+        "st_read": "Terminados",
+        "st_wish": "Quiero leer"
     }
 }
