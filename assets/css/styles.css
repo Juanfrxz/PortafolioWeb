@@ -40,6 +40,16 @@
   /*===== z index =====*/
   --z-back: -10;
   --z-fixed: 100;
+  /*===== Grupos de tecnologia =====*/
+  /* Un tono por grupo. Frio arriba (la superficie que ve el usuario),
+     calido abajo (los datos). Las herramientas van desaturadas a
+     proposito: son el andamiaje, no el producto.
+     Viven en :root porque los comparten Skills y Experiencia. */
+  --cst-front: #38bdf8;
+  --cst-back: #a78bfa;
+  --cst-data: #fbbf24;
+  --cst-infra: #34d399;
+  --cst-tool: #94a3b8;
 }
 
 /* Dark theme variables */
@@ -2017,13 +2027,13 @@ img {
     white-space: nowrap;
   }
   .nav__item {
-    margin-left: 1.5rem;
+    margin-left: 1.1rem;
   }
 }
 
 @media screen and (min-width: 1200px) {
   .nav__item {
-    margin-left: 2.25rem;
+    margin-left: 1.7rem;
   }
 }
 
@@ -2059,5 +2069,1024 @@ img {
 @media screen and (min-width: 768px) {
   .home__img-hint {
     bottom: -1rem;
+  }
+}
+
+/*=============================================
+=          SKILLS — CONSTELACION              =
+=  Nodos en HTML posicionados en %, lineas en =
+=  un SVG estirado detras. Al usar las mismas =
+=  coordenadas en %, siempre quedan alineados.=
+=============================================*/
+
+.skills__intro {
+  max-width: 46ch;
+  margin: -1rem auto 2rem;
+  font-size: var(--normal-font-size);
+  color: var(--text-color-light);
+  text-align: center;
+}
+
+/*===== Leyenda =====*/
+.cst__legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+}
+
+.cst__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  transition: color 0.25s ease;
+}
+
+.cst__legend-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background-color: var(--dot, var(--cst-tool));
+}
+
+.cst__legend-item[data-group="front"] { --dot: var(--cst-front); }
+.cst__legend-item[data-group="back"]  { --dot: var(--cst-back); }
+.cst__legend-item[data-group="data"]  { --dot: var(--cst-data); }
+.cst__legend-item[data-group="infra"] { --dot: var(--cst-infra); }
+.cst__legend-item[data-group="tool"]  { --dot: var(--cst-tool); }
+
+/*===== Lienzo =====*/
+.cst {
+  position: relative;
+  display: none;               /* en movil manda la lista */
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  aspect-ratio: 1000 / 720;
+}
+
+@media screen and (min-width: 768px) {
+  .cst {
+    display: block;
+  }
+  .skills__groups {
+    /* En escritorio la lista sigue en el DOM para lectores de pantalla,
+       pero fuera de la vista. */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/*===== Lineas =====*/
+.cst__links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.cst__link {
+  stroke: currentColor;
+  color: var(--cst-tool);
+  stroke-width: 1.25;
+  /* Las lineas SON la premisa de la seccion: a 0.28 no se veian */
+  opacity: 0.5;
+  transition: opacity 0.3s ease, stroke-width 0.3s ease;
+}
+
+/* En reposo el color agrupa; asi se leen los racimos sin interactuar */
+.cst__link[data-group="front"] { color: var(--cst-front); }
+.cst__link[data-group="back"]  { color: var(--cst-back); }
+.cst__link[data-group="data"]  { color: var(--cst-data); }
+.cst__link[data-group="infra"] { color: var(--cst-infra); }
+.cst__link[data-group="tool"]  { color: var(--cst-tool); }
+
+/*===== Nodos =====*/
+.cst__node {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 7rem;
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.cst__icon {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: var(--card-bg);
+  border: 1.5px solid var(--ring, var(--cst-tool));
+  box-shadow: 0 0 0 0 var(--ring, var(--cst-tool));
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.cst__node[data-group="front"] { --ring: var(--cst-front); }
+.cst__node[data-group="back"]  { --ring: var(--cst-back); }
+.cst__node[data-group="data"]  { --ring: var(--cst-data); }
+.cst__node[data-group="infra"] { --ring: var(--cst-infra); }
+.cst__node[data-group="tool"]  { --ring: var(--cst-tool); }
+
+/* Los iconos venian a 50px fijos: el CSS gana sobre esos atributos */
+.cst__icon svg,
+.cst__icon img {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+.cst__icon i {
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--ring, var(--cst-tool));
+}
+
+.cst__name {
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-semi);
+  color: var(--text-color);
+  text-align: center;
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+/*===== Estados: resaltar el vecindario =====*/
+.cst__node:hover .cst__icon,
+.cst__node:focus-visible .cst__icon {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--ring) 18%, transparent);
+}
+
+.cst__node:focus-visible {
+  outline: none;
+}
+
+.cst__node:focus-visible .cst__icon {
+  border-color: #fff;
+}
+
+/* Cuando hay un nodo activo, lo no relacionado se apaga */
+.cst.is-exploring .cst__node {
+  opacity: 0.22;
+}
+
+.cst.is-exploring .cst__node.is-active,
+.cst.is-exploring .cst__node.is-linked {
+  opacity: 1;
+}
+
+.cst.is-exploring .cst__link {
+  opacity: 0.07;
+}
+
+.cst.is-exploring .cst__link.is-active {
+  opacity: 1;
+  stroke-width: 2;
+  color: var(--ring-active, var(--first-color));
+}
+
+.cst.is-exploring .cst__node.is-active .cst__name {
+  color: var(--ring);
+}
+
+/*===== Lista agrupada (movil + lectores de pantalla) =====*/
+.skills__groups {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.skills__group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: var(--normal-font-size);
+  color: var(--title-color);
+}
+
+.skills__group-title::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background-color: var(--dot, var(--cst-tool));
+  flex-shrink: 0;
+}
+
+.skills__group[data-group="front"] { --dot: var(--cst-front); }
+.skills__group[data-group="back"]  { --dot: var(--cst-back); }
+.skills__group[data-group="data"]  { --dot: var(--cst-data); }
+.skills__group[data-group="infra"] { --dot: var(--cst-infra); }
+.skills__group[data-group="tool"]  { --dot: var(--cst-tool); }
+
+.skills__group-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.skills__group-list li {
+  padding: 0.35rem 0.75rem;
+  font-size: var(--smaller-font-size);
+  color: var(--text-color);
+  background-color: var(--card-bg);
+  border: 1px solid color-mix(in srgb, var(--dot) 30%, transparent);
+  border-radius: 0.5rem;
+}
+
+/*===== Respetar quien desactivo las animaciones =====*/
+@media (prefers-reduced-motion: reduce) {
+  .cst__node,
+  .cst__icon,
+  .cst__link,
+  .cst__name {
+    transition: none;
+  }
+  .cst__node:hover .cst__icon,
+  .cst__node:focus-visible .cst__icon {
+    transform: none;
+  }
+}
+
+/* En movil no hay grafo: la leyenda y el texto que habla de "lineas"
+   describirian algo que no esta en pantalla. Los titulos de grupo,
+   con su punto de color, ya se explican solos. */
+@media screen and (max-width: 767px) {
+  .skills__intro,
+  .cst__legend {
+    display: none;
+  }
+  .skills__groups {
+    padding-left: var(--mb-2);
+    padding-right: var(--mb-2);
+  }
+}
+
+/*=============================================
+=      SKILLS — FONDO DE PROFUNDIDAD          =
+=  Nada de puntos unidos por lineas: eso ya   =
+=  lo hace la constelacion y competirian.     =
+=  Aqui: polvo estelar + una luz que sigue    =
+=  al cursor y toma el color del grupo.       =
+=============================================*/
+
+.skills {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  /* Color de la luz. skills.js lo cambia al grupo que se explora. */
+  --glow: var(--first-color);
+  --dust: rgba(255, 255, 255, 0.55);
+  --depth-a: hsl(260, 30%, 9%);
+  --depth-b: hsl(266, 32%, 13%);
+
+  /* Sustituye al color plano de .section */
+  background-color: var(--depth-a);
+  background-image:
+    radial-gradient(120% 70% at 50% -20%, var(--depth-b) 0%, transparent 60%),
+    radial-gradient(90% 60% at 50% 120%, var(--depth-b) 0%, transparent 55%);
+}
+
+[data-theme="light"] .skills {
+  --dust: rgba(80, 60, 130, 0.4);
+  --depth-a: #f4f2f8;
+  --depth-b: #ffffff;
+}
+
+/* El contenido va por encima de las capas de fondo */
+.skills > *:not(.skills__glow) {
+  position: relative;
+  z-index: 1;
+}
+
+/*===== Polvo estelar =====*/
+/* Tres rejillas de tamanos distintos: al superponerse el ojo ya no
+   percibe la retícula y se lee como disperso. */
+.skills::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, var(--dust) 0.9px, transparent 1px),
+    radial-gradient(circle, var(--dust) 0.7px, transparent 1px),
+    radial-gradient(circle, var(--dust) 1.2px, transparent 1.4px);
+  background-size: 97px 97px, 61px 61px, 143px 143px;
+  background-position: 0 0, 24px 38px, 61px 12px;
+  opacity: 0.45;
+  /* Cada capa se desplaza a su ritmo: da sensacion de profundidad.
+     El recorrido es exactamente un mosaico, asi el bucle no salta. */
+  animation: skills-drift-a 90s linear infinite,
+             skills-drift-b 140s linear infinite,
+             skills-drift-c 210s linear infinite;
+}
+
+@keyframes skills-drift-a { to { background-position: 0 -97px, 24px 38px, 61px 12px; } }
+@keyframes skills-drift-b { to { background-position: 0 0, 24px -23px, 61px 12px; } }
+@keyframes skills-drift-c { to { background-position: 0 0, 24px 38px, 61px -131px; } }
+
+/*===== Vineta: mantiene el contraste de los nodos en los bordes =====*/
+.skills::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    115% 85% at 50% 50%,
+    transparent 45%,
+    color-mix(in srgb, var(--depth-a) 85%, black) 100%
+  );
+}
+
+/*===== La luz que sigue al cursor =====*/
+.skills__glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 46rem;
+  height: 46rem;
+  margin: -23rem 0 0 -23rem;   /* centrada en su propio origen */
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle closest-side,
+    color-mix(in srgb, var(--glow) 30%, transparent) 0%,
+    color-mix(in srgb, var(--glow) 12%, transparent) 40%,
+    transparent 72%
+  );
+  /* transform en vez de left/top: se compone en GPU y no repinta la seccion */
+  transform: translate3d(var(--gx, 50vw), var(--gy, 50vh), 0);
+  transition: opacity 0.45s ease, background 0.4s ease;
+  will-change: transform;
+}
+
+.skills.is-lit .skills__glow {
+  opacity: 1;
+}
+
+[data-theme="light"] .skills__glow {
+  background: radial-gradient(
+    circle closest-side,
+    color-mix(in srgb, var(--glow) 22%, transparent) 0%,
+    color-mix(in srgb, var(--glow) 8%, transparent) 40%,
+    transparent 72%
+  );
+}
+
+/*===== Accesibilidad =====*/
+@media (prefers-reduced-motion: reduce) {
+  .skills::before {
+    animation: none;
+  }
+  .skills__glow {
+    transition: none;
+  }
+}
+
+/* En claro la vineta oscura ensuciaba las esquinas y no hace falta:
+   los nodos ya tienen contraste de sobra sobre fondo claro. */
+[data-theme="light"] .skills::after {
+  background: radial-gradient(
+    115% 85% at 50% 50%,
+    transparent 55%,
+    rgba(80, 60, 130, 0.06) 100%
+  );
+}
+
+/*=============================================
+=       EXPERIENCIA — TIMELINE CON CARRIL     =
+=  Una sola columna: el zigzag anterior       =
+=  dejaba media fila vacia en cada entrada.   =
+=============================================*/
+
+.experience {
+  position: relative;
+}
+
+.xp {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto;
+  /* .section no aporta margen lateral: sin esto los nodos se salen
+     por el borde izquierdo en movil */
+  padding: 0 var(--mb-2);
+  list-style: none;
+}
+
+/*===== Entradas =====*/
+.xp__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.xp__item:last-child {
+  margin-bottom: 0;
+}
+
+/*===== Nodo de cada empleo =====*/
+/* Misma receta que los nodos de la constelacion: circulo, anillo de color
+   e icono dentro. Antes era una hairline con aros vacios, que no hablaba
+   el mismo idioma que el resto del sitio. */
+.xp__node {
+  --ring: var(--cst-back);
+  grid-column: 1;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background-color: var(--card-bg);
+  border: 1.5px solid color-mix(in srgb, var(--ring) 55%, transparent);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.xp__node i {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--ring);
+}
+
+/* El rol de redes toma el verde de "Redes" en Skills: misma idea, mismo tono */
+.xp__item[data-kind="net"] .xp__node {
+  --ring: var(--cst-infra);
+}
+
+/* El empleo actual manda: acento de marca y halo, como el nodo activo del grafo */
+.xp__item--current .xp__node {
+  --ring: var(--first-color);
+  border-width: 2px;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--ring) 14%, transparent);
+}
+
+.xp__item:hover .xp__node {
+  transform: scale(1.06);
+  border-color: var(--ring);
+}
+
+/*===== Conector entre nodos =====*/
+/* Translucido y tenido, igual que los enlaces de la constelacion */
+.xp__item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 1.625rem;
+  top: 3.9rem;
+  bottom: -1.6rem;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--linea) 55%, transparent) 0%,
+    color-mix(in srgb, var(--linea) 12%, transparent) 100%
+  );
+}
+
+.xp__item { --linea: var(--cst-back); }
+.xp__item--current { --linea: var(--first-color); }
+.xp__item[data-kind="net"] { --linea: var(--cst-infra); }
+
+/*===== Tarjeta =====*/
+.xp__card {
+  padding: 1.5rem;
+  background-color: var(--card-bg);
+  border: 1px solid color-mix(in srgb, var(--text-color) 12%, transparent);
+  border-radius: 0.75rem;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.xp__card:hover {
+  transform: translateX(3px);
+  border-color: color-mix(in srgb, var(--first-color) 45%, transparent);
+}
+
+/* El empleo actual manda: mas aire, borde vivo y un halo tenue */
+.xp__item--current .xp__card {
+  padding: 1.75rem;
+  border-color: color-mix(in srgb, var(--first-color) 40%, transparent);
+  background-image: radial-gradient(
+    120% 100% at 0% 0%,
+    color-mix(in srgb, var(--first-color) 8%, transparent) 0%,
+    transparent 55%
+  );
+}
+
+/* Los anteriores, mas discretos: la jerarquia es informacion */
+.xp__card--past {
+  padding: 1.25rem;
+}
+
+/*===== Distintivo de empleo actual =====*/
+.xp__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+  padding: 0.25rem 0.7rem;
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-semi);
+  color: var(--first-color);
+  background-color: color-mix(in srgb, var(--first-color) 12%, transparent);
+  border-radius: 2rem;
+}
+
+.xp__dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background-color: #22c55e;
+  animation: xp-pulse 2s infinite;
+}
+
+@keyframes xp-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70%  { box-shadow: 0 0 0 0.45rem rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/*===== Textos =====*/
+/* La empresa va primero y grande: es lo que un reclutador escanea */
+.xp__company {
+  margin: 0 0 0.15rem;
+  font-size: 1.15rem;
+  font-weight: var(--font-bold);
+  color: var(--title-color);
+  line-height: 1.25;
+}
+
+.xp__card--past .xp__company {
+  font-size: 1rem;
+}
+
+.xp__role {
+  margin: 0 0 0.6rem;
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-semi);
+  color: var(--first-color);
+}
+
+.xp__date {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.85rem;
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+}
+
+.xp__desc {
+  margin: 0;
+  font-size: var(--normal-font-size);
+  line-height: 1.7;
+  color: var(--text-color);
+}
+
+/*===== Tecnologias del puesto =====*/
+/* Mismos colores que la constelacion: se ve de un vistazo que lo
+   listado en Skills es lo que se usa en el trabajo actual. */
+.xp__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.xp__chip {
+  padding: 0.28rem 0.65rem;
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-semi);
+  color: var(--text-color);
+  background-color: color-mix(in srgb, var(--tone) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tone) 32%, transparent);
+  border-radius: 0.4rem;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.xp__chip:hover {
+  color: var(--tone);
+  border-color: var(--tone);
+}
+
+.xp__chip[data-group="front"] { --tone: var(--cst-front); }
+.xp__chip[data-group="back"]  { --tone: var(--cst-back); }
+.xp__chip[data-group="data"]  { --tone: var(--cst-data); }
+.xp__chip[data-group="infra"] { --tone: var(--cst-infra); }
+.xp__chip[data-group="tool"]  { --tone: var(--cst-tool); }
+
+/*===== Entrada al hacer scroll =====*/
+/* Por defecto VISIBLE. Solo el JS oculta lo que aun no llega al pliegue,
+   y lo vuelve a mostrar al entrar. Al reves (ocultar por CSS y revelar por
+   JS) basta con que el observador no dispare para perder el contenido. */
+.xp__item {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.xp__item.is-pending {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+@media screen and (min-width: 768px) {
+  .xp__item {
+    margin-bottom: 2.5rem;
+    column-gap: 1.5rem;
+  }
+  .xp__item:not(:last-child)::before {
+    bottom: -2.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .xp__dot {
+    animation: none;
+  }
+  .xp__card:hover {
+    transform: none;
+  }
+}
+
+/*=============================================
+=   FUERA DEL CODIGO — ESTANTERIA DE LOMOS    =
+=  Sin portadas: los lomos son CSS puro, asi  =
+=  la seccion no suma ni un kilobyte de       =
+=  imagenes. El estado va por color.          =
+=============================================*/
+
+.reads {
+  --st-reading: var(--first-color);
+  --st-read: var(--cst-infra);
+  --st-wish: var(--cst-tool);
+}
+
+.reads__intro {
+  max-width: 46ch;
+  margin: -1rem auto 1.75rem;
+  font-size: var(--normal-font-size);
+  color: var(--text-color-light);
+  text-align: center;
+}
+
+/*===== Leyenda =====*/
+.reads__legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  list-style: none;
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+}
+
+.reads__legend {
+  margin-bottom: 0;
+}
+
+.reads__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.reads__legend-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 2px;
+  background-color: var(--tono);
+}
+
+.reads__legend-item[data-status="reading"] { --tono: var(--st-reading); }
+.reads__legend-item[data-status="read"]    { --tono: var(--st-read); }
+.reads__legend-item[data-status="wish"]    { --tono: var(--st-wish); }
+
+/*===== El estante =====*/
+.shelf {
+  display: none;              /* en movil manda la lista */
+  position: relative;
+  /* Se cine a los libros: con ancho fijo la tabla sobresalia mucho
+     por los lados y el conjunto quedaba descentrado. */
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--mb-2);
+}
+
+@media screen and (min-width: 768px) {
+  .shelf {
+    display: block;
+  }
+  .reads__groups {
+    /* Sigue en el DOM para lectores de pantalla, fuera de la vista */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+.shelf__books {
+  display: flex;
+  align-items: flex-end;      /* todos apoyados en la misma base */
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  min-height: 200px;
+  margin: 0;
+  /* Aire para el tiron de la portada; el relleno lateral hace que la
+     tabla sobresalga por los lados, como un estante de verdad */
+  padding: 3.5rem 1.75rem 0.4rem;
+  list-style: none;
+}
+
+/* La tabla del estante */
+.shelf__board {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--text-color) 30%, transparent),
+    color-mix(in srgb, var(--text-color) 12%, transparent)
+  );
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.55);
+}
+
+/*===== Cada lomo =====*/
+.shelf__book {
+  position: relative;
+  width: var(--w, 32px);
+  height: var(--h, 170px);
+  cursor: default;
+}
+
+.shelf__spine {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0;
+  border-radius: 2px 3px 3px 2px;
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--tono) 55%, #000 45%) 0%,
+    color-mix(in srgb, var(--tono) 30%, transparent) 12%,
+    color-mix(in srgb, var(--tono) 22%, transparent) 88%,
+    color-mix(in srgb, var(--tono) 45%, #000 30%) 100%
+  );
+  border: 1px solid color-mix(in srgb, var(--tono) 45%, transparent);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.shelf__book[data-status="reading"] { --tono: var(--st-reading); }
+.shelf__book[data-status="read"]    { --tono: var(--st-read); }
+.shelf__book[data-status="wish"]    { --tono: var(--st-wish); }
+
+/* Los pendientes, mas apagados: aun no son parte de lo leido */
+.shelf__book[data-status="wish"] .shelf__spine {
+  opacity: 0.6;
+  border-style: dashed;
+}
+
+/* El titulo va en vertical, como en un lomo de verdad */
+.shelf__spine-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);   /* se lee de abajo hacia arriba */
+  max-height: 100%;
+  overflow: hidden;
+  font-size: 0.68rem;
+  font-weight: var(--font-semi);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--title-color);
+}
+
+/* Al pasar por encima el libro se saca un poco del estante */
+/* Al sacar el libro, su lomo se desvanece: el hueco queda tapado por la
+   propia portada. Si el lomo seguia visible, asomaba por debajo de la
+   imagen y parecia que hubiera dos ejemplares del mismo libro. */
+.shelf__book:hover .shelf__spine,
+.shelf__book:focus-within .shelf__spine {
+  opacity: 0;
+}
+
+/* Gana a la regla que deja los pendientes al 60% */
+.shelf__book[data-status="wish"]:hover .shelf__spine,
+.shelf__book[data-status="wish"]:focus-within .shelf__spine {
+  opacity: 0;
+}
+
+/*===== La portada, al pasar el raton =====*/
+/* Va posicionada en absoluto: si el lomo se ensanchara, el flex
+   reacomodaria toda la estanteria en cada hover. */
+.shelf__cover {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 4;
+  /* 8.5rem -> ~209px de alto, casi lo mismo que el lomo: asi al salir
+     no se sube por encima de la leyenda */
+  width: 8.5rem;
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(6px) scale(0.94);
+  transform-origin: bottom center;
+  transition: opacity 0.26s ease, transform 0.26s ease, visibility 0.26s;
+  pointer-events: none;
+}
+
+.shelf__cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 18px 34px -14px rgba(0, 0, 0, 0.85),
+              0 0 0 1px color-mix(in srgb, var(--tono) 45%, transparent);
+}
+
+/* Titulo y autor sobre la propia portada, con velo para que se lean */
+.shelf__meta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 1.7rem 0.55rem 0.5rem;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 45%, transparent 100%);
+}
+
+.shelf__meta b {
+  font-size: 0.76rem;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.shelf__meta i {
+  font-size: 0.64rem;
+  font-style: normal;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.shelf__book:hover .shelf__cover,
+.shelf__book:focus-within .shelf__cover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-10px) scale(1);
+}
+
+/*===== Lista (movil + lectores de pantalla) =====*/
+.reads__groups {
+  display: grid;
+  gap: 1.75rem;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 var(--mb-2);
+}
+
+.reads__group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+  font-size: var(--normal-font-size);
+  color: var(--title-color);
+}
+
+.reads__group-title::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 2px;
+  background-color: var(--tono);
+  flex-shrink: 0;
+}
+
+.reads__group[data-status="reading"] { --tono: var(--st-reading); }
+.reads__group[data-status="read"]    { --tono: var(--st-read); }
+.reads__group[data-status="wish"]    { --tono: var(--st-wish); }
+
+.reads__group-list {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.reads__group-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  background-color: var(--card-bg);
+  border-left: 3px solid var(--tono);
+  border-radius: 0 0.4rem 0.4rem 0;
+}
+
+.reads__group-list img {
+  width: 44px;
+  height: auto;
+  border-radius: 2px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.6);
+}
+
+.reads__book-data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.reads__group-list b {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-semi);
+  color: var(--title-color);
+}
+
+.reads__group-list span {
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shelf__spine,
+  .shelf__tip {
+    transition: none;
+  }
+  .shelf__book:hover .shelf__spine,
+  .shelf__book:focus-within .shelf__spine {
+    transform: none;
+  }
+}
+
+/* En movil no hay estante: la leyenda repetiria exactamente lo que ya
+   dicen los titulos de grupo con su cuadrito de color. Mismo criterio
+   que en Skills. */
+@media screen and (max-width: 767px) {
+  /* La leyenda repetiria lo que ya dicen los titulos de grupo, y la intro
+     habla de pasar el raton por un estante que en movil no existe. */
+  .reads__legend,
+  .reads__intro {
+    display: none;
+  }
+  .reads__groups {
+    margin-top: 0.5rem;
   }
 }
